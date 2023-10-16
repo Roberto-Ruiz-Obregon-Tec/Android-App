@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frag_home"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+        <TextView
+            android:id="@+id/Label_Bienvenida"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="120dp"
+            android:text="¡Bienvenido!"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <ImageView
+            android:id="@+id/fondo_imagen"
+            android:layout_width="416dp"
+            android:layout_height="161dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/image_rounded_corners"
+            android:src="@drawable/fondo_imagen"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Label_Bienvenida" />
+
+        <TextView
+            android:id="@+id/Mis_cursos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/misCursos"
+            android:textColor="#FFFFFF"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:shadowColor="#000000"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="2"
+            app:layout_constraintBottom_toBottomOf="@+id/fondo_imagen"
+            app:layout_constraintEnd_toEndOf="@+id/fondo_imagen"
+            app:layout_constraintHorizontal_bias="0.531"
+            app:layout_constraintStart_toStartOf="@+id/fondo_imagen"
+            app:layout_constraintTop_toTopOf="@+id/fondo_imagen"
+            app:layout_constraintVertical_bias="0.428" />
+
+
+        <TextView
+            android:id="@+id/titulo_redes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/redesSociales"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.529"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fondo_imagen" />
+
+        <TextView
+            android:id="@+id/label_contacto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/contacto"
+            android:textColor="#000000"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.524"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.748" />
+
+        <ImageView
+            android:id="@+id/twitter_icon"
+            android:layout_width="47dp"
+            android:layout_height="46dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="168dp"
+            android:src="@drawable/twiitter_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/titulo_redes" />
+
+        <ImageView
+            android:id="@+id/insta_icon"
+            android:layout_width="45dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/ig_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.803"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/titulo_redes" />
+
+
+        <ImageView
+            android:id="@+id/whaLogo"
+            android:layout_width="36dp"
+            android:layout_height="40dp"
+            android:src="@drawable/whatsapp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.525"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.806" />
+
+        <ImageView
+            android:id="@+id/email_icon"
+            android:layout_width="31dp"
+            android:layout_height="46dp"
+            android:src="@drawable/email"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.226"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.867" />
+
+        <TextView
+            android:id="@+id/email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Administracion@fundacionrro.org"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.59"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.852" />
+
+        <TextView
+            android:id="@+id/telefono3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="442  214 3033"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.531"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.945" />
+
+        <TextView
+            android:id="@+id/telefono2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="442  214 2380"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.876"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.944" />
+
+        <TextView
+            android:id="@+id/telefono1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="442  214 4020"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.189"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.947"
+            tools:ignore="MissingConstraints" />
+
+        <ImageView
+            android:id="@+id/faceLogo"
+            android:layout_width="44dp"
+            android:layout_height="51dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="164dp"
+            android:src="@drawable/face_logo"
+            app:layout_constraintEnd_toStartOf="@+id/insta_icon"
+            app:layout_constraintTop_toBottomOf="@+id/titulo_redes" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="124dp"
+            android:layout_height="117dp"
+            android:layout_marginTop="4dp"
+            android:src="@drawable/logo_robertoruiz"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iconollamada"
+            android:layout_width="23dp"
+            android:layout_height="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/telefono3"
+            app:layout_constraintHorizontal_bias="0.1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.959"
+            app:srcCompat="@drawable/telefono" />
+
+        <ImageView
+            android:id="@+id/config"
+            android:layout_width="38dp"
+            android:layout_height="40dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.957"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.025"
+            app:srcCompat="@drawable/configuration"
+            />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

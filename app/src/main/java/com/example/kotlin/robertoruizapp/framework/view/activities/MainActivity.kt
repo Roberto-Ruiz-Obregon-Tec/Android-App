@@ -91,17 +91,17 @@ class MainActivity : AppCompatActivity() {
                 FragmentoHome(), //Crear fragmento inicio, se usa home temporalmente
                 Constants.MENU_INICIO
             )
-            Constants.MENU_FEED -> exchangeCurrentFragment(
-                FragmentoFeed(), //Crear fragmento feed
-                Constants.MENU_FEED
-            )
-            Constants.MENU_FRRO -> exchangeCurrentFragment(
-                FragmentoFRRO(), //Crear fragmento frro
-                Constants.MENU_FRRO
-            )
+            //Constants.MENU_FEED -> exchangeCurrentFragment(
+            //    FragmentoFeed(), //Crear fragmento feed
+            //    Constants.MENU_FEED
+            //)
+            //Constants.MENU_FRRO -> exchangeCurrentFragment(
+            //    FragmentoFRRO(), //Crear fragmento frro
+            //    Constants.MENU_FRRO
+            //)
             Constants.MENU_PERFIL -> exchangeCurrentFragment(
-                FragmentoPerfil(),
-                Constants.MENU_PERFIL
+              FragmentoPerfil(),
+              Constants.MENU_PERFIL
             )
         }
     }

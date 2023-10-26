@@ -1,6 +1,5 @@
 package com.example.kotlin.robertoruizapp.framework.view.activities
 
-
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -27,7 +26,7 @@ class MainActivity : AppCompatActivity() {
 
     /**
      * When the activity is created sets up binding and viewmodel
-     * alsi initializes the manageIntent, Binding and Listener methods
+     * also initializes the manageIntent, Binding and Listener methods
      *
      * @param savedInstanceState the state of the activity / fragment
      */
@@ -42,17 +41,17 @@ class MainActivity : AppCompatActivity() {
      * Initializes the Listeners to bind the icons with their corresponding action
      */
     private fun initializeListeners() {
-        binding.appBarMain.cursologo.setOnClickListener {
-            selectMenuOption(Constants.MENU_CURSOS)
-        }
-        binding.appBarMain.imghome.setOnClickListener {
+        binding.appBarMain.inicioMenu.setOnClickListener {
             selectMenuOption(Constants.MENU_INICIO)
         }
-        binding.appBarMain.userlogo.setOnClickListener {
-            selectMenuOption(Constants.MENU_PERFIL)
+        binding.appBarMain.feedMenu.setOnClickListener {
+            selectMenuOption(Constants.MENU_FEED)
         }
-        binding.appBarMain.becalogo.setOnClickListener {
-            selectMenuOption(Constants.MENU_PROGRAM)
+        binding.appBarMain.frroMenu.setOnClickListener {
+            selectMenuOption(Constants.MENU_FRRO)
+        }
+        binding.appBarMain.perfilMenu.setOnClickListener {
+            selectMenuOption(Constants.MENU_PERFIL)
         }
     }
 
@@ -88,18 +87,21 @@ class MainActivity : AppCompatActivity() {
             return
         }
         when (menuOption) {
-            Constants.MENU_CURSOS -> exchangeCurrentFragment(
-                FragmentoCursos(),
-                Constants.MENU_CURSOS
+            Constants.MENU_INICIO -> exchangeCurrentFragment(
+                FragmentoHome(), //Crear fragmento inicio, se usa home temporalmente
+                Constants.MENU_INICIO
             )
-            Constants.MENU_INICIO -> exchangeCurrentFragment(FragmentoHome(), Constants.MENU_INICIO)
+            //Constants.MENU_FEED -> exchangeCurrentFragment(
+            //    FragmentoFeed(), //Crear fragmento feed
+            //    Constants.MENU_FEED
+            //)
+            //Constants.MENU_FRRO -> exchangeCurrentFragment(
+            //    FragmentoFRRO(), //Crear fragmento frro
+            //    Constants.MENU_FRRO
+            //)
             Constants.MENU_PERFIL -> exchangeCurrentFragment(
-                FragmentoPerfil(),
-                Constants.MENU_PERFIL
-            )
-            Constants.MENU_PROGRAM -> exchangeCurrentFragment(
-                ProgramFragment(), Constants
-                    .MENU_PROGRAM
+              FragmentoPerfil(), //Cambiar por los fragmentos que usaremos
+              Constants.MENU_PERFIL
             )
         }
     }

@@ -3,126 +3,83 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="#FFFFFF"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:gravity="center"
     android:orientation="horizontal"
-    android:background="@color/primary"
-    >
+    android:weightSum="4">
+
+    <!-- Inicio -->
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_weight="0.5"
-        android:orientation="vertical"
-        android:id="@+id/homelogo"
-        android:layout_gravity="center"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:gravity="center"
-        >
-        <ImageView            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/home_24"
-            android:id="@+id/imghome"
-            android:layout_gravity="center"
-            />
-        <TextView
-            android:layout_marginTop="0dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:text="Home"
-            android:textColor="@color/semiWhite"/>
-
-    </LinearLayout>
-    <View
-        android:layout_width="2dp"
-
-    android:layout_height="56dp"
-    android:layout_marginTop="8dp"
-    android:layout_marginBottom="8dp"
-        android:background="#FFFFFF"
-    />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_weight="0.5"
-        android:orientation="vertical"
-        android:id="@+id/cursologo"
-        android:layout_gravity="center"
-        android:gravity="center"
-        >
-        <ImageView            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/cursologo_24"
-            android:layout_gravity="center"
-            />
-        <TextView
-            android:layout_marginTop="0dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Cursos"
-            android:textColor="@color/semiWhite"/>
-
-    </LinearLayout>
-
-    <View
-        android:layout_width="2dp"
-
-        android:layout_height="56dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="#FFFFFF"
-        />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_weight="0.5"
-        android:orientation="vertical"
-        android:id="@+id/becalogo"
-        android:layout_gravity="center"
-        android:gravity="center"
-        >
-        <ImageView            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/becalogo"
-            android:layout_gravity="center"
-            />
-        <TextView
-            android:layout_marginTop="0dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Becas"
-            android:textColor="@color/semiWhite"/>
-
-    </LinearLayout>
-
-    <View
-        android:layout_width="2dp"
-
-        android:layout_height="56dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="#FFFFFF"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_weight="0.5"
-        android:orientation="vertical"
-        android:id="@+id/userlogo"
-        android:layout_gravity="center"
-        android:gravity="center"
-        >
-
+        android:orientation="vertical">
         <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center"
-            android:src="@drawable/person_24" />
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/icon_inicio" />
         <TextView
-            android:layout_marginTop="0dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Mi Perfil"
-            android:textColor="@color/semiWhite"/>
-
+            android:text="Inicio"
+            android:marginTop="4dp"/>
     </LinearLayout>
+
+    <!-- Feed -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/icon_feed" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Feed"
+            android:marginTop="4dp"/>
+    </LinearLayout>
+
+    <!-- FRRO -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/icon_frro" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="FRRO"
+            android:marginTop="4dp"/>
+    </LinearLayout>
+
+    <!-- Perfil -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/icon_perfil" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Perfil"
+            android:marginTop="4dp"/>
+    </LinearLayout>
+
 </LinearLayout>

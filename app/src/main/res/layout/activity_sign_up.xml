@@ -9,7 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginHorizontal="10dp"
+        android:layout_marginHorizontal="20dp"
         android:layout_marginVertical="10dp"
         android:paddingVertical="20dp"
         app:layout_constraintVertical_chainStyle="packed">
@@ -19,197 +19,181 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/logo"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="-26dp"
+            app:layout_constraintBottom_toTopOf="@id/textName"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/TextViewPersonalInfo"/>
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="-26dp" />
 
         <TextView
             android:id="@+id/textViewRegister"
             android:layout_width="130sp"
-            android:layout_height="34dp"
+            android:layout_height="34sp"
             android:text="Registrate"
             android:textColor="@color/blueTitle"
             android:textSize="25sp"
             app:layout_constraintBottom_toTopOf="@+id/textFundationName"
             app:layout_constraintStart_toEndOf="@id/imageView4"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textFundationName"
             android:layout_width="182sp"
             android:layout_height="wrap_content"
-            android:text="Fundación  Roberto Ruiz Obregon"
+            android:text="Fundación Roberto Ruíz Obregón"
             android:textColor="@color/secondaryText"
             android:textSize="17sp"
-            app:layout_constraintTop_toBottomOf="@id/textViewRegister"
+            app:layout_constraintBottom_toTopOf="@id/textName"
             app:layout_constraintStart_toEndOf="@id/imageView4"
-            app:layout_constraintBottom_toTopOf="@id/TextViewPersonalInfo"
-            />
+            app:layout_constraintTop_toBottomOf="@id/textViewRegister" />
 
         <TextView
-            android:id="@+id/TextViewPersonalInfo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:id="@+id/textName"
+            android:layout_width="140sp"
+            android:layout_height="18sp"
             android:layout_marginTop="10dp"
-            android:text="@string/informaci_n_personal"
-            android:textSize="24sp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:text="Nombre Completo"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/editTextName"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textFundationName" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingEnd="10sp"
+            android:text="Requerido"
+            android:textColor="@color/secondaryText"
+            android:textSize="13sp"
+            app:layout_constraintBottom_toBottomOf="@id/textName"
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <EditText
             android:id="@+id/editTextName"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_height="24sp"
             android:autofillHints="name"
-            android:hint="@string/nombre_completo"
             android:inputType="textPersonName"
+            app:layout_constraintBottom_toTopOf="@id/textEmail"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/TextViewPersonalInfo" />
+            app:layout_constraintTop_toBottomOf="@+id/textName" />
+
+        <TextView
+            android:id="@+id/textEmail"
+            android:layout_width="140sp"
+            android:layout_height="18sp"
+            android:layout_marginTop="10dp"
+            android:text="Correo"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/editTextMail"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextName" />
+
+        <EditText
+            android:id="@+id/editTextMail"
+            android:layout_width="match_parent"
+            android:layout_height="24sp"
+            android:autofillHints="email"
+            android:inputType="textEmailAddress"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textEmail" />
+
+        <TextView
+            android:id="@+id/textAge"
+            android:layout_width="140sp"
+            android:layout_height="18sp"
+            android:layout_marginTop="10dp"
+            android:text="Edad"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/editTextAge"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextMail" />
 
         <EditText
             android:id="@+id/editTextAge"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:hint="@string/eDad"
+            android:layout_height="24sp"
+            android:autofillHints="age"
             android:inputType="number"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextName" />
+            app:layout_constraintTop_toBottomOf="@+id/textAge" />
 
-        <Spinner
-            android:id="@+id/spinnerSex"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+        <TextView
+            android:id="@+id/textGender"
+            android:layout_width="140sp"
+            android:layout_height="18sp"
             android:layout_marginTop="10dp"
-            android:spinnerMode="dialog"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:text="Sexo"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/editTextGender"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextAge" />
 
         <Spinner
-            android:id="@+id/spinnerEducation"
+            android:id="@+id/editTextGender"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:spinnerMode="dialog"
+            android:autofillHints="gender"
+            android:inputType="text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spinnerSex" />
+            app:layout_constraintTop_toBottomOf="@+id/textGender" />
+
+        <TextView
+            android:id="@+id/textOccupation"
+            android:layout_width="140sp"
+            android:layout_height="18sp"
+            android:layout_marginTop="10dp"
+            android:text="Ocupación"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/editTextOccupation"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextGender" />
 
         <EditText
-            android:id="@+id/editTextJob"
+            android:id="@+id/editTextOccupation"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:hint="@string/ocupaci_n"
-            android:inputType="textPersonName"
-            app:layout_constraintBottom_toTopOf="@+id/editTextPostalCode"
+            android:layout_height="24sp"
+            android:autofillHints="occupation"
+            android:inputType="text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spinnerEducation" />
+            app:layout_constraintTop_toBottomOf="@+id/textOccupation" />
+
+        <TextView
+            android:id="@+id/textPC"
+            android:layout_width="140sp"
+            android:layout_height="18sp"
+            android:layout_marginTop="10dp"
+            android:text="CP"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/editTextPC"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextOccupation" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingEnd="10sp"
+            android:text="Requerido"
+            android:textColor="@color/secondaryText"
+            android:textSize="13sp"
+            app:layout_constraintBottom_toBottomOf="@id/textPC"
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <EditText
-            android:id="@+id/editTextPostalCode"
+            android:id="@+id/editTextPC"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_height="24sp"
             android:autofillHints="postalCode"
-            android:hint="@string/código_postal"
             android:inputType="number"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextJob" />
+            app:layout_constraintTop_toBottomOf="@+id/textPC" />
 
-        <TextView
-            android:id="@+id/textViewContactData"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/datos_de_contacto"
-            android:layout_marginTop="10dp"
-            android:textSize="24sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextPostalCode" />
-
-        <EditText
-            android:id="@+id/editTextEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:autofillHints="emailAddress"
-            android:layout_marginTop="10dp"
-            android:hint="@string/correo_electr_nico"
-            android:inputType="textEmailAddress"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewContactData" />
-
-        <EditText
-            android:id="@+id/editTextPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:hint="@string/contrase_a"
-            android:inputType="textPassword"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextEmail" />
-
-        <TextView
-            android:id="@+id/password_message"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:text="Tu contraseña de tener mínimo 8 caracteres."
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextPassword" />
-
-
-        <EditText
-            android:id="@+id/editTextCnfPassword"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:hint="@string/confirmar_contraseña"
-            android:inputType="textPassword"
-            app:layout_constraintBottom_toTopOf="@+id/buttonGoLogin"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/password_message"
-            app:layout_constraintVertical_bias="0.0" />
-        <Button
-            android:id="@+id/buttonGoLogin"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="4dp"
-            android:background="@android:color/transparent"
-            android:text="@string/volver_al_inicio_de_sesi_n"
-            android:textColor="@android:color/holo_red_dark"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/buttonRegister"
-            app:layout_constraintHorizontal_chainStyle="packed" />
-
-        <Button
-            android:id="@+id/buttonRegister"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:backgroundTint="@color/primary"
-            android:text="@string/regístrate"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/buttonGoLogin"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintHorizontal_chainStyle="packed" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

@@ -29,18 +29,18 @@
             android:id="@+id/textViewRegister"
             android:layout_width="130sp"
             android:layout_height="34sp"
-            android:text="Registrate"
+            android:text="@string/regístrate"
             android:textColor="@color/blueTitle"
             android:textSize="25sp"
-            app:layout_constraintBottom_toTopOf="@+id/textFundationName"
+            app:layout_constraintBottom_toTopOf="@+id/textFoundationName"
             app:layout_constraintStart_toEndOf="@id/imageView4"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textFundationName"
+            android:id="@+id/textFoundationName"
             android:layout_width="182sp"
             android:layout_height="wrap_content"
-            android:text="Fundación Roberto Ruíz Obregón"
+            android:text="@string/fundacion"
             android:textColor="@color/secondaryText"
             android:textSize="17sp"
             app:layout_constraintBottom_toTopOf="@id/textName"
@@ -49,20 +49,22 @@
 
         <TextView
             android:id="@+id/textName"
-            android:layout_width="140sp"
-            android:layout_height="18sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Nombre Completo"
+            android:text="@string/nombre_completo"
             android:textSize="16sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/editTextName"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textFundationName" />
+            app:layout_constraintTop_toBottomOf="@+id/textFoundationName" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingEnd="10sp"
-            android:text="Requerido"
+            android:text="@string/requerido"
             android:textColor="@color/secondaryText"
             android:textSize="13sp"
             app:layout_constraintBottom_toBottomOf="@id/textName"
@@ -71,8 +73,10 @@
         <EditText
             android:id="@+id/editTextName"
             android:layout_width="match_parent"
-            android:layout_height="24sp"
+            android:layout_height="40sp"
             android:autofillHints="name"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/edit_text_bg"
             android:inputType="textPersonName"
             app:layout_constraintBottom_toTopOf="@id/textEmail"
             app:layout_constraintEnd_toEndOf="parent"
@@ -81,11 +85,13 @@
 
         <TextView
             android:id="@+id/textEmail"
-            android:layout_width="140sp"
-            android:layout_height="18sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Correo"
+            android:text="@string/correo_electronico"
             android:textSize="16sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/editTextMail"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextName" />
@@ -93,7 +99,9 @@
         <EditText
             android:id="@+id/editTextMail"
             android:layout_width="match_parent"
-            android:layout_height="24sp"
+            android:layout_height="40sp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/edit_text_bg"
             android:autofillHints="email"
             android:inputType="textEmailAddress"
             app:layout_constraintEnd_toEndOf="parent"
@@ -102,11 +110,13 @@
 
         <TextView
             android:id="@+id/textAge"
-            android:layout_width="140sp"
-            android:layout_height="18sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Edad"
+            android:text="@string/Age"
             android:textSize="16sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/editTextAge"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextMail" />
@@ -114,7 +124,9 @@
         <EditText
             android:id="@+id/editTextAge"
             android:layout_width="match_parent"
-            android:layout_height="24sp"
+            android:layout_height="40sp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/edit_text_bg"
             android:autofillHints="age"
             android:inputType="number"
             app:layout_constraintEnd_toEndOf="parent"
@@ -123,41 +135,48 @@
 
         <TextView
             android:id="@+id/textGender"
-            android:layout_width="140sp"
-            android:layout_height="18sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Sexo"
+            android:text="@string/sexo"
             android:textSize="16sp"
-            app:layout_constraintBottom_toTopOf="@+id/editTextGender"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/spinnerGender"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextAge" />
 
         <Spinner
-            android:id="@+id/editTextGender"
+            android:id="@+id/spinnerGender"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:spinnerMode="dialog"
+            android:layout_marginTop="10dp"
             android:autofillHints="gender"
             android:inputType="text"
+            android:spinnerMode="dialog"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textGender" />
 
         <TextView
             android:id="@+id/textOccupation"
-            android:layout_width="140sp"
-            android:layout_height="18sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Ocupación"
+            android:text="@string/ocupacion"
             android:textSize="16sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/editTextOccupation"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextGender" />
+            app:layout_constraintTop_toBottomOf="@+id/spinnerGender" />
 
         <EditText
             android:id="@+id/editTextOccupation"
             android:layout_width="match_parent"
-            android:layout_height="24sp"
+            android:layout_height="40sp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/edit_text_bg"
             android:autofillHints="occupation"
             android:inputType="text"
             app:layout_constraintEnd_toEndOf="parent"
@@ -166,11 +185,13 @@
 
         <TextView
             android:id="@+id/textPC"
-            android:layout_width="140sp"
-            android:layout_height="18sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="CP"
+            android:text="@string/codigo_postal"
             android:textSize="16sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/editTextPC"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextOccupation" />
@@ -179,7 +200,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingEnd="10sp"
-            android:text="Requerido"
+            android:text="@string/requerido"
             android:textColor="@color/secondaryText"
             android:textSize="13sp"
             app:layout_constraintBottom_toBottomOf="@id/textPC"
@@ -188,12 +209,164 @@
         <EditText
             android:id="@+id/editTextPC"
             android:layout_width="match_parent"
-            android:layout_height="24sp"
+            android:layout_height="40sp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/edit_text_bg"
             android:autofillHints="postalCode"
             android:inputType="number"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textPC" />
+
+        <TextView
+            android:id="@+id/textInterests"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/intereses"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/editTextInterests"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextPC" />
+
+        <Spinner
+            android:id="@+id/editTextInterests"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:autofillHints="interests"
+            android:inputType="none"
+            android:spinnerMode="dropdown"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInterests" />
+
+        <TextView
+            android:id="@+id/textCompany"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Empresa donde trabajo (opcional)"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/editTextCompany"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextInterests" />
+
+        <EditText
+            android:id="@+id/editTextCompany"
+            android:layout_width="match_parent"
+            android:layout_height="40sp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/edit_text_bg"
+            android:autofillHints="company"
+            android:inputType="text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textCompany" />
+
+        <CheckBox
+            android:id="@+id/checkboxESR"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="La empresa cuenta con certificación ESR"
+            android:textColor="@color/secondaryText"
+            android:textSize="11sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextCompany" />
+
+        <TextView
+            android:id="@+id/textProfilePic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/foto_perfil"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/uploadProfilePic"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/checkboxESR" />
+
+        <EditText
+            android:id="@+id/uploadProfilePic"
+            android:layout_width="match_parent"
+            android:layout_height="40sp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/edit_text_bg"
+            android:autofillHints="profile picture"
+            android:inputType="text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textProfilePic" />
+
+        <TextView
+            android:id="@+id/textPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/contraseña"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/editTextPassword"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/uploadProfilePic" />
+
+        <EditText
+            android:id="@+id/editTextPassword"
+            android:layout_width="match_parent"
+            android:layout_height="40sp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/edit_text_bg"
+            android:autofillHints="password"
+            android:inputType="textPassword"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textPassword" />
+
+        <TextView
+            android:id="@+id/textConfirmPass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/confirmar_contraseña"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/editTextConfirmPass"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextPassword" />
+
+        <EditText
+            android:id="@+id/editTextConfirmPass"
+            android:layout_width="match_parent"
+            android:layout_height="40sp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/edit_text_bg"
+            android:autofillHints="confirm password"
+            android:inputType="textPassword"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textConfirmPass" />
+
+        <Button
+            android:id="@+id/buttonRegister"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="8dp"
+            android:backgroundTint="@color/primary"
+            android:text="@string/regístrate"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextConfirmPass" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

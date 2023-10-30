@@ -49,7 +49,7 @@
 
         <EditText
             android:id="@+id/editTextJob"
-            android:hint="@string/ocupaci_n"
+            android:hint="@string/ocupacion"
             android:inputType="textPersonName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
 
         <EditText
             android:id="@+id/editTextPostalCode"
-            android:hint="@string/código_postal"
+            android:hint="@string/codigo_postal"
             android:inputType="number"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

@@ -26,9 +26,10 @@ class SignUpActivity : AppCompatActivity() {
         setContentView(R.layout.activity_sign_up)
 
         val generos = arrayOf("Hombre", "Mujer", "Prefiero no decir")
-        val gender = findViewById<Spinner>(R.id.spinnerSex)
+        val gender = findViewById<Spinner>(R.id.spinnerGender)
         gender.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, generos)
 
+        /*
         val estudios = arrayOf(
             "Ninguno",
             "Primaria",
@@ -41,14 +42,15 @@ class SignUpActivity : AppCompatActivity() {
         val studies = findViewById<Spinner>(R.id.spinnerEducation)
         studies.adapter =
             ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, estudios)
+         */
 
         val name: EditText = findViewById(R.id.editTextName)
         val edad: EditText = findViewById<EditText>(R.id.editTextAge)
-        val job: EditText = findViewById<EditText>(R.id.editTextJob)
-        val postalCode: EditText = findViewById<EditText>(R.id.editTextPostalCode)
-        val email: EditText = findViewById<EditText>(R.id.editTextEmail)
+        //val job: EditText = findViewById<EditText>(R.id.editTextJob)
+        val postalCode: EditText = findViewById<EditText>(R.id.editTextPC)
+        val email: EditText = findViewById<EditText>(R.id.editTextMail)
         val password: EditText = findViewById<EditText>(R.id.editTextPassword)
-        val cnfPassword: EditText = findViewById<EditText>(R.id.editTextCnfPassword)
+        val cnfPassword: EditText = findViewById<EditText>(R.id.editTextConfirmPass)
 
         fun initViewModel() {
             viewModel = ViewModelProvider(this)[SignUpActivityViewModel::class.java]
@@ -73,19 +75,19 @@ class SignUpActivity : AppCompatActivity() {
         initViewModel()
 
         val btnRegister = findViewById<Button>(R.id.buttonRegister)
-        val btnGoLogin = findViewById<Button>(R.id.buttonGoLogin)
+        //val btnGoLogin = findViewById<Button>(R.id.buttonGoLogin)
         fun signUpUser() {
 
             val ageInt: Int = edad.text.toString().toIntOrNull() ?: 0
             val pcInt: Int = postalCode.text.toString().toIntOrNull() ?: 0
             val selectedGender = gender.selectedItem.toString()
-            val selectedStudies = studies.selectedItem.toString()
+            //val selectedStudies = studies.selectedItem.toString()
             val user = SignUp(
                 name.text.toString(),
                 ageInt,
                 selectedGender,
-                job.text.toString(),
-                selectedStudies,
+                "job.text.toString()",
+                "selectedStudies",
                 pcInt,
                 email.text.toString(),
                 password.text.toString(),
@@ -109,8 +111,8 @@ class SignUpActivity : AppCompatActivity() {
                     name.text.toString(),
                     edad.text.toString(),
                     gender.selectedItem.toString(),
-                    job.text.toString(),
-                    studies.selectedItem.toString(),
+                    "job.text.toString()",
+                    "studies.selectedItem.toString()",
                     postalCode.text.toString(),
                     email.text.toString(),
                     password.text.toString(),
@@ -123,12 +125,13 @@ class SignUpActivity : AppCompatActivity() {
         }
 
 
-
+    /*
         btnGoLogin.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
 
         }
+     */
 
     }
     private fun validateInput(

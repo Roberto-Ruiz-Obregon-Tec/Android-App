@@ -51,10 +51,10 @@ class eventosAdapter (val clickListener: EventosClickListener): RecyclerView.Ada
 
         init {
             eventName = itemView.findViewById(R.id.txtEvento)
-            description = itemView.findViewById(R.id.txtDescripcion
-            eventDate = itemView.findViewById(R.id.txtFecha
+            description = itemView.findViewById(R.id.txtDescripcion)
+            eventDate = itemView.findViewById(R.id.txtFecha)
             eventImage = itemView.findViewById(R.id.imgEvento)
-            eventLocation = itemView.findViewById(R.id.txtUbicacion
+            eventLocation = itemView.findViewById(R.id.txtUbicacion)
             eventButton = itemView.findViewById(R.id.btnVerMas)
         }
     }

@@ -114,12 +114,15 @@ class SignUpActivity : AppCompatActivity() {
         btnRegister.setOnClickListener {
             if (validateInput(
                     name.text.toString(),
+                    email.text.toString(),
                     edad.text.toString(),
                     gender.selectedItem.toString(),
-                    "job.text.toString()",
-                    "studies.selectedItem.toString()",
+                    occupation.text.toString(),
                     postalCode.text.toString(),
-                    email.text.toString(),
+                    interest.selectedItem.toString(),
+                    company.toString(),
+                    companyESR.isChecked,
+                    profilePicture,
                     password.text.toString(),
                     cnfPassword.text.toString()
                 )) {
@@ -152,17 +155,25 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun validateInput(
         name: String,
+        email: String,
         age: String,
         selectedGender: String,
-        job: String,
-        selectedStudies: String,
+        occupation: String,
         postalCode: String,
-        email: String,
+        interests: String,
+        company: String?,
+        companyESR: Boolean?,
+        profilePicture: String,
         password: String,
         cnfPassword: String
     ):Boolean {
         if (name.isEmpty()) {
             Toast.makeText(this, "El nombre no puede estar vacío.", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            Toast.makeText(this, "Ingrese un correo electrónico válido.", Toast.LENGTH_SHORT).show()
             return false
         }
 
@@ -176,13 +187,8 @@ class SignUpActivity : AppCompatActivity() {
             return false
         }
 
-        if (job.isEmpty()) {
+        if (occupation.isEmpty()) {
             Toast.makeText(this, "La Ocupación no puede estar vacía.", Toast.LENGTH_SHORT).show()
-            return false
-        }
-
-        if (selectedStudies == "Seleccione su nivel de estudios") {
-            Toast.makeText(this, "Por favor, seleccione su nivel de estudios.", Toast.LENGTH_SHORT).show()
             return false
         }
 
@@ -191,8 +197,8 @@ class SignUpActivity : AppCompatActivity() {
             return false
         }
 
-        if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            Toast.makeText(this, "Ingrese un correo electrónico válido.", Toast.LENGTH_SHORT).show()
+        if (interests.isEmpty()) {
+            Toast.makeText(this, "Por favor, seleccione al menos un interes.", Toast.LENGTH_SHORT).show()
             return false
         }
 

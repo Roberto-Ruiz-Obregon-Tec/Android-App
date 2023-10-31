@@ -25,7 +25,7 @@
 
             <!--Titulo-->
             <ImageView
-                android:id="@+id/imgCertificacion"
+                android:id="@+id/imgEvento"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_marginTop="10dp"
@@ -34,7 +34,7 @@
 
             <!--Descripcion-->
             <TextView
-                android:id="@+id/txtCertificacion"
+                android:id="@+id/txtEvento"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -62,16 +62,7 @@
                 android:textSize="15sp" />
 
             <TextView
-                android:id="@+id/precio"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:text="Costo"
-                android:textSize="15sp" />
-
-            <TextView
-                android:id="@+id/mode"
+                android:id="@+id/txtUbicacion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"

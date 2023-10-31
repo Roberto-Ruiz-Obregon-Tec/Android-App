@@ -3,6 +3,20 @@ package com.example.kotlin.robertoruizapp.framework.adapters
 import androidx.appcompat.view.menu.ActionMenuItemView
 import androidx.recyclerview.widget.RecyclerView
 
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
+import com.bumptech.glide.Glide //Not in use
+import com.example.kotlin.robertoruizapp.R
+import com.example.kotlin.robertoruizapp.framework.view.activities.EventoClickListener
+import com.example.kotlin.robertoruizapp.data.network.model.Eventos.Document
+import com.example.kotlin.robertoruizapp.databinding.ItemProgramaBinding //IDK what is this
+import java.text.SimpleDateFormat // ??
+import java.util.*
+
 class eventosAdapter (val clickListener: EventosClickListener): RecyclerView.Adapter<eventosAdapter.ViewHolder>() {
 
     lateinit var data : List<Document>

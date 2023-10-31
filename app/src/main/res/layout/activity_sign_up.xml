@@ -227,12 +227,12 @@
             android:textSize="16sp"
             android:textColor="@color/black"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/editTextInterests"
+            app:layout_constraintBottom_toTopOf="@+id/spinnerInterests"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextPC" />
 
         <Spinner
-            android:id="@+id/editTextInterests"
+            android:id="@+id/spinnerInterests"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -254,7 +254,7 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/editTextCompany"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextInterests" />
+            app:layout_constraintTop_toBottomOf="@+id/spinnerInterests" />
 
         <EditText
             android:id="@+id/editTextCompany"
@@ -287,21 +287,30 @@
             android:textSize="16sp"
             android:textColor="@color/black"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/uploadProfilePic"
+            app:layout_constraintBottom_toTopOf="@+id/imageViewProfilePic"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/checkboxESR" />
 
-        <EditText
+        <ImageView
+            android:id="@+id/imageViewProfilePic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/textProfilePic"
+            app:layout_constraintBottom_toTopOf="@+id/uploadProfilePic"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <Button
             android:id="@+id/uploadProfilePic"
             android:layout_width="match_parent"
             android:layout_height="40sp"
             android:layout_marginTop="10dp"
-            android:background="@drawable/edit_text_bg"
+            android:text="Sube una foto"
+            android:textColor="@color/secondaryText"
             android:autofillHints="profile picture"
-            android:inputType="text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textProfilePic" />
+            app:layout_constraintTop_toBottomOf="@+id/imageViewProfilePic" />
 
         <TextView
             android:id="@+id/textPassword"

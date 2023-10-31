@@ -1,13 +1,19 @@
 package com.example.kotlin.robertoruizapp.framework.view.activities
 
 import android.content.Intent
+import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
+import android.util.Base64
+import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.kotlin.robertoruizapp.R
 import com.example.kotlin.robertoruizapp.data.network.model.signup.SignUp
 import com.example.kotlin.robertoruizapp.framework.viewmodel.SignUpActivityViewModel
+import java.io.ByteArrayOutputStream
 
 /**
  * SignUpActivity class that manages the activity actions
@@ -29,28 +35,25 @@ class SignUpActivity : AppCompatActivity() {
         val gender = findViewById<Spinner>(R.id.spinnerGender)
         gender.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, generos)
 
-        /*
-        val estudios = arrayOf(
-            "Ninguno",
-            "Primaria",
-            "Secundaria",
-            "Preparatoria",
-            "Universidad",
-            "Maestria",
-            "Doctorado"
-        )
-        val studies = findViewById<Spinner>(R.id.spinnerEducation)
-        studies.adapter =
-            ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, estudios)
-         */
+        val interests = arrayOf("Interés 1","Interés 2","Interés 3")
+        val interest = findViewById<Spinner>(R.id.spinnerInterests)
+        interest.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, interests)
 
         val name: EditText = findViewById(R.id.editTextName)
-        val edad: EditText = findViewById<EditText>(R.id.editTextAge)
-        //val job: EditText = findViewById<EditText>(R.id.editTextJob)
-        val postalCode: EditText = findViewById<EditText>(R.id.editTextPC)
         val email: EditText = findViewById<EditText>(R.id.editTextMail)
+        val edad: EditText = findViewById<EditText>(R.id.editTextAge)
+        val occupation: EditText = findViewById<EditText>(R.id.editTextOccupation)
+        val postalCode: EditText = findViewById<EditText>(R.id.editTextPC)
+        val company: EditText = findViewById<EditText>(R.id.editTextCompany)
+        val companyESR: CheckBox = findViewById<CheckBox>(R.id.checkboxESR)
         val password: EditText = findViewById<EditText>(R.id.editTextPassword)
         val cnfPassword: EditText = findViewById<EditText>(R.id.editTextConfirmPass)
+
+        val uploadPicBtn= findViewById<Button>(R.id.uploadProfilePic)
+        uploadPicBtn.setOnClickListener {
+            val iGallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            startActivityForResult(iGallery, 3)
+        }
 
         fun initViewModel() {
             viewModel = ViewModelProvider(this)[SignUpActivityViewModel::class.java]
@@ -75,21 +78,23 @@ class SignUpActivity : AppCompatActivity() {
         initViewModel()
 
         val btnRegister = findViewById<Button>(R.id.buttonRegister)
-        //val btnGoLogin = findViewById<Button>(R.id.buttonGoLogin)
         fun signUpUser() {
 
             val ageInt: Int = edad.text.toString().toIntOrNull() ?: 0
             val pcInt: Int = postalCode.text.toString().toIntOrNull() ?: 0
             val selectedGender = gender.selectedItem.toString()
-            //val selectedStudies = studies.selectedItem.toString()
+            val selectedInterests = interest.selectedItem.toString()
             val user = SignUp(
                 name.text.toString(),
+                email.text.toString(),
                 ageInt,
                 selectedGender,
-                "job.text.toString()",
-                "selectedStudies",
+                occupation.text.toString(),
                 pcInt,
-                email.text.toString(),
+                selectedInterests,
+                company.text.toString(),
+                companyESR.isChecked,
+                profilePicture,
                 password.text.toString(),
                 cnfPassword.text.toString(),
             )
@@ -125,15 +130,26 @@ class SignUpActivity : AppCompatActivity() {
         }
 
 
-    /*
-        btnGoLogin.setOnClickListener {
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-
-        }
-     */
-
     }
+
+    private lateinit var profilePicture: String
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(resultCode == RESULT_OK && data != null){
+            val selectedImage: Uri = data.getData()!!
+            val img: ImageView = findViewById(R.id.imageViewProfilePic)
+            val bitmap: Bitmap = MediaStore.Images.Media.getBitmap(contentResolver, selectedImage)
+            img.setImageBitmap(bitmap)
+            val byteArrayOutputStream = ByteArrayOutputStream()
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
+            val bytes: ByteArray = byteArrayOutputStream.toByteArray()
+            val base64Image: String = Base64.encodeToString(bytes, Base64.DEFAULT)
+            profilePicture = base64Image
+        } else {
+            Toast.makeText(applicationContext, "Seleccione una imagen!", Toast.LENGTH_SHORT).show()
+        }
+    }
+
     private fun validateInput(
         name: String,
         age: String,

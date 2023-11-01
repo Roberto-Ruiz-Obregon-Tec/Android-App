@@ -102,6 +102,7 @@
             android:layout_height="40sp"
             android:autofillHints="last name"
             android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
             android:background="@drawable/edit_text_bg"
             android:inputType="textPersonName"
             app:layout_constraintBottom_toBottomOf="@id/editTextName"

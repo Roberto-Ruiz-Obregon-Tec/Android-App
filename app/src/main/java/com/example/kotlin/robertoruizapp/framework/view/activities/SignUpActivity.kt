@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.kotlin.robertoruizapp.R
 import com.example.kotlin.robertoruizapp.data.network.model.signup.SignUp
 import com.example.kotlin.robertoruizapp.framework.viewmodel.SignUpActivityViewModel
+import timber.log.Timber
 import java.io.ByteArrayOutputStream
 
 /**
@@ -22,6 +23,7 @@ import java.io.ByteArrayOutputStream
  */
 class SignUpActivity : AppCompatActivity() {
     private lateinit var viewModel: SignUpActivityViewModel
+    private var profilePicture: String = ""
 
     /**
      * Sets the information for the current activity when creating the view
@@ -32,15 +34,16 @@ class SignUpActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
 
-        val generos = arrayOf("Hombre", "Mujer", "Prefiero no decir")
+        val generos = arrayOf("Hombre", "Mujer", "Otro")
         val gender = findViewById<Spinner>(R.id.spinnerGender)
         gender.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, generos)
 
-        val interests = arrayOf("Interés 1","Interés 2","Interés 3")
+        val interests = arrayOf("Selecciona uno o más intereses","Interés 1","Interés 2","Interés 3")
         val interest = findViewById<Spinner>(R.id.spinnerInterests)
         interest.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, interests)
 
         val name: EditText = findViewById(R.id.editTextName)
+        val lastName: EditText = findViewById(R.id.editTextLastName)
         val email: EditText = findViewById<EditText>(R.id.editTextMail)
         val edad: EditText = findViewById<EditText>(R.id.editTextAge)
         val occupation: EditText = findViewById<EditText>(R.id.editTextOccupation)
@@ -78,6 +81,7 @@ class SignUpActivity : AppCompatActivity() {
 
         initViewModel()
 
+
         val btnRegister = findViewById<Button>(R.id.buttonRegister)
         fun signUpUser() {
 
@@ -87,6 +91,7 @@ class SignUpActivity : AppCompatActivity() {
             val selectedInterests = interest.selectedItem.toString()
             val user = SignUp(
                 name.text.toString(),
+                lastName.text.toString(),
                 email.text.toString(),
                 ageInt,
                 selectedGender,
@@ -96,8 +101,7 @@ class SignUpActivity : AppCompatActivity() {
                 company.text.toString(),
                 companyESR.isChecked,
                 profilePicture,
-                password.text.toString(),
-                cnfPassword.text.toString(),
+                password.text.toString()
             )
             try {
                 viewModel.signUpNewUser(user)
@@ -115,6 +119,7 @@ class SignUpActivity : AppCompatActivity() {
         btnRegister.setOnClickListener {
             if (validateInput(
                     name.text.toString(),
+                    lastName.text.toString(),
                     email.text.toString(),
                     edad.text.toString(),
                     gender.selectedItem.toString(),
@@ -131,14 +136,14 @@ class SignUpActivity : AppCompatActivity() {
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
             } else {
-                Log.d("AVA","Error Validating Inputs")
+                Timber.tag("INPUT_VALIDATOR").d("Error Validating Inputs")
             }
         }
 
 
     }
 
-    private lateinit var profilePicture: String
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(resultCode == RESULT_OK && data != null){
@@ -158,6 +163,7 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun validateInput(
         name: String,
+        lastName: String,
         email: String,
         age: String,
         selectedGender: String,
@@ -170,7 +176,7 @@ class SignUpActivity : AppCompatActivity() {
         password: String,
         cnfPassword: String
     ):Boolean {
-        if (name.isEmpty()) {
+        if (name.isEmpty() || lastName.isEmpty()) {
             Toast.makeText(this, "El nombre no puede estar vacío.", Toast.LENGTH_SHORT).show()
             return false
         }

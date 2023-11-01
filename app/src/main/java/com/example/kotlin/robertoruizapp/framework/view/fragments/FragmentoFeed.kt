@@ -3,6 +3,7 @@ package com.example.kotlin.robertoruizapp.framework.view.fragments
 import android.os.Build
 import com.example.kotlin.robertoruizapp.databinding.FragmentoFeedBinding
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -46,6 +47,7 @@ class FragmentoFeed : Fragment() {
         class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             val nombreEmpresa: TextView = view.findViewById(R.id.empresa_list)
             val descripcionEmpresa: TextView = view.findViewById(R.id.empresa_description)
+            val certificacionEmpresa: TextView = view.findViewById(R.id.empresa_certificacion)
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -57,7 +59,10 @@ class FragmentoFeed : Fragment() {
             val empresa = empresas[position]
             holder.nombreEmpresa.text = empresa?.name
             holder.descripcionEmpresa.text = empresa?.description
+            holder.certificacionEmpresa.text = empresa?.phone
+
         }
+
 
         override fun getItemCount() = empresas.size
     }

@@ -5,6 +5,6 @@ class Document (
     val postalCode: String,
     val name: String,
     val description: String,
-    val phone: String
-    //val certification: List<String>
+    val phone: String,
+    val certification: List<Any>
 )

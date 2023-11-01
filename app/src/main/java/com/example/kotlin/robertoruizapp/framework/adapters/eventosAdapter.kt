@@ -9,19 +9,24 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import com.bumptech.glide.Glide //Not in use
+import com.bumptech.glide.Glide
 import com.example.kotlin.robertoruizapp.R
 import com.example.kotlin.robertoruizapp.framework.view.activities.EventoClickListener
 import com.example.kotlin.robertoruizapp.data.network.model.Eventos.Document
-import com.example.kotlin.robertoruizapp.databinding.ItemProgramaBinding //IDK what is this
-import java.text.SimpleDateFormat // ??
+import com.example.kotlin.robertoruizapp.databinding.ListElementEventosBinding
+import java.text.SimpleDateFormat
 import java.util.*
 
-class eventosAdapter (val clickListener: EventosClickListener): RecyclerView.Adapter<eventosAdapter.ViewHolder>() {
+class eventosAdapter (val clickListener: EventoClickListener): RecyclerView.Adapter<eventosAdapter.ViewHolder>() {
 
     lateinit var data : List<Document>
     var results : Int = 0
 
+    /**
+     * function to assign the data provided as param to the current events
+     *
+     * @param data list of events
+     */
     fun eventosAdapter (data: List<Document>) {
             this.data = data
 
@@ -33,6 +38,12 @@ class eventosAdapter (val clickListener: EventosClickListener): RecyclerView.Ada
         }
     }
 
+    /**
+     * Overrides the fun onCreateViewHolder to set up the LayoutInflater for the ViewHolder
+     * @param viewGroup a ViewGroup object
+     * @param i an Integer
+     * @return ViewHolder type object
+     */
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int):ViewHolder {
         val v = LayoutInflater.from(viewGroup.context).inflate(R.layout.list_element_eventos, viewGroup, false)
         return ViewHolder(v, clickListener)
@@ -47,7 +58,28 @@ class eventosAdapter (val clickListener: EventosClickListener): RecyclerView.Ada
     override fun onBindViewHolder(viewHolder: ViewHolder, i: Int) { //Missing stuff
         var temp: Document = data[i]
 
-        viewHolder.bind(temp, clickListener)
+
+        val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+        val outputFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+
+        if(temp.fecha_Inicio != null){
+            val date: Date = inputFormat.parse(temp.fecha_Inicio)
+            val formattedDate = outputFormat.format(date)
+            viewHolder.eventDate.text = formattedDate
+        } else {
+            viewHolder.eventDate.text = "Sin fecha"
+        }
+        viewHolder.eventName.text = temp.nombre
+        viewHolder.description.text = temp.descripcion
+        viewHolder.eventLocation.text = temp.ubicacion
+
+        Glide.with(viewHolder.itemView.context)
+            .load(temp.fotoUrl)
+            .into(viewHolder.eventImage)
+
+        viewHolder.eventButton.setOnClickListener(){
+            clickListener.onClick(temp)
+        }
     }
 
     override fun getItemCount(): Int {
@@ -55,7 +87,7 @@ class eventosAdapter (val clickListener: EventosClickListener): RecyclerView.Ada
         return eventos
     }
 
-    inner class ViewHolder(itemView: View, private val clickListener: EventClickListener): RecyclerView.ViewHolder(itemView){
+    inner class ViewHolder(itemView: View, private val clickListener: EventoClickListener): RecyclerView.ViewHolder(itemView){
         val eventName: TextView
         val description: TextView
         val eventDate: TextView
@@ -73,5 +105,14 @@ class eventosAdapter (val clickListener: EventosClickListener): RecyclerView.Ada
         }
     }
 
+    //Auxiliary method
+    private fun Button.setOnClickListener(_id: String) {
+
+    }
+
+    //Auxiliary method
+    private fun ImageView.setImageDrawable(imageUrl: String) {
+
+    }
 
 }

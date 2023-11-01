@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Base64
+import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -129,6 +130,8 @@ class SignUpActivity : AppCompatActivity() {
                 signUpUser()
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
+            } else {
+                Log.d("AVA","Error Validating Inputs")
             }
         }
 

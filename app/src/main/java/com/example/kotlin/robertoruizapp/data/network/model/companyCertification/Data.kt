@@ -3,5 +3,5 @@ package com.example.kotlin.robertoruizapp.data.network.model.companyCertificatio
 import com.example.kotlin.robertoruizapp.data.network.model.companyCertification.Document
 
 data class Data(
-    val documents: List<Document>,
+    val companies: List<Document>,
 )

@@ -1,7 +1,9 @@
 package com.example.kotlin.robertoruizapp.data
 
+import android.util.Log
 import com.example.kotlin.robertoruizapp.data.network.model.NetworkModuleDIcompanyC
 import com.example.kotlin.robertoruizapp.data.network.model.companyCertification.CertificacionEmpresaObj
+import com.example.kotlin.robertoruizapp.data.network.model.companyCertificationApiClient
 import com.example.kotlin.robertoruizapp.data.network.model.companyCertificationApiService
 
 class companyCertificationRepository() {
@@ -9,13 +11,11 @@ class companyCertificationRepository() {
 
     suspend fun  getCompanyCertification():CertificacionEmpresaObj?{
         api = NetworkModuleDIcompanyC()
-        return try{
-            api.getCompanyCertification()
+        return api.getCompanyCertification()
 
-        }catch (e:java.lang.Exception){
-            e.printStackTrace()
-            null
-        }
+
     }
+
+
 
 }

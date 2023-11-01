@@ -3,11 +3,9 @@ package com.example.kotlin.robertoruizapp.framework.view.fragments
 import android.os.Build
 import com.example.kotlin.robertoruizapp.databinding.FragmentoFeedBinding
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
@@ -51,7 +49,7 @@ class FragmentoFeed : Fragment() {
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-            val view = LayoutInflater.from(parent.context).inflate(R.layout.item_empresas, parent, false)
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.item_empresas_certificacion, parent, false)
             return ViewHolder(view)
         }
 

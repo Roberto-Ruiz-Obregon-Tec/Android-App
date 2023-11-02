@@ -68,9 +68,10 @@ class FragmentoFeed : Fragment() {
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             val empresa = empresas[position]
+            //Log.d("EmpresaAdapter", "Certificaciones: ${empresa?.certifications}")
             holder.nombreEmpresa.text = empresa?.name
             holder.descripcionEmpresa.text = empresa?.description
-            holder.certificacionEmpresa.text = empresa?.phone
+            holder.certificacionEmpresa.text = empresa?.certifications?.joinToString(separator = ", ")
 
         }
 

@@ -41,6 +41,11 @@ class FragmentoFeed : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         getCompanyCertification()
+       
+        binding.button3.setOnClickListener() {
+
+            getCompanyCertification()
+        }
         
         binding.button1.setOnClickListener {
             getEvents()

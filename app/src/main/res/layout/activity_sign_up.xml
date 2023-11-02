@@ -14,6 +14,16 @@
         android:paddingVertical="20dp"
         app:layout_constraintVertical_chainStyle="packed">
 
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="87dp"
+            android:layout_height="88dp"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:src="@drawable/logo"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="-26dp" />
 
         <TextView
             android:id="@+id/textViewRegister"

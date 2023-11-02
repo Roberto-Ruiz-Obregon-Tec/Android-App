@@ -49,5 +49,10 @@
     <string name="volver_al_inicio_de_sesi_n">Volver al inicio de sesión</string>
     <string name="Lorem">Lorem ipsum dolor sit amet. Est quia consequatur ut culpa natus sed consequuntur veritatis et quia dolorem ea eaque tempore. In consequatur neque 33 saepe consequuntur ut nulla vitae ea magni nostrum ex incidunt aperiam non culpa exercitationem et quos commodi.</string>
     <string name="whatsapp_icon">WhatsApp Icon</string>
+    <string name="inicio">Inicio</string>
+    <string name="cursos">Cursos</string>
+    <string name="programas">Programas</string>
+    <string name="becas">Becas</string>
+    <string name="certificaciones">Certificaciones</string>
 
 </resources>

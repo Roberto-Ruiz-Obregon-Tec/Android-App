@@ -21,9 +21,10 @@ class EventsAdapter(private val events: List<Document?>) :
         
         
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val nombreEvento: TextView = view.findViewById(R.id.event_name)
-        val descripcionEvento: TextView = view.findViewById(R.id.event_description)
-        val fechaEvento: TextView = view.findViewById(R.id.event_date)
+        val eventName: TextView = view.findViewById(R.id.name)
+        val eventDescription: TextView = view.findViewById(R.id.description)
+        val eventDate: TextView = view.findViewById(R.id.date)
+        val eventLocation: TextView = view.findViewById(R.id.location)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -33,9 +34,10 @@ class EventsAdapter(private val events: List<Document?>) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val event = events[position]
-        holder.nombreEvento.text = event?.eventName
-        holder.descripcionEvento.text = event?.description
-        holder.fechaEvento.text = event?.startDate
+        holder.eventName.text = event?.eventName
+        holder.eventDescription.text = event?.description
+        holder.eventDate.text = event?.startDate
+        holder.eventLocation.text = event?.location
     }
 
     override fun getItemCount() = events.size

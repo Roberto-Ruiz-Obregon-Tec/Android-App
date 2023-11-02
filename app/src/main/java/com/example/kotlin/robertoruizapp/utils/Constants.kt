@@ -1,6 +1,6 @@
 package com.example.kotlin.robertoruizapp.utils
 
-object Constants {
+object  Constants {
     const val BASE_URL_PROYECTO = "http://10.25.85.197:3001/v1/"
     const val SPLASHCREEN_DURATION = 1000L
     const val CURSO_ID_EXTRA = "cursoExtra"

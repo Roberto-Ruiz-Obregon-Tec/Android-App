@@ -50,7 +50,26 @@ interface ApiService {
     suspend fun getCursosNoFilter(
         @Header("Authorization") jwt: String
     ) : CursosObjeto
+    
+    @GET("event")
+    suspend fun getEventsNoFilter(
+    ): EventObject
 
+    @GET("event/{id}")
+    suspend fun getEvent(
+        @Path("id") id: String
+    ): EventObject
+    
+    @GET("event")
+    suspend fun getEvents(
+        @Query("eventName[regex]") eventName: String,
+        @Query("location[regex]") location: String,
+        @Query("description[regex]") description: String,
+        @Query("startDate[regex]") startDate: String,
+        @Query("endDate[regex]") endDate: String,
+        @Query("eventImage[regex]") topic: String
+    ): EventObject
+    
     @GET("topics")
     suspend fun getTopics(
         @Header("Authorization") jwt: String

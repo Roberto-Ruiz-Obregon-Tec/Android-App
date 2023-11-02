@@ -46,7 +46,7 @@ class FragmentoCertificaciones : Fragment() {
         RecyclerView.Adapter<CertificacionesAdapter.ViewHolder>() {
 
         class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-            val nombreCertificacion: TextView = view.findViewById(R.id.certificaciones_list)
+            val nombreCertificacion: TextView = view.findViewById(R.id.certificacion_list)
             val descripcionCertificacion: TextView = view.findViewById(R.id.descripcionCertificacion)
         }
 

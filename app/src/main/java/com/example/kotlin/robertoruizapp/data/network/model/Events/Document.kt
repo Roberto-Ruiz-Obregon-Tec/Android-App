@@ -4,7 +4,7 @@ data class Document (
 
     val location: String,
     val _id: String,
-    val name: String,
+    val eventName: String,
     val description: String,
     val startDate: String,
     val endDate: String,

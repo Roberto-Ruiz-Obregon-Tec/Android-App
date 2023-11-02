@@ -33,7 +33,7 @@ class EventsAdapter(private val events: List<Document?>) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val event = events[position]
-        holder.nombreEvento.text = event?.name
+        holder.nombreEvento.text = event?.eventName
         holder.descripcionEvento.text = event?.description
         holder.fechaEvento.text = event?.startDate
     }

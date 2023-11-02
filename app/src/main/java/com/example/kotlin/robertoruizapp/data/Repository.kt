@@ -2,6 +2,7 @@ package com.example.kotlin.robertoruizapp.data
 
 import com.example.kotlin.robertoruizapp.data.network.model.*
 import com.example.kotlin.robertoruizapp.data.network.model.Cursos.CursosObjeto
+import com.example.kotlin.robertoruizapp.data.network.model.Events.EventObject
 import com.example.kotlin.robertoruizapp.data.network.model.Profile.EditProfileRequest
 import com.example.kotlin.robertoruizapp.data.network.model.Profile.EditProfileResponse
 import com.example.kotlin.robertoruizapp.data.network.model.Topic.TopicsObject
@@ -60,6 +61,45 @@ class Repository() {
         }
     }
 
+    /**
+     * Gets the [CursosObjeto] calling the [NetworkModuleDI]
+     *
+     * @return the call to the [NetworkModuleDI] method [getEventsNoFilter]
+     */
+    
+    suspend fun getEventsNoFilter() : EventObject? {
+        api = NetworkModuleDI()
+        return try {
+            api.getEventsNoFilter()
+        }
+        catch (e:java.lang.Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+    
+    /**
+     * Gets the [EventObject] calling the [NetworkModuleDI]
+     *
+     * @param eventName the name of the event
+     * @param location location of the event
+     * @param description description of the event
+     * @param startDate start date of the event
+     * @param endDate end date of the event
+     * @param topic the about of the event
+     *
+     * @return [EventObject] object
+     */
+    suspend fun getEvents(eventName: String, location: String, description: String, startDate: String, endDate: String, topic: String): EventObject? {
+        api = NetworkModuleDI()
+        return try {
+            api.getEvents(eventName, location, description, startDate, endDate, topic)
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+    
     /**
      * Gets the [TopicsObject] from [NetworkModuleDI]
      *

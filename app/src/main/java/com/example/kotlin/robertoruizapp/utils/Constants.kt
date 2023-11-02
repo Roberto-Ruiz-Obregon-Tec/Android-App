@@ -12,6 +12,10 @@ object Constants {
     const val MENU_FEED = "FEED"
     const val MENU_FRRO = "FRRO"
     const val MENU_PERFIL = "PERFIL"
+    const val MENU_BECAS = "BECAS"
+    const val MENU_CURSOS = "CURSOS"
+    const val MENU_CERTIFICACIONES = "CERTIFICACIONES"
+    const val MENU_PROGRAMAS = "PROGRAMAS"
     //No se para que se usan las siguientes constantes pero las dejo por si a caso
     // project url
     // const val base_url = "https://roberto-ruiz-obregon.firebaseapp.com/v1/"

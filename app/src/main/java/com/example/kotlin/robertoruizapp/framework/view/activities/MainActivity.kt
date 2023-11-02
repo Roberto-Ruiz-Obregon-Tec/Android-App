@@ -8,6 +8,7 @@ import com.example.kotlin.mypokedexapp.viewmodel.MainViewModel
 import com.example.kotlin.robertoruizapp.R
 import com.example.kotlin.robertoruizapp.databinding.ActivityMainBinding
 import com.example.kotlin.robertoruizapp.framework.view.fragments.FragmentoCursos
+import com.example.kotlin.robertoruizapp.framework.view.fragments.FragmentoFeed
 import com.example.kotlin.robertoruizapp.framework.view.fragments.FragmentoHome
 import com.example.kotlin.robertoruizapp.framework.view.fragments.FragmentoPerfil
 import com.example.kotlin.robertoruizapp.framework.view.fragments.ProgramFragment
@@ -91,10 +92,10 @@ class MainActivity : AppCompatActivity() {
                 FragmentoHome(), //Crear fragmento inicio, se usa home temporalmente
                 Constants.MENU_INICIO
             )
-            //Constants.MENU_FEED -> exchangeCurrentFragment(
-            //    FragmentoFeed(), //Crear fragmento feed
-            //    Constants.MENU_FEED
-            //)
+            Constants.MENU_FEED -> exchangeCurrentFragment(
+                FragmentoFeed(), //Crear fragmento feed
+                Constants.MENU_FEED
+            )
             //Constants.MENU_FRRO -> exchangeCurrentFragment(
             //    FragmentoFRRO(), //Crear fragmento frro
             //    Constants.MENU_FRRO

@@ -1,5 +1,6 @@
 package com.example.kotlin.robertoruizapp.data.network.model
 
+import com.example.kotlin.robertoruizapp.data.network.model.certificaciones.CertificacionesObjeto
 import com.example.kotlin.robertoruizapp.data.network.model.Cursos.CursosObjeto
 import com.example.kotlin.robertoruizapp.data.network.model.Events.EventObject
 import com.example.kotlin.robertoruizapp.data.network.model.Inscripcion.Inscription
@@ -7,7 +8,6 @@ import com.example.kotlin.robertoruizapp.data.network.model.Inscripcion.Pago
 import com.example.kotlin.robertoruizapp.data.network.model.Topic.TopicsObject
 import com.example.kotlin.robertoruizapp.data.network.model.Login.LoginRequest
 import com.example.kotlin.robertoruizapp.data.network.model.Login.LoginResponse
-import com.example.kotlin.robertoruizapp.data.network.model.Login.User
 import com.example.kotlin.robertoruizapp.data.network.model.Profile.Profile
 import com.example.kotlin.robertoruizapp.data.network.model.Profile.EditProfileRequest
 import com.example.kotlin.robertoruizapp.data.network.model.Profile.EditProfileResponse
@@ -26,7 +26,6 @@ import retrofit2.http.Query
 import retrofit2.http.PATCH
 import retrofit2.http.Multipart
 import retrofit2.http.Part
-import retrofit2.http.*
 
 
 interface ApiService {
@@ -127,5 +126,13 @@ interface ApiService {
     suspend fun getCursosRecomendados(
         @Query("postalCode[regex]") postalCode: String,
     ): CursosObjeto
+
+    @GET("certification")
+    suspend fun getCertificaciones(
+        @Header("Authorization") jwt: String
+    ): CertificacionesObjeto
+
+
+
 }
 

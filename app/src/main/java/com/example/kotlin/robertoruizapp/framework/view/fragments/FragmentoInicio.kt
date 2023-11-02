@@ -90,6 +90,11 @@ class FragmentoInicio: Fragment() {
                 FragmentoBecas(),
                 Constants.MENU_BECAS
             )
+
+            Constants.MENU_CERTIFICACIONES -> exchangeCurrentFragment(
+                FragmentoCertificaciones(),
+                Constants.MENU_CERTIFICACIONES
+            )
             //Constants.MENU_CURSOS -> exchangeCurrentFragment(
             //    FragmentoCursos(), //Crear fragmento cursos
             //    Constants.MENU_CURSOS

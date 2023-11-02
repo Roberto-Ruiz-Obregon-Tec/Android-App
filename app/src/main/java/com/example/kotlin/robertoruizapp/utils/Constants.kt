@@ -1,6 +1,8 @@
 package com.example.kotlin.robertoruizapp.utils
 
 object Constants {
+    const val BASE_URL_PROYECTO = "http://10.25.110.110:3001/v1/"
+
     // project url
     // const val BASE_URL_PROYECTO = "https://roberto-ruiz-obregon.firebaseapp.com/v1/"
     // local url
@@ -16,6 +18,7 @@ object Constants {
     const val MENU_CURSOS = "CURSOS"
     const val MENU_CERTIFICACIONES = "CERTIFICACIONES"
     const val MENU_PROGRAMAS = "PROGRAMAS"
+    const val BASE_URL = "http://10.25.110.110:3001/v1/"
     //No se para que se usan las siguientes constantes pero las dejo por si a caso
     // project url
     // const val base_url = "https://roberto-ruiz-obregon.firebaseapp.com/v1/"

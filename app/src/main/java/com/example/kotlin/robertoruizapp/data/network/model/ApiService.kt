@@ -1,6 +1,7 @@
 package com.example.kotlin.robertoruizapp.data.network.model
 
 import com.example.kotlin.robertoruizapp.data.network.model.Cursos.CursosObjeto
+import com.example.kotlin.robertoruizapp.data.network.model.Events.EventObject
 import com.example.kotlin.robertoruizapp.data.network.model.Inscripcion.Inscription
 import com.example.kotlin.robertoruizapp.data.network.model.Inscripcion.Pago
 import com.example.kotlin.robertoruizapp.data.network.model.Topic.TopicsObject

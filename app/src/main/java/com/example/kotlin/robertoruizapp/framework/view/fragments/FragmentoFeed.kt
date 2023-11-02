@@ -1,5 +1,6 @@
 package com.example.kotlin.robertoruizapp.framework.view.fragments
 
+import android.content.Intent
 import android.os.Build
 import com.example.kotlin.robertoruizapp.databinding.FragmentoFeedBinding
 import android.os.Bundle
@@ -13,9 +14,12 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlin.robertoruizapp.R
+import com.example.kotlin.robertoruizapp.data.Repository
 import com.example.kotlin.robertoruizapp.data.companyCertificationRepository
+import com.example.kotlin.robertoruizapp.data.network.model.Events.EventObject
 import com.example.kotlin.robertoruizapp.data.network.model.companyCertification.Document
 import com.example.kotlin.robertoruizapp.data.network.model.companyCertification.CertificacionEmpresaObj
+import com.example.kotlin.robertoruizapp.framework.adapters.EventsAdapter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -39,6 +43,10 @@ class FragmentoFeed : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         getCompanyCertification()
+        
+        binding.button1.setOnClickListener {
+            getEvents()
+        }
     }
 
     class EmpresaAdapter(private val empresas: List<Document?>) :
@@ -66,6 +74,8 @@ class FragmentoFeed : Fragment() {
 
         override fun getItemCount() = empresas.size
     }
+    
+    
 
     @RequiresApi(Build.VERSION_CODES.N)
     private fun getCompanyCertification() {
@@ -76,6 +86,23 @@ class FragmentoFeed : Fragment() {
             if (result != null) {
                 withContext(Dispatchers.Main) {
                     val adapter = EmpresaAdapter(result.data.companies)
+                    binding.empresaList.adapter = adapter
+                    binding.empresaList.layoutManager = LinearLayoutManager(context)
+                }
+            }
+        }
+    }
+    
+    // Get events
+    @RequiresApi(Build.VERSION_CODES.N)
+    private fun getEvents() {
+        CoroutineScope(Dispatchers.IO).launch {
+            val eventsRepository = Repository()
+            val result: EventObject? = eventsRepository.getEventsNoFilter()
+
+            if (result != null) {
+                withContext(Dispatchers.Main) {
+                    val adapter = EventsAdapter(result.data.documents)
                     binding.empresaList.adapter = adapter
                     binding.empresaList.layoutManager = LinearLayoutManager(context)
                 }

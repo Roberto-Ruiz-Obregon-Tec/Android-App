@@ -1,6 +1,7 @@
 package com.example.kotlin.robertoruizapp.framework.view.fragments
 
 
+import android.content.Intent
 import com.example.kotlin.robertoruizapp.data.network.model.Course.Document
 import android.os.Build
 import android.os.Bundle
@@ -8,38 +9,23 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.example.kotlin.mypokedexapp.viewmodel.MainViewModel
 import com.example.kotlin.robertoruizapp.R
+import com.example.kotlin.robertoruizapp.data.CertificacionesRepository
 import com.example.kotlin.robertoruizapp.data.CourseRepository
-import com.example.kotlin.robertoruizapp.data.network.model.ApiService
 import com.example.kotlin.robertoruizapp.data.network.model.Course.CourseObject
-import com.example.kotlin.robertoruizapp.data.network.model.NetworkModuleDI
+import com.example.kotlin.robertoruizapp.data.network.model.certificaciones.CertificacionesObjeto
 import com.example.kotlin.robertoruizapp.databinding.FragmentoHomeBinding
-import com.example.kotlin.robertoruizapp.framework.view.activities.LoginActivity
-import com.example.kotlin.robertoruizapp.utils.PreferenceHelper
-import com.example.kotlin.robertoruizapp.utils.PreferenceHelper.get
-import com.example.kotlin.robertoruizapp.utils.PreferenceHelper.set
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.w3c.dom.Text
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.Locale
-import com.example.kotlin.robertoruizapp.framework.view.fragments.FragmentoPerfil as perfil
 
 class FragmentoHome : Fragment() {
 
@@ -60,6 +46,18 @@ class FragmentoHome : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         getCourse()
+
+        binding.button1.setOnClickListener {
+            getCourse()
+        }
+
+        binding.button3.setOnClickListener {
+            getCertificaciones()
+        }
+
+
+
+
     }
 
     class CursoAdapter(private val cursos: List<Document?>) :
@@ -80,6 +78,8 @@ class FragmentoHome : Fragment() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
             val view = LayoutInflater.from(parent.context).inflate(R.layout.item_cursos, parent, false)
             return ViewHolder(view)
+
+
         }
 
         //Esto es lo que tengo en mi lista de documentos
@@ -129,6 +129,23 @@ class FragmentoHome : Fragment() {
             }
         }
     }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    private fun getCertificaciones() {
+        CoroutineScope(Dispatchers.IO).launch {
+            val certificacionesRepository = CertificacionesRepository()
+            val result: CertificacionesObjeto? = certificacionesRepository.getCertificaciones()
+
+            if (result != null) {
+                withContext(Dispatchers.Main) {
+                    val adapter = FragmentoCertificaciones.CertificacionesAdapter(result.data.documents)
+                    binding.cursosList.adapter = adapter
+                    binding.cursosList.layoutManager = LinearLayoutManager(context)
+                }
+            }
+        }
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

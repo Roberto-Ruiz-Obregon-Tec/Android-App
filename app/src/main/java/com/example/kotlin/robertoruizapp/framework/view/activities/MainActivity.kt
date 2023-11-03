@@ -88,7 +88,7 @@ class MainActivity : AppCompatActivity() {
         }
         when (menuOption) {
             Constants.MENU_INICIO -> exchangeCurrentFragment(
-                FragmentoInicio(), //Crear fragmento inicio, se usa home temporalmente
+                FragmentoHome(), //Crear fragmento inicio, se usa home temporalmente
                 Constants.MENU_INICIO
             )
             Constants.MENU_FEED -> exchangeCurrentFragment(

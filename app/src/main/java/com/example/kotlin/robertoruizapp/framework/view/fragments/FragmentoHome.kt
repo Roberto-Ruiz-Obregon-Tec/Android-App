@@ -1,196 +1,137 @@
 package com.example.kotlin.robertoruizapp.framework.view.fragments
 
-import android.content.Intent
-import android.net.Uri
+
+import com.example.kotlin.robertoruizapp.data.network.model.Course.Document
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.PopupMenu
+import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.kotlin.mypokedexapp.viewmodel.MainViewModel
 import com.example.kotlin.robertoruizapp.R
+import com.example.kotlin.robertoruizapp.data.CourseRepository
 import com.example.kotlin.robertoruizapp.data.network.model.ApiService
+import com.example.kotlin.robertoruizapp.data.network.model.Course.CourseObject
 import com.example.kotlin.robertoruizapp.data.network.model.NetworkModuleDI
 import com.example.kotlin.robertoruizapp.databinding.FragmentoHomeBinding
 import com.example.kotlin.robertoruizapp.framework.view.activities.LoginActivity
 import com.example.kotlin.robertoruizapp.utils.PreferenceHelper
 import com.example.kotlin.robertoruizapp.utils.PreferenceHelper.get
 import com.example.kotlin.robertoruizapp.utils.PreferenceHelper.set
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import org.w3c.dom.Text
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.SimpleDateFormat
+import java.util.Locale
 import com.example.kotlin.robertoruizapp.framework.view.fragments.FragmentoPerfil as perfil
-/**
- * FragmentHome class that manages the fragment actions
- */
+
 class FragmentoHome : Fragment() {
 
     private var _binding: FragmentoHomeBinding? = null
-    private val binding get() = _binding!!
-    private lateinit var viewModel: MainViewModel
-    private val preferences by lazy {
-        PreferenceHelper.defaultPrefs(this@FragmentoHome.requireActivity())
-    }
 
-    /**
-     * When the fragment is created sets up binding, viewmodel and progress bar
-     *
-     * @param inflater How the layout wil be created
-     * @param container what viewmgroup the fragment belongs to
-     * @param savedInstanceState the state of the activity / fragment
-     *
-     * @return [View] object containing the information about the fragment
-     */
+    private val binding get() = _binding!!
+
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         _binding = FragmentoHomeBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        return binding.root
+    }
 
-        initializeListeners()
+    @RequiresApi(Build.VERSION_CODES.N)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        getCourse()
+    }
 
-        val imageView = binding.fondoImagen
+    class CursoAdapter(private val cursos: List<Document?>) :
+        RecyclerView.Adapter<CursoAdapter.ViewHolder>() {
 
-        val configuration = binding.config
-        configuration.setOnClickListener {
-            val popupMenu = PopupMenu(context, configuration)
-            popupMenu.menuInflater.inflate(R.menu.configuration_button, popupMenu.menu)
-            popupMenu.setOnMenuItemClickListener { item ->
-                when (item.itemId) {
-                    R.id.menu_item1 -> {
-                        performLogout()
-                        true
-                    }
-                    else -> false
+        //Acá lo llamo para que aparezca en item_cursos.xml
+        class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+            val nombreCurso: TextView = view.findViewById(R.id.cursos_list)
+            val descripcionCurso: TextView = view.findViewById(R.id.curso_description)
+            val fechaCurso: TextView = view.findViewById(R.id.curso_fecha)
+            //Poner esto cuando se tengan las url's bien de las imagenes
+            //val imagenCurso: ImageView = view.findViewById(R.id.curso_imagen)
+            val costoCurso: TextView = view.findViewById(R.id.curso_costo)
+            val modalidadCurso: TextView = view.findViewById(R.id.curso_modalidad)
+
+        }
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.item_cursos, parent, false)
+            return ViewHolder(view)
+        }
+
+        //Esto es lo que tengo en mi lista de documentos
+        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+            val curso = cursos[position]
+            Log.d("Cursos", "Cursos: ${curso?.name}")
+            holder.nombreCurso.text = curso?.name
+            holder.descripcionCurso.text = curso?.description
+
+            // Convertir y mostrar la fecha
+            val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US)
+            val outputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.US)
+            val date = inputFormat.parse(curso?.startDate ?: "")
+            holder.fechaCurso.text = outputFormat.format(date)
+
+            //Poner esto cuando se tengan las url's bien de las imagenes
+            //Glide.with(holder.imagenCurso.context).load(curso?.courseImage).into(holder.imagenCurso)
+
+            // Mostrar el costo
+            if (curso?.cost == 0) {
+                holder.costoCurso.text = "Gratuito"
+            } else {
+                holder.costoCurso.text = "$${curso?.cost}"
+            }
+
+            holder.modalidadCurso.text = curso?.modality
+        }
+
+
+
+        override fun getItemCount() = cursos.size
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    private fun getCourse() {
+        CoroutineScope(Dispatchers.IO).launch {
+            val CourseRepository = CourseRepository()
+            val result: CourseObject? = CourseRepository.getCourse()
+
+            if (result != null) {
+                withContext(Dispatchers.Main) {
+                    val adapter = CursoAdapter(result.data)
+                    binding.cursosList.adapter = adapter
+                    binding.cursosList.layoutManager = LinearLayoutManager(context)
                 }
+
             }
-            popupMenu.show()
-        }
-
-
-        imageView.setOnClickListener {
-            goToNewFragment()
-        }
-        return root
-    }
-
-    /**
-     * Initializes the listeners for the buttons in the home view
-     *
-     */
-    private fun initializeListeners() {
-        binding.twitterIcon.setOnClickListener {
-            val openURL = Intent(Intent.ACTION_VIEW)
-            openURL.data = Uri.parse("https://twitter.com/Fundacion_RRO")
-            startActivity(openURL)
-        }
-
-        binding.instaIcon.setOnClickListener {
-            val openURL = Intent(Intent.ACTION_VIEW)
-            openURL.data = Uri.parse("https://www.instagram.com/frobertoruizobregon/")
-            startActivity(openURL)
-        }
-
-        binding.faceLogo.setOnClickListener {
-            val openURL = Intent(Intent.ACTION_VIEW)
-            openURL.data = Uri.parse("https://www.facebook.com/fundacionruizobregon/")
-            startActivity(openURL)
-        }
-
-        binding.whaLogo.setOnClickListener {
-            val openURL = Intent(Intent.ACTION_VIEW)
-            openURL.data = Uri.parse("https://wa.me/524422142380")
-            startActivity(openURL)
-        }
-
-        binding.telefono1.setOnClickListener(){
-            val phone  = "tel:" + "442  214 4020"
-            startActivity(Intent(Intent.ACTION_DIAL, Uri.parse(phone)))
-
-        }
-
-        binding.telefono2.setOnClickListener() {
-            val phone = "tel:" + "442  214 2380"
-            startActivity(Intent(Intent.ACTION_DIAL, Uri.parse(phone)))
-
-        }
-        binding.telefono3.setOnClickListener(){
-            val phone  = "tel:" + "442  214 3033"
-            startActivity(Intent(Intent.ACTION_DIAL, Uri.parse(phone)))
-
         }
     }
 
-    private fun performLogout(){
-        val retroService = NetworkModuleDI.getRetroInstance().create(ApiService::class.java)
-        val token = preferences["token", ""]
-        val call = retroService.postLogout("Bearer $token")
-
-        call.enqueue(object: Callback<Void> {
-            override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                clearSessionPreference()
-                Toast.makeText(
-                    this@FragmentoHome.requireActivity(),
-                    "Logout exitoso",
-                    Toast.LENGTH_SHORT
-                ).show()
-                passViewGoToLogin()
-            }
-
-            override fun onFailure(call: Call<Void>, t: Throwable) {
-                Toast.makeText(
-                    this@FragmentoHome.requireActivity(),
-                    "Se produjo un error en el servidor (logout)",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-
-        })
-    }
-    private fun clearSessionPreference(){
-        preferences["token"] = ""
-    }
-    private fun passViewGoToLogin() {
-        val intent = Intent()
-        intent.setClass(requireActivity(), LoginActivity::class.java)
-        requireActivity().startActivity(intent)
-    }
-
-    private fun goToNewFragment() {
-
-        val contenedor = (context as FragmentActivity).findViewById<ViewGroup>(R.id.frag_home)
-        contenedor.removeAllViews()
-
-        val fragmentoNuevo = FragmentoMisCursos()
-        val transaction = (context as FragmentActivity).supportFragmentManager.beginTransaction()
-
-        transaction.replace(R.id.frag_home, fragmentoNuevo)
-        transaction.addToBackStack(null)
-        transaction.commit()
-    }
-
-
-    /**
-     * Sets the binding to Null after the fragment is destoroyed
-     */
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
-
-
 }
-
-
-
-

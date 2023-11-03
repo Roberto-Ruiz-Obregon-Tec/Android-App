@@ -7,11 +7,10 @@ import androidx.fragment.app.Fragment
 import com.example.kotlin.mypokedexapp.viewmodel.MainViewModel
 import com.example.kotlin.robertoruizapp.R
 import com.example.kotlin.robertoruizapp.databinding.ActivityMainBinding
-import com.example.kotlin.robertoruizapp.framework.view.fragments.FragmentoHome
-import com.example.kotlin.robertoruizapp.framework.view.fragments.FragmentoInicio
+    import com.example.kotlin.robertoruizapp.framework.view.fragments.FragmentoInicio
 import com.example.kotlin.robertoruizapp.framework.view.fragments.FragmentoPerfil
-import com.example.kotlin.robertoruizapp.framework.view.fragments.FragmentoCursos
 import com.example.kotlin.robertoruizapp.framework.view.fragments.FragmentoFeed
+import com.example.kotlin.robertoruizapp.framework.view.fragments.FragmentoHome
 import com.example.kotlin.robertoruizapp.utils.Constants
 
 /**
@@ -35,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         initializeBinding()
         initializeListeners()
-        exchangeCurrentFragment(FragmentoInicio(), Constants.MENU_INICIO)
+        exchangeCurrentFragment(FragmentoHome(), Constants.MENU_INICIO)
     }
 
     /**

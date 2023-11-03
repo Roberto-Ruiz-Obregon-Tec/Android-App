@@ -19,7 +19,7 @@ class SignUpActivityViewModel : ViewModel() {
     var signUpNewUserLiveData: MutableLiveData<SignUp?> = MutableLiveData()
 
     /**
-     * Gets the signUpnewUserLiveData variable
+     * Gets the signUpNewUserLiveData variable
      *
      * @return MutableLiveData Object
      */

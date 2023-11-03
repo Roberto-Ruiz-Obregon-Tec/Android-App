@@ -23,7 +23,25 @@ import java.io.ByteArrayOutputStream
  */
 class SignUpActivity : AppCompatActivity() {
     private lateinit var viewModel: SignUpActivityViewModel
-    private var profilePicture: String = ""
+
+    // Declare variables for layout inputs
+    private lateinit var name: EditText
+    private lateinit var lastName: EditText
+    private lateinit var email: EditText
+    private lateinit var age: EditText
+    private lateinit var genders: Array<String>
+    private lateinit var gender: Spinner
+    private lateinit var occupation: EditText
+    private lateinit var postalCode: EditText
+    private lateinit var interests: Array<String>
+    private lateinit var interest: Spinner
+    private lateinit var company: EditText
+    private lateinit var companyESR: CheckBox
+    private lateinit var uploadPicBtn: Button
+    private lateinit var profilePicture: String
+    private lateinit var password: EditText
+    private lateinit var cnfPassword: EditText
+    private lateinit var btnRegister: Button
 
     /**
      * Sets the information for the current activity when creating the view
@@ -34,104 +52,64 @@ class SignUpActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
 
-        val generos = arrayOf("Hombre", "Mujer", "Otro")
-        val gender = findViewById<Spinner>(R.id.spinnerGender)
-        gender.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, generos)
+        initComponents()
+        initAdapters()
+        initListeners()
+        initViewModel()
 
-        val interests = arrayOf("Selecciona uno o más intereses","Interés 1","Interés 2","Interés 3")
-        val interest = findViewById<Spinner>(R.id.spinnerInterests)
-        interest.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, interests)
+    }
 
-        val name: EditText = findViewById(R.id.editTextName)
-        val lastName: EditText = findViewById(R.id.editTextLastName)
-        val email: EditText = findViewById<EditText>(R.id.editTextMail)
-        val edad: EditText = findViewById<EditText>(R.id.editTextAge)
-        val occupation: EditText = findViewById<EditText>(R.id.editTextOccupation)
-        val postalCode: EditText = findViewById<EditText>(R.id.editTextPC)
-        val company: EditText = findViewById<EditText>(R.id.editTextCompany)
-        val companyESR: CheckBox = findViewById<CheckBox>(R.id.checkboxESR)
-        val password: EditText = findViewById<EditText>(R.id.editTextPassword)
-        val cnfPassword: EditText = findViewById<EditText>(R.id.editTextConfirmPass)
+    // Initialize components from the layout inputs
+    private fun initComponents() {
+        name = findViewById(R.id.editTextName)
+        lastName = findViewById(R.id.editTextLastName)
+        email = findViewById(R.id.editTextMail)
+        age = findViewById(R.id.editTextAge)
+        genders = arrayOf("Hombre", "Mujer", "Otro")
+        gender = findViewById(R.id.spinnerGender)
+        occupation = findViewById(R.id.editTextOccupation)
+        postalCode = findViewById(R.id.editTextPC)
+        interests = arrayOf("Selecciona uno o más intereses", "Interés 1", "Interés 2", "Interés 3")
+        interest = findViewById(R.id.spinnerInterests)
+        company = findViewById(R.id.editTextCompany)
+        companyESR = findViewById(R.id.checkboxESR)
+        profilePicture = ""
+        password = findViewById(R.id.editTextPassword)
+        cnfPassword = findViewById(R.id.editTextConfirmPass)
+        uploadPicBtn = findViewById(R.id.uploadProfilePic)
+        btnRegister = findViewById(R.id.buttonRegister)
+    }
 
-        val uploadPicBtn= findViewById<Button>(R.id.uploadProfilePic)
+    // Initialize adapters for items selected
+    private fun initAdapters() {
+        gender.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, genders)
+        interest.adapter =
+            ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, interests)
+    }
+
+    private fun initListeners() {
+
+        // Open Gallery for Profile Picture
         uploadPicBtn.setOnClickListener {
             val iGallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             startActivityForResult(iGallery, 3)
         }
 
-        fun initViewModel() {
-            viewModel = ViewModelProvider(this)[SignUpActivityViewModel::class.java]
-            viewModel.getSignUpNewUserObserver().observe(this) {
-
-                if (it == null) {
-                    Toast.makeText(
-                        this@SignUpActivity,
-                        "Failed to register User",
-                        Toast.LENGTH_LONG
-                    ).show()
-                } else {
-                    Toast.makeText(
-                        this@SignUpActivity,
-                        "Successfully register User",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
-            }
-        }
-
-        initViewModel()
-
-
-        val btnRegister = findViewById<Button>(R.id.buttonRegister)
-        fun signUpUser() {
-
-            val ageInt: Int = edad.text.toString().toIntOrNull() ?: 0
-            val pcInt: Int = postalCode.text.toString().toIntOrNull() ?: 0
-            val selectedGender = gender.selectedItem.toString()
-            val selectedInterests = interest.selectedItem.toString()
-            val user = SignUp(
-                name.text.toString(),
-                lastName.text.toString(),
-                email.text.toString(),
-                ageInt,
-                selectedGender,
-                occupation.text.toString(),
-                pcInt,
-                selectedInterests,
-                company.text.toString(),
-                companyESR.isChecked,
-                profilePicture,
-                password.text.toString()
-            )
-            try {
-                viewModel.signUpNewUser(user)
-            } catch (e: Exception) {
-                Toast.makeText(
-                    applicationContext,
-                    "$e",
-                    Toast.LENGTH_LONG
-                ).show()
-            }
-
-
-        }
-
+        // Validate Inputs and sign up new user
         btnRegister.setOnClickListener {
             if (validateInput(
                     name.text.toString(),
                     lastName.text.toString(),
                     email.text.toString(),
-                    edad.text.toString(),
+                    age.text.toString(),
                     gender.selectedItem.toString(),
                     occupation.text.toString(),
                     postalCode.text.toString(),
                     interest.selectedItem.toString(),
-                    company.toString(),
-                    companyESR.isChecked,
-                    profilePicture,
                     password.text.toString(),
                     cnfPassword.text.toString()
-                )) {
+                )
+            ) {
                 signUpUser()
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
@@ -139,15 +117,65 @@ class SignUpActivity : AppCompatActivity() {
                 Timber.tag("INPUT_VALIDATOR").d("Error Validating Inputs")
             }
         }
+    }
 
+    private fun signUpUser() {
+        val ageInt: Int = age.text.toString().toIntOrNull() ?: 0
+        val pcInt: Int = postalCode.text.toString().toIntOrNull() ?: 0
+        val selectedGender = gender.selectedItem.toString()
+        val selectedInterests = interest.selectedItem.toString()
+        val user = SignUp(
+            name.text.toString(),
+            lastName.text.toString(),
+            email.text.toString(),
+            ageInt,
+            selectedGender,
+            occupation.text.toString(),
+            pcInt,
+            selectedInterests,
+            company.text.toString(),
+            companyESR.isChecked,
+            profilePicture,
+            password.text.toString()
+        )
+        try {
+            viewModel.signUpNewUser(user)
+        } catch (e: Exception) {
+            Toast.makeText(
+                applicationContext,
+                "$e",
+                Toast.LENGTH_LONG
+            ).show()
+        }
 
     }
 
+    private fun initViewModel() {
+        viewModel = ViewModelProvider(this)[SignUpActivityViewModel::class.java]
+        viewModel.getSignUpNewUserObserver().observe(this) {
 
+            if (it == null) {
+                Toast.makeText(
+                    this@SignUpActivity,
+                    "Failed to register User",
+                    Toast.LENGTH_LONG
+                ).show()
+            } else {
+                Toast.makeText(
+                    this@SignUpActivity,
+                    "Successfully register User",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
+    }
+
+    // Show Selected image in the layout and covert it to String with bitmap
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(resultCode == RESULT_OK && data != null){
-            val selectedImage: Uri = data.getData()!!
+        if (resultCode == RESULT_OK && data != null) {
+            val selectedImage: Uri = data.data!!
             val img: ImageView = findViewById(R.id.imageViewProfilePic)
             val bitmap: Bitmap = MediaStore.Images.Media.getBitmap(contentResolver, selectedImage)
             img.setImageBitmap(bitmap)
@@ -170,12 +198,9 @@ class SignUpActivity : AppCompatActivity() {
         occupation: String,
         postalCode: String,
         interests: String,
-        company: String?,
-        companyESR: Boolean?,
-        profilePicture: String,
         password: String,
         cnfPassword: String
-    ):Boolean {
+    ): Boolean {
         if (name.isEmpty() || lastName.isEmpty()) {
             Toast.makeText(this, "El nombre no puede estar vacío.", Toast.LENGTH_SHORT).show()
             return false
@@ -202,12 +227,14 @@ class SignUpActivity : AppCompatActivity() {
         }
 
         if (postalCode.isEmpty()) {
-            Toast.makeText(this, "El código postal no puede estar vacío.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "El código postal no puede estar vacío.", Toast.LENGTH_SHORT)
+                .show()
             return false
         }
 
         if (interests.isEmpty()) {
-            Toast.makeText(this, "Por favor, seleccione al menos un interes.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Por favor, seleccione al menos un interes.", Toast.LENGTH_SHORT)
+                .show()
             return false
         }
 

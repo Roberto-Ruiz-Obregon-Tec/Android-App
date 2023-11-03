@@ -19,5 +19,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="blueTitle">#002647</color>
     <color name="nav_bar">#CC2A25</color> <!-- Color primario Nosotros -->
+    <color name="red">#FF0000</color>
 </resources>
 

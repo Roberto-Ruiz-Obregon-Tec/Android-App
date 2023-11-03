@@ -20,7 +20,6 @@
     <string name="Age">Edad</string>
     <string name="nivel_Educativo">Nivel educativo</string>
     <string name="correo_electronico">Correo</string>
-    <string name="nivel_EDucativo">Nivel educativo</string>
     <string name="registro">Registro</string>
     <string name="eDad">Edad</string>
     <string name="this_is_first_activity">This is first Activity</string>
@@ -30,12 +29,14 @@
     <string name="foto_perfil">Foto de Perfil</string>
 
     <string-array name = "generos">
+        <item>Selecciona tu género</item>
         <item>Hombre</item>
         <item>Mujer</item>
-        <item>Prefiero no decir</item>
+        <item>Otro</item>
     </string-array>
 
     <string-array name="intereses">
+        <item>Seleccione uno o más intereses</item>
         <item>Interés 1</item>
         <item>Interés 2</item>
         <item>Interés 3</item>

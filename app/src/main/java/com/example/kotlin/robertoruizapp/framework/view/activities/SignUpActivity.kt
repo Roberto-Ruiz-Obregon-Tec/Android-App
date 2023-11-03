@@ -6,8 +6,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Base64
-import android.util.Log
-import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -31,10 +29,12 @@ class SignUpActivity : AppCompatActivity() {
     private lateinit var age: EditText
     private lateinit var genders: Array<String>
     private lateinit var gender: Spinner
+    private lateinit var selectedGender: String
     private lateinit var occupation: EditText
     private lateinit var postalCode: EditText
     private lateinit var interests: Array<String>
     private lateinit var interest: Spinner
+    private lateinit var selectedInterests: Array<String>
     private lateinit var company: EditText
     private lateinit var companyESR: CheckBox
     private lateinit var uploadPicBtn: Button
@@ -65,11 +65,11 @@ class SignUpActivity : AppCompatActivity() {
         lastName = findViewById(R.id.editTextLastName)
         email = findViewById(R.id.editTextMail)
         age = findViewById(R.id.editTextAge)
-        genders = arrayOf("Hombre", "Mujer", "Otro")
+        genders = resources.getStringArray(R.array.generos)
         gender = findViewById(R.id.spinnerGender)
         occupation = findViewById(R.id.editTextOccupation)
         postalCode = findViewById(R.id.editTextPC)
-        interests = arrayOf("Selecciona uno o más intereses", "Interés 1", "Interés 2", "Interés 3")
+        interests = resources.getStringArray(R.array.intereses)
         interest = findViewById(R.id.spinnerInterests)
         company = findViewById(R.id.editTextCompany)
         companyESR = findViewById(R.id.checkboxESR)
@@ -97,19 +97,9 @@ class SignUpActivity : AppCompatActivity() {
 
         // Validate Inputs and sign up new user
         btnRegister.setOnClickListener {
-            if (validateInput(
-                    name.text.toString(),
-                    lastName.text.toString(),
-                    email.text.toString(),
-                    age.text.toString(),
-                    gender.selectedItem.toString(),
-                    occupation.text.toString(),
-                    postalCode.text.toString(),
-                    interest.selectedItem.toString(),
-                    password.text.toString(),
-                    cnfPassword.text.toString()
-                )
-            ) {
+            selectedGender = gender.selectedItem.toString()
+            selectedInterests = arrayOf(interest.selectedItem.toString())
+            if (validateInput()) {
                 signUpUser()
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
@@ -122,8 +112,6 @@ class SignUpActivity : AppCompatActivity() {
     private fun signUpUser() {
         val ageInt: Int = age.text.toString().toIntOrNull() ?: 0
         val pcInt: Int = postalCode.text.toString().toIntOrNull() ?: 0
-        val selectedGender = gender.selectedItem.toString()
-        val selectedInterests = interest.selectedItem.toString()
         val user = SignUp(
             name.text.toString(),
             lastName.text.toString(),
@@ -189,64 +177,46 @@ class SignUpActivity : AppCompatActivity() {
         }
     }
 
-    private fun validateInput(
-        name: String,
-        lastName: String,
-        email: String,
-        age: String,
-        selectedGender: String,
-        occupation: String,
-        postalCode: String,
-        interests: String,
-        password: String,
-        cnfPassword: String
-    ): Boolean {
-        if (name.isEmpty() || lastName.isEmpty()) {
+    private fun validateInput(): Boolean {
+        if (name.text.toString().isEmpty() || lastName.text.toString().isEmpty()) {
             Toast.makeText(this, "El nombre no puede estar vacío.", Toast.LENGTH_SHORT).show()
             return false
         }
 
-        if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+        if (email.text.toString().isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email.text.toString()).matches()) {
             Toast.makeText(this, "Ingrese un correo electrónico válido.", Toast.LENGTH_SHORT).show()
             return false
         }
 
-        if (age.isEmpty()) {
+        if (age.text.toString().isEmpty()) {
             Toast.makeText(this, "La edad no puede estar vacía.", Toast.LENGTH_SHORT).show()
             return false
         }
 
-        if (selectedGender == "Seleccione su género") {
-            Toast.makeText(this, "Por favor, seleccione su Preferencia.", Toast.LENGTH_SHORT).show()
+        if (selectedGender == genders[0]) {
+            Toast.makeText(this, "Por favor, seleccione su preferencia de Genero.", Toast.LENGTH_SHORT).show()
             return false
         }
 
-        if (occupation.isEmpty()) {
-            Toast.makeText(this, "La Ocupación no puede estar vacía.", Toast.LENGTH_SHORT).show()
-            return false
-        }
-
-        if (postalCode.isEmpty()) {
+        if (postalCode.text.toString().isEmpty()) {
             Toast.makeText(this, "El código postal no puede estar vacío.", Toast.LENGTH_SHORT)
                 .show()
             return false
         }
 
-        if (interests.isEmpty()) {
-            Toast.makeText(this, "Por favor, seleccione al menos un interes.", Toast.LENGTH_SHORT)
-                .show()
-            return false
+        if (selectedInterests.size <= 1 && selectedInterests[0] == interests[0]) {
+            selectedInterests = emptyArray()
         }
 
-        if (password.isEmpty() || cnfPassword.isEmpty()) {
+        if (password.text.toString().isEmpty() || cnfPassword.text.toString().isEmpty()) {
             Toast.makeText(this, "La contraseña no puede estar vacía.", Toast.LENGTH_SHORT).show()
             return false
-        } else if (password.length <= 8) {
+        } else if (password.text.toString().length < 8) {
             Toast.makeText(this, "La contraseña debe contener al menos 8 caracteres.", Toast.LENGTH_SHORT).show()
             return false
         }
 
-        if (password != cnfPassword) {
+        if (password.text.toString() != cnfPassword.text.toString()) {
             Toast.makeText(this, "Las contraseñas no coinciden.", Toast.LENGTH_SHORT).show()
             return false
         }

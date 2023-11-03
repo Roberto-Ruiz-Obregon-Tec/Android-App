@@ -90,7 +90,7 @@ interface ApiService {
         @Body request: LoginRequest
     ): Call<LoginResponse>
 
-    @POST("user/auth/logout")
+    @POST("user/auth/logout") // TODO: CHANGE FOR A GET METHOD
     fun postLogout(
         @Header("Authorization") authHeader: String
     ): Call<Void>

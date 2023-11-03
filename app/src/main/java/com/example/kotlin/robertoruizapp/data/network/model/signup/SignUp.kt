@@ -8,7 +8,7 @@ data class SignUp(
     val gender: String,
     val occupation: String,
     val postalCode: Int,
-    val interests: String,
+    val interests: Array<String>,
     val company: String?,
     val sociallyResponsibleCompany: Boolean?,
     val profilePicture: String,

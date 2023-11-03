@@ -241,6 +241,9 @@ class SignUpActivity : AppCompatActivity() {
         if (password.isEmpty() || cnfPassword.isEmpty()) {
             Toast.makeText(this, "La contraseña no puede estar vacía.", Toast.LENGTH_SHORT).show()
             return false
+        } else if (password.length <= 8) {
+            Toast.makeText(this, "La contraseña debe contener al menos 8 caracteres.", Toast.LENGTH_SHORT).show()
+            return false
         }
 
         if (password != cnfPassword) {

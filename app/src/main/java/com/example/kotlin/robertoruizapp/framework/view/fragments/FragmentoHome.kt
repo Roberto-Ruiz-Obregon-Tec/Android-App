@@ -17,9 +17,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlin.robertoruizapp.R
 import com.example.kotlin.robertoruizapp.data.CertificacionesRepository
 import com.example.kotlin.robertoruizapp.data.CourseRepository
+import com.example.kotlin.robertoruizapp.data.ScholarshipRepository
+import com.example.kotlin.robertoruizapp.data.network.model.Becas.BecasObjeto
 import com.example.kotlin.robertoruizapp.data.network.model.Course.CourseObject
 import com.example.kotlin.robertoruizapp.data.network.model.certificaciones.CertificacionesObjeto
 import com.example.kotlin.robertoruizapp.databinding.FragmentoHomeBinding
+import com.example.kotlin.robertoruizapp.framework.adapters.ScholarshipAdapter
 import com.example.kotlin.robertoruizapp.framework.view.activities.LoginActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -54,6 +57,9 @@ class FragmentoHome : Fragment() {
 
         binding.button3.setOnClickListener {
             getCertificaciones()
+        }
+        binding.button4.setOnClickListener {
+            getScholarship()
         }
 
 
@@ -143,6 +149,23 @@ class FragmentoHome : Fragment() {
                     binding.cursosList.adapter = adapter
                     binding.cursosList.layoutManager = LinearLayoutManager(context)
                 }
+            }
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    private fun getScholarship() {
+        CoroutineScope(Dispatchers.IO).launch {
+            val ScholarshipRepository = ScholarshipRepository()
+            val result: BecasObjeto? = ScholarshipRepository.getScholarship()
+
+            if (result != null) {
+                withContext(Dispatchers.Main) {
+                    val adapter = ScholarshipAdapter(result.data.becas)
+                    binding.cursosList.adapter = adapter
+                    binding.cursosList.layoutManager = LinearLayoutManager(context)
+                }
+
             }
         }
     }

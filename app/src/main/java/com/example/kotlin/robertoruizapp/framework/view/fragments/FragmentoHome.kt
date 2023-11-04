@@ -1,6 +1,7 @@
 package com.example.kotlin.robertoruizapp.framework.view.fragments
 
 
+import android.content.Intent
 import com.example.kotlin.robertoruizapp.data.network.model.Course.Document
 import android.os.Build
 import android.os.Bundle
@@ -22,6 +23,7 @@ import com.example.kotlin.robertoruizapp.data.network.model.Course.CourseObject
 import com.example.kotlin.robertoruizapp.data.network.model.certificaciones.CertificacionesObjeto
 import com.example.kotlin.robertoruizapp.databinding.FragmentoHomeBinding
 import com.example.kotlin.robertoruizapp.framework.adapters.ScholarshipAdapter
+import com.example.kotlin.robertoruizapp.framework.view.activities.LoginActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -122,7 +124,7 @@ class FragmentoHome : Fragment() {
     private fun getCourse() {
         CoroutineScope(Dispatchers.IO).launch {
             val CourseRepository = CourseRepository()
-            val result: CourseObject? = CourseRepository.getCourse()
+            val result: CourseObject? = CourseRepository.getCourse(LoginActivity.token)
 
             if (result != null) {
                 withContext(Dispatchers.Main) {

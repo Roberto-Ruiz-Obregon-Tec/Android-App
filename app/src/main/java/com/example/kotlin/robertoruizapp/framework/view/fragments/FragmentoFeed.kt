@@ -92,7 +92,6 @@ class FragmentoFeed : Fragment() {
             val nombreEmpresa: TextView = view.findViewById(R.id.empresa_nombre)
             val descripcionEmpresa: TextView = view.findViewById(R.id.empresa_description)
             val certificacionEmpresa: TextView = view.findViewById(R.id.empresa_certificacion)
-            val celEmpresa: TextView = view.findViewById(R.id.cel_empresa)
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -107,7 +106,6 @@ class FragmentoFeed : Fragment() {
             holder.nombreEmpresa.text = empresa?.name
             holder.descripcionEmpresa.text = empresa?.description
             holder.certificacionEmpresa.text = empresa?.certifications?.joinToString(separator = ", ")
-            holder.celEmpresa.text = empresa?.phone
 
         }
 

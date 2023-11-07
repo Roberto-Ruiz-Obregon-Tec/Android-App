@@ -18,15 +18,32 @@ import com.example.kotlin.robertoruizapp.data.network.model.Events.EventObject
 import com.example.kotlin.robertoruizapp.data.network.model.companyCertification.Document
 import com.example.kotlin.robertoruizapp.data.network.model.companyCertification.CertificacionEmpresaObj
 import com.example.kotlin.robertoruizapp.framework.adapters.EventsAdapter
+import com.example.kotlin.robertoruizapp.framework.view.activities.LoginActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+/**
+ * This fragment shows the companies with their certifications
+ *
+ * @property _binding Variable for the automatically generated view binding for this fragment.
+ * @property binding Access property to `_binding` that ensures it is not null.
+ */
 class FragmentoFeed : Fragment() {
 
     private var _binding: FragmentoFeedBinding? = null
     private val binding get() = _binding!!
+
+    /**
+     * Create the fragment view.
+     *
+     *
+     * @param inflater The LayoutInflater used to inflate the fragment.
+     * @param container The container where the fragment will be inserted.
+     * @param savedInstanceState A Bundle containing data from the previous state of the fragment.
+     * @return The root view of the inflated fragment.
+     */
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
@@ -36,6 +53,15 @@ class FragmentoFeed : Fragment() {
         _binding = FragmentoFeedBinding.inflate(inflater, container, false)
         return binding.root
     }
+
+    /**
+     * Called once the view has been created.
+     *
+     * Configure the button listeners and perform the first upload of certification data.
+     *
+     * @param view The root view of the fragment.
+     * @param savedInstanceState A Bundle containing data from the previous state of the fragment.
+     */
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -52,6 +78,13 @@ class FragmentoFeed : Fragment() {
         }
     }
 
+    /**
+     * Adapter for company list.
+     *
+     * This adapter is responsible for linking the companies' data with the view in the RecyclerView.
+     *
+     * @param companies List of company documents that will be displayed.
+     */
     class EmpresaAdapter(private val empresas: List<Document?>) :
         RecyclerView.Adapter<EmpresaAdapter.ViewHolder>() {
 
@@ -81,7 +114,12 @@ class FragmentoFeed : Fragment() {
 
         override fun getItemCount() = empresas.size
     }
-
+    /**
+     * Obtain company certifications and update your view.
+     *
+     * Make an asynchronous request to obtain company certifications and, once obtained,
+     * Updates the list in the UI.
+     */
 
     @RequiresApi(Build.VERSION_CODES.N)
     private fun getCompanyCertification() {
@@ -89,10 +127,11 @@ class FragmentoFeed : Fragment() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val companyCertificationRepository = companyCertificationRepository()
-                val result: CertificacionEmpresaObj? = companyCertificationRepository.getCompanyCertification()
+                val result: CertificacionEmpresaObj? = companyCertificationRepository.getCompanyCertification(LoginActivity.token)
 
-                withContext(Dispatchers.Main) {
+
                     if (result != null) {
+                        withContext(Dispatchers.Main) {
                         val adapter = EmpresaAdapter(result.data.companies)
                         binding.empresaList.adapter = adapter
                         binding.empresaList.layoutManager = LinearLayoutManager(context)

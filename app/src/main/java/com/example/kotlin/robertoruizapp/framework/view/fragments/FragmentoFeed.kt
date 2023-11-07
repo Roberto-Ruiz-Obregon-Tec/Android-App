@@ -18,15 +18,32 @@ import com.example.kotlin.robertoruizapp.data.network.model.Events.EventObject
 import com.example.kotlin.robertoruizapp.data.network.model.companyCertification.Document
 import com.example.kotlin.robertoruizapp.data.network.model.companyCertification.CertificacionEmpresaObj
 import com.example.kotlin.robertoruizapp.framework.adapters.EventsAdapter
+import com.example.kotlin.robertoruizapp.framework.view.activities.LoginActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+/**
+ * This fragment shows the companies with their certifications
+ *
+ * @property _binding Variable for the automatically generated view binding for this fragment.
+ * @property binding Access property to `_binding` that ensures it is not null.
+ */
 class FragmentoFeed : Fragment() {
 
     private var _binding: FragmentoFeedBinding? = null
     private val binding get() = _binding!!
+
+    /**
+     * Create the fragment view.
+     *
+     *
+     * @param inflater The LayoutInflater used to inflate the fragment.
+     * @param container The container where the fragment will be inserted.
+     * @param savedInstanceState A Bundle containing data from the previous state of the fragment.
+     * @return The root view of the inflated fragment.
+     */
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
@@ -37,32 +54,50 @@ class FragmentoFeed : Fragment() {
         return binding.root
     }
 
+    /**
+     * Called once the view has been created.
+     *
+     * Configure the button listeners and perform the first upload of certification data.
+     *
+     * @param view The root view of the fragment.
+     * @param savedInstanceState A Bundle containing data from the previous state of the fragment.
+     */
+
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         getCompanyCertification()
-       
+
         binding.button3.setOnClickListener() {
 
             getCompanyCertification()
         }
-        
+
         binding.button1.setOnClickListener {
             getEvents()
         }
     }
 
+    /**
+     * Adapter for company list.
+     *
+     * This adapter is responsible for linking the companies' data with the view in the RecyclerView.
+     *
+     * @param companies List of company documents that will be displayed.
+     */
     class EmpresaAdapter(private val empresas: List<Document?>) :
         RecyclerView.Adapter<EmpresaAdapter.ViewHolder>() {
 
         class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-            val nombreEmpresa: TextView = view.findViewById(R.id.empresa_list)
+            val nombreEmpresa: TextView = view.findViewById(R.id.empresa_nombre)
             val descripcionEmpresa: TextView = view.findViewById(R.id.empresa_description)
             val certificacionEmpresa: TextView = view.findViewById(R.id.empresa_certificacion)
+            val celEmpresa: TextView = view.findViewById(R.id.cel_empresa)
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-            val view = LayoutInflater.from(parent.context).inflate(R.layout.item_empresas_certificacion, parent, false)
+            val view = LayoutInflater.from(parent.context)
+                .inflate(R.layout.item_empresas_certificacion, parent, false)
             return ViewHolder(view)
         }
 
@@ -72,46 +107,71 @@ class FragmentoFeed : Fragment() {
             holder.nombreEmpresa.text = empresa?.name
             holder.descripcionEmpresa.text = empresa?.description
             holder.certificacionEmpresa.text = empresa?.certifications?.joinToString(separator = ", ")
+            holder.celEmpresa.text = empresa?.phone
 
         }
 
 
         override fun getItemCount() = empresas.size
     }
-    
-    
+    /**
+     * Obtain company certifications and update your view.
+     *
+     * Make an asynchronous request to obtain company certifications and, once obtained,
+     * Updates the list in the UI.
+     */
 
     @RequiresApi(Build.VERSION_CODES.N)
     private fun getCompanyCertification() {
+        showProgressBar()
         CoroutineScope(Dispatchers.IO).launch {
-            val companyCertificationRepository = companyCertificationRepository()
-            val result: CertificacionEmpresaObj? = companyCertificationRepository.getCompanyCertification()
+            try {
+                val companyCertificationRepository = companyCertificationRepository()
+                val result: CertificacionEmpresaObj? = companyCertificationRepository.getCompanyCertification(LoginActivity.token)
 
-            if (result != null) {
+
+                    if (result != null) {
+                        withContext(Dispatchers.Main) {
+                        val adapter = EmpresaAdapter(result.data.companies)
+                        binding.empresaList.adapter = adapter
+                        binding.empresaList.layoutManager = LinearLayoutManager(context)
+                    }
+                }
+            } catch (e: Exception) {
+                e.printStackTrace() // Log the exception
+            } finally {
                 withContext(Dispatchers.Main) {
-                    val adapter = EmpresaAdapter(result.data.companies)
-                    binding.empresaList.adapter = adapter
-                    binding.empresaList.layoutManager = LinearLayoutManager(context)
+                    hideProgressBar()
                 }
             }
         }
     }
-    
     // Get events
     @RequiresApi(Build.VERSION_CODES.N)
     private fun getEvents() {
+        showProgressBar()
         CoroutineScope(Dispatchers.IO).launch {
             val eventsRepository = Repository()
             val result: EventObject? = eventsRepository.getEventsNoFilter()
 
-            if (result != null) {
-                withContext(Dispatchers.Main) {
+            withContext(Dispatchers.Main) {
+                hideProgressBar()
+                if (result != null) {
                     val adapter = EventsAdapter(result.data.documents)
                     binding.empresaList.adapter = adapter
                     binding.empresaList.layoutManager = LinearLayoutManager(context)
                 }
             }
         }
+    }
+    private fun showProgressBar() {
+        binding.progressBar.visibility = View.VISIBLE
+        binding.empresaList.visibility = View.INVISIBLE // Ocultar la lista mientras carga
+    }
+
+    private fun hideProgressBar() {
+        binding.progressBar.visibility = View.GONE
+        binding.empresaList.visibility = View.VISIBLE
     }
 
     override fun onDestroyView() {

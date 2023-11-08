@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -62,13 +63,42 @@ class FragmentoHome : Fragment() {
 
         binding.button1.setOnClickListener {
             getCourse()
+
+            binding.button1.setBackgroundResource(R.drawable.button_active)
+            binding.button1.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+
+            binding.button3.setBackgroundResource(R.drawable.button_inactive)
+            binding.button3.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+
+            binding.button4.setBackgroundResource(R.drawable.button_inactive)
+            binding.button4.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
         }
 
         binding.button3.setOnClickListener {
             getCertificaciones()
+
+            binding.button1.setBackgroundResource(R.drawable.button_inactive)
+            binding.button1.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+
+            binding.button3.setBackgroundResource(R.drawable.button_active)
+            binding.button3.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+
+            binding.button4.setBackgroundResource(R.drawable.button_inactive)
+            binding.button4.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+
+
         }
         binding.button4.setOnClickListener {
             getScholarship()
+
+            binding.button1.setBackgroundResource(R.drawable.button_inactive)
+            binding.button1.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+
+            binding.button3.setBackgroundResource(R.drawable.button_inactive)
+            binding.button3.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+
+            binding.button4.setBackgroundResource(R.drawable.button_active)
+            binding.button4.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
         }
 
 
@@ -123,7 +153,7 @@ class FragmentoHome : Fragment() {
 
             // Convert and display the date
             val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US)
-            val outputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.US)
+            val outputFormat = SimpleDateFormat("dd/MM/yyyy", Locale.US)
             val startDate = inputFormat.parse(curso?.startDate ?: "")
             val endDate = inputFormat.parse(curso?.endDate ?: "")
             holder.fechaCurso.text = if (startDate != null && endDate != null) {
@@ -158,17 +188,27 @@ class FragmentoHome : Fragment() {
      */
     @RequiresApi(Build.VERSION_CODES.N)
     private fun getCourse() {
+        showProgressBar()
         CoroutineScope(Dispatchers.IO).launch {
-            val CourseRepository = CourseRepository()
-            val result: CourseObject? = CourseRepository.getCourse(LoginActivity.token)
+            try{
+                val CourseRepository = CourseRepository()
+                val result: CourseObject? = CourseRepository.getCourse(LoginActivity.token)
 
-            if (result != null) {
-                withContext(Dispatchers.Main) {
-                    val adapter = CursoAdapter(result.data)
-                    binding.cursosList.adapter = adapter
-                    binding.cursosList.layoutManager = LinearLayoutManager(context)
+                if (result != null) {
+                    withContext(Dispatchers.Main) {
+                        val adapter = CursoAdapter(result.data)
+                        binding.cursosList.adapter = adapter
+                        binding.cursosList.layoutManager = LinearLayoutManager(context)
+                    }
+
                 }
 
+            } catch (e: Exception) {
+                e.printStackTrace() // Log the exception
+            } finally {
+                withContext(Dispatchers.Main) {
+                    hideProgressBar()
+                }
             }
         }
     }
@@ -204,6 +244,16 @@ class FragmentoHome : Fragment() {
             }
         }
     }
+    private fun showProgressBar() {
+        binding.progressBar.visibility = View.VISIBLE
+        binding.cursosList.visibility = View.INVISIBLE
+    }
+
+    private fun hideProgressBar() {
+        binding.progressBar.visibility = View.GONE
+        binding.cursosList.visibility = View.VISIBLE
+    }
+
 
     /**
      * Method called when the fragment view is destroyed.

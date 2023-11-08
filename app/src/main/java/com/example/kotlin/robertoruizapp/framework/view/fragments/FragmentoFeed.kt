@@ -3,11 +3,14 @@ package com.example.kotlin.robertoruizapp.framework.view.fragments
 import android.os.Build
 import com.example.kotlin.robertoruizapp.databinding.FragmentoFeedBinding
 import android.os.Bundle
+import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -66,15 +69,30 @@ class FragmentoFeed : Fragment() {
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        getCompanyCertification()
+        getEvents()
 
-        binding.button3.setOnClickListener() {
-
+        binding.button3.setOnClickListener {
             getCompanyCertification()
+
+            // Cambia el drawable y color del texto de button3
+            binding.button3.setBackgroundResource(R.drawable.button_active)
+            binding.button3.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+
+            // Cambia el drawable y color del texto de button1
+            binding.button1.setBackgroundResource(R.drawable.button_inactive)
+            binding.button1.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
         }
 
         binding.button1.setOnClickListener {
             getEvents()
+
+            // Cambia el drawable y color del texto de button1
+            binding.button1.setBackgroundResource(R.drawable.button_active)
+            binding.button1.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+
+            // Cambia el drawable y color del texto de button3
+            binding.button3.setBackgroundResource(R.drawable.button_inactive)
+            binding.button3.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
         }
     }
 
@@ -92,7 +110,6 @@ class FragmentoFeed : Fragment() {
             val nombreEmpresa: TextView = view.findViewById(R.id.empresa_nombre)
             val descripcionEmpresa: TextView = view.findViewById(R.id.empresa_description)
             val certificacionEmpresa: TextView = view.findViewById(R.id.empresa_certificacion)
-            val celEmpresa: TextView = view.findViewById(R.id.cel_empresa)
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -107,7 +124,6 @@ class FragmentoFeed : Fragment() {
             holder.nombreEmpresa.text = empresa?.name
             holder.descripcionEmpresa.text = empresa?.description
             holder.certificacionEmpresa.text = empresa?.certifications?.joinToString(separator = ", ")
-            holder.celEmpresa.text = empresa?.phone
 
         }
 

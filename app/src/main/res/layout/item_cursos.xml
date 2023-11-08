@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:textSize="16sp"
             android:textColor="#000"
-            android:text="Nombre curso"/>
+            android:text="Nombre del curso"/>
 
         <TextView
             android:id="@+id/curso_description"
@@ -34,34 +34,82 @@
             android:textSize="14sp"
             android:textColor="#666"
             android:layout_marginTop="4dp"
-            android:text="Descripción..."/>/>
+            android:text="Descripción del curso"/>
 
-        <TextView
-            android:id="@+id/curso_fecha"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:textColor="#666"
-            android:layout_marginTop="4dp"
-            android:text="Fecha"/>
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
 
-        <TextView
-            android:id="@+id/curso_costo"
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="14sp"
+                android:textColor="#666"
+                android:text="Fecha"/>
+
+            <TextView
+                android:id="@+id/curso_fecha"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:gravity="end"
+                android:textSize="14sp"
+                android:textColor="#666"
+                android:text="dd/MM/yyyy - dd/MM/yyyy"/>
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:textColor="#666"
-            android:layout_marginTop="4dp"
-            android:text="Costo"/>
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
 
-        <TextView
-            android:id="@+id/curso_modalidad"
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="14sp"
+                android:textColor="#666"
+                android:text="Costo"/>
+
+            <TextView
+                android:id="@+id/curso_costo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:gravity="end"
+                android:textSize="14sp"
+                android:textColor="#666"
+                android:text="$130.0"/>
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:textColor="#666"
-            android:layout_marginTop="4dp"
-            android:text="Modalidad"/>
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="14sp"
+                android:textColor="#666"
+                android:text="Modalidad"/>
+
+            <TextView
+                android:id="@+id/curso_modalidad"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:gravity="end"
+                android:textSize="14sp"
+                android:textColor="#666"
+                android:text="Remoto"/>
+        </LinearLayout>
 
         <Button
             android:layout_width="match_parent"
@@ -70,7 +118,5 @@
             android:text="Ver más"
             android:backgroundTint="#FF0000"
             android:textColor="#FFFFFF" />
-
     </LinearLayout>
-
 </androidx.cardview.widget.CardView>

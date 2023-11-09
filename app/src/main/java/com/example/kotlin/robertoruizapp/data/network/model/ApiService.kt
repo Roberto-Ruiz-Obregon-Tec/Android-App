@@ -2,6 +2,7 @@ package com.example.kotlin.robertoruizapp.data.network.model
 
 import com.example.kotlin.robertoruizapp.data.network.model.certificaciones.CertificacionesObjeto
 import com.example.kotlin.robertoruizapp.data.network.model.Cursos.CursosObjeto
+import com.example.kotlin.robertoruizapp.data.network.model.Events.EventObject
 import com.example.kotlin.robertoruizapp.data.network.model.Inscripcion.Inscription
 import com.example.kotlin.robertoruizapp.data.network.model.Inscripcion.Pago
 import com.example.kotlin.robertoruizapp.data.network.model.Topic.TopicsObject
@@ -49,7 +50,26 @@ interface ApiService {
     suspend fun getCursosNoFilter(
         @Header("Authorization") jwt: String
     ) : CursosObjeto
+    
+    @GET("event")
+    suspend fun getEventsNoFilter(
+    ): EventObject
 
+    @GET("event/{id}")
+    suspend fun getEvent(
+        @Path("id") id: String
+    ): EventObject
+    
+    @GET("event")
+    suspend fun getEvents(
+        @Query("eventName[regex]") eventName: String,
+        @Query("location[regex]") location: String,
+        @Query("description[regex]") description: String,
+        @Query("startDate[regex]") startDate: String,
+        @Query("endDate[regex]") endDate: String,
+        @Query("eventImage[regex]") topic: String
+    ): EventObject
+    
     @GET("topics")
     suspend fun getTopics(
         @Header("Authorization") jwt: String
@@ -70,7 +90,7 @@ interface ApiService {
         @Body request: LoginRequest
     ): Call<LoginResponse>
 
-    @POST("user/auth/logout")
+    @GET("user/auth/logout")
     fun postLogout(
         @Header("Authorization") authHeader: String
     ): Call<Void>

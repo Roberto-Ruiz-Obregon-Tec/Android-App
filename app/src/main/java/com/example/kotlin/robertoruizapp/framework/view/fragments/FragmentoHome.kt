@@ -217,7 +217,7 @@ class FragmentoHome : Fragment() {
     private fun getCertificaciones() {
         CoroutineScope(Dispatchers.IO).launch {
             val certificacionesRepository = CertificacionesRepository()
-            val result: CertificacionesObjeto? = certificacionesRepository.getCertificaciones()
+            val result: CertificacionesObjeto? = certificacionesRepository.getCertificaciones(LoginActivity.token)
 
             if (result != null) {
                 withContext(Dispatchers.Main) {

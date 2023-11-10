@@ -36,7 +36,9 @@
             android:maxLines="2"
             android:minLines="2"
             android:text="Titulo"
-            android:textSize="14sp"/>
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
 
         <TextView
             android:id="@+id/des_beca"
@@ -55,7 +57,8 @@
             android:minLines="2"
             android:paddingTop="8dp"
             android:text="Descripcion"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textSize="12sp"/>
 
         <TextView
             android:id="@+id/label_tipo_beca"
@@ -63,7 +66,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/des_beca"
             android:layout_marginStart="25dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="11dp"
             android:layout_marginBottom="8dp"
             android:paddingTop="8dp"
             android:text="Tipo"
@@ -81,6 +84,7 @@
             android:layout_marginBottom="8dp"
             android:paddingTop="8dp"
             android:text="Tipos"
+            android:textColor="@color/black"
             android:textSize="13sp" />
 
         <TextView
@@ -107,6 +111,7 @@
             android:layout_marginBottom="8dp"
             android:paddingTop="8dp"
             android:text="Fecha"
+            android:textColor="@color/black"
             android:textSize="13sp" />
 
         <TextView
@@ -131,11 +136,10 @@
             android:layout_marginTop="28dp"
             android:layout_marginEnd="25dp"
             android:layout_marginBottom="8dp"
+            android:textColor="@color/black"
             android:paddingTop="8dp"
             android:text="Organizacion"
             android:textSize="13sp" />
-
-
 
 
         <Button
@@ -143,11 +147,9 @@
             android:layout_width="340dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/label_orga_beca"
-            android:layout_alignParentEnd="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            android:layout_marginEnd="28dp"
             android:backgroundTint="@color/nav_bar"
             android:text="Ver más"
             android:textColor="@color/white"

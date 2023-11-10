@@ -37,7 +37,6 @@ class SignUpActivity : AppCompatActivity() {
     private lateinit var selectedInterests: Array<String>
     private lateinit var company: EditText
     private lateinit var companyESR: CheckBox
-    private lateinit var uploadPicBtn: Button
     private lateinit var profilePicture: String
     private lateinit var password: EditText
     private lateinit var cnfPassword: EditText
@@ -76,7 +75,6 @@ class SignUpActivity : AppCompatActivity() {
         profilePicture = ""
         password = findViewById(R.id.editTextPassword)
         cnfPassword = findViewById(R.id.editTextConfirmPass)
-        uploadPicBtn = findViewById(R.id.uploadProfilePic)
         btnRegister = findViewById(R.id.buttonRegister)
     }
 
@@ -88,12 +86,6 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun initListeners() {
-
-        // Open Gallery for Profile Picture
-        uploadPicBtn.setOnClickListener {
-            val iGallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-            startActivityForResult(iGallery, 3)
-        }
 
         // Validate Inputs and sign up new user
         btnRegister.setOnClickListener {
@@ -158,27 +150,19 @@ class SignUpActivity : AppCompatActivity() {
         }
     }
 
-    // Show Selected image in the layout and covert it to String with bitmap
-    @Deprecated("Deprecated in Java")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == RESULT_OK && data != null) {
-            val selectedImage: Uri = data.data!!
-            val img: ImageView = findViewById(R.id.imageViewProfilePic)
-            val bitmap: Bitmap = MediaStore.Images.Media.getBitmap(contentResolver, selectedImage)
-            img.setImageBitmap(bitmap)
-            val byteArrayOutputStream = ByteArrayOutputStream()
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
-            val bytes: ByteArray = byteArrayOutputStream.toByteArray()
-            val base64Image: String = Base64.encodeToString(bytes, Base64.DEFAULT)
-            profilePicture = base64Image
-        } else {
-            Toast.makeText(applicationContext, "Seleccione una imagen!", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    private fun validateInput(): Boolean {
-        if (name.text.toString().isEmpty() || lastName.text.toString().isEmpty()) {
+    private fun validateInput(
+        name: String,
+        lastName: String,
+        email: String,
+        age: String,
+        selectedGender: String,
+        occupation: String,
+        postalCode: String,
+        interests: String,
+        password: String,
+        cnfPassword: String
+    ): Boolean {
+        if (name.isEmpty() || lastName.isEmpty()) {
             Toast.makeText(this, "El nombre no puede estar vacío.", Toast.LENGTH_SHORT).show()
             return false
         }

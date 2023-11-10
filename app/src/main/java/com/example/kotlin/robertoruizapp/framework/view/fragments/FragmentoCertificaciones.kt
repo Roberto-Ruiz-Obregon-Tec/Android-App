@@ -19,7 +19,35 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import com.example.kotlin.robertoruizapp.framework.view.activities.LoginActivity
 import java.util.*
+
+/*
+    * Created by Dante Perez 2/11/2023
+    * A fragment that displays a list of certifications.
+    *
+    * Parameters:
+    *  None.
+    *
+    * Methods:
+    *  getCertificaciones(): A suspend function that gets the certification data from the repository.
+    *  @return a CertificacionesObjeto object containing the certification data.
+    *
+    *  onViewCreated(): A function that is called when the fragment is created.
+    *  @param view: A View object.
+    *  @param savedInstanceState: A Bundle object.
+    *
+    *  onCreateView(): A function that is called when the fragment is created.
+    *  @param inflater: A LayoutInflater object.
+    *  @param container: A ViewGroup object.
+    *  @param savedInstanceState: A Bundle object.
+    *  @return a View object.
+    *
+    *  onDestroyView(): A function that is called when the fragment is destroyed.
+    *  @param None.
+    *  @return None.
+    *
+ */
 
 class FragmentoCertificaciones : Fragment() {
 
@@ -27,6 +55,7 @@ class FragmentoCertificaciones : Fragment() {
     private var _binding: ActivityCertificacionesBinding? = null
     private val binding get() = _binding!!
 
+    // Crear la vista del fragmento inflando el layout correspondiente y preparando el binding
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,11 +65,46 @@ class FragmentoCertificaciones : Fragment() {
         return binding.root
     }
 
+    /*
+        * A function that is called when the fragment is created.
+        * @param view: A View object.
+        * @param savedInstanceState: A Bundle object.
+        * @return None.
+        * @see getCertificaciones
+        * @see CertificacionesAdapter
+        * @see CertificacionesObjeto
+        * @see CertificacionesRepository
+        * @see Document
+        *
+        *
+     */
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         getCertificaciones()
     }
+
+    /*
+    * A class that represents a certification adapter.
+    * @param certificaciones: A List<Document> object.
+    * @return None.
+    * @see ViewHolder
+    *
+    * Methods:
+    * onCreateViewHolder(): A function that is called when the view holder is created each time the recycler view is created.
+    * @param parent: A ViewGroup object.
+    * @param viewType: An Int object.
+    * @return a ViewHolder object.
+    *
+    * onBindViewHolder(): A function that is called when the view holder is bound to the recycler view.
+    * @param holder: A ViewHolder object.
+    * @param position: An Int object.
+    * @return None.
+    *
+    * getItemCount(): A function that returns the number of items in the recycler view.
+    * @param None.
+    * @return an Int object.
+     */
 
     class CertificacionesAdapter(private val certificaciones: List<Document?>) :
         RecyclerView.Adapter<CertificacionesAdapter.ViewHolder>() {
@@ -67,11 +131,19 @@ class FragmentoCertificaciones : Fragment() {
         }
     }
 
+    /*
+        * A suspend function that gets the certification data from the repository.
+        * @param None.
+        * @return a CertificacionesObjeto object containing the certification data.
+        * @see CertificacionesObjeto
+        * @see CertificacionesRepository
+        * @see Document
+     */
     @RequiresApi(Build.VERSION_CODES.N)
     private fun getCertificaciones() {
         CoroutineScope(Dispatchers.IO).launch {
             val certificacionesRepository = CertificacionesRepository()
-            val result: CertificacionesObjeto? = certificacionesRepository.getCertificaciones()
+            val result: CertificacionesObjeto? = certificacionesRepository.getCertificaciones(LoginActivity.token)
 
             if (result != null) {
                 withContext(Dispatchers.Main) {
@@ -83,6 +155,11 @@ class FragmentoCertificaciones : Fragment() {
         }
     }
 
+    /*
+        * A function that is called when the fragment is destroyed.
+        * @param None.
+        * @return None.
+     */
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

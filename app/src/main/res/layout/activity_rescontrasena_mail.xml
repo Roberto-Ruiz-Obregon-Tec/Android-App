@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    tools:context="UserPasswordRecoveryActivity">
+    tools:context="ResContrasena">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -62,7 +62,7 @@
         <EditText
             android:id="@+id/editTextEmail"
             android:layout_width="0dp"
-            android:layout_height="35dp"
+            android:layout_height="45dp"
             android:hint="Correo electrónico"
             android:inputType="textEmailAddress"
             android:background="@drawable/edit_text_bg"
@@ -87,7 +87,7 @@
         <EditText
             android:id="@+id/editTextConfirmEmail"
             android:layout_width="0dp"
-            android:layout_height="35"
+            android:layout_height="45dp"
             android:hint="Confirmar correo electrónico"
             android:inputType="textEmailAddress"
             android:background="@drawable/edit_text_bg"

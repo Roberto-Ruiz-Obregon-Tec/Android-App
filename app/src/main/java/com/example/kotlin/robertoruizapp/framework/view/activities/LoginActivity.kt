@@ -1,5 +1,6 @@
 package com.example.kotlin.robertoruizapp.framework.view.activities
 
+
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -20,6 +21,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
+import com.example.kotlin.robertoruizapp.framework.view.activities.ResContrasena
+
 
 /**
  * LoginActivity class that manages the activity actions
@@ -72,6 +75,13 @@ class LoginActivity : AppCompatActivity() {
         val btnStartRegisterActivity = findViewById<Button>(R.id.signup)
         btnStartRegisterActivity.setOnClickListener {
             val intent = Intent(this, SignUpActivity::class.java)
+            startActivity(intent)
+        }
+        // Add the event handler on click for the password reset.
+        val forgotPasswordButton = findViewById<Button>(R.id.forgot_password_button)
+        forgotPasswordButton.setOnClickListener {
+            // Starts the activity ResContrasena
+            val intent = Intent(this, ResContrasena::class.java)
             startActivity(intent)
         }
 

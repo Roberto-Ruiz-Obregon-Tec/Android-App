@@ -44,8 +44,6 @@ class FragmentoFRRO : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentoFrroBinding.inflate(inflater, container, false)
-        return binding.root
-
 
         binding.faceBook.setOnClickListener {
             openFacebookPage()
@@ -59,7 +57,7 @@ class FragmentoFRRO : Fragment() {
             openTwitterPage()
         }
 
-        return view
+        return binding.root
     }
 
     private fun openFacebookPage() {
@@ -108,16 +106,9 @@ class FragmentoFRRO : Fragment() {
     }
 
     /**
-     * Adapter for company list.
+     * Obtain Information  and update your view.
      *
-     * This adapter is responsible for linking the companies' data with the view in the RecyclerView.
-     *
-     * @param companies List of company documents that will be displayed.
-     */
-    /**
-     * Obtain company certifications and update your view.
-     *
-     * Make an asynchronous request to obtain company certifications and, once obtained,
+     * Make an asynchronous request to obtain foundation Information and, once obtained,
      * Updates the list in the UI.
      */
 
@@ -131,8 +122,14 @@ class FragmentoFRRO : Fragment() {
 
                 if (result != null && result.data.info.isNotEmpty()) {
                     withContext(Dispatchers.Main) {
-                        val phone = result.data.info.first()?.phone // Suponiendo que hay un campo 'phone'
+                        val phone = result.data.info.first()?.phone
                         binding.phoneTextView.text = phone
+                        val descripcion = result.data.info.first()?.description
+                        binding.descripcionFun.text = descripcion
+                        val email = result.data.info.first()?.email
+                        binding.emailFun.text = email
+                        val ubicacion = result.data.info.first()?.location
+                        binding.ubicacion.text = ubicacion
                     }
                 }
             } catch (e: Exception) {

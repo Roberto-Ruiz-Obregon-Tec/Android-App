@@ -3,7 +3,7 @@ package com.example.kotlin.robertoruizapp.utils
 object Constants {
 
 
-    const val BASE_URL_PROYECTO = "http://10.25.76.97:3001/v1/"
+    const val BASE_URL_PROYECTO = "https://us-central1-roberto-ruiz-obregon.cloudfunctions.net/test/v1/"
 
 
     const val SPLASHCREEN_DURATION = 1000L
@@ -20,7 +20,7 @@ object Constants {
     //No se para que se usan las siguientes constantes pero las dejo por si a caso
 
 
-    const val BASE_URL = "http://10.25.76.97:3001/v1/"
+    const val BASE_URL = "https://us-central1-roberto-ruiz-obregon.cloudfunctions.net/test/v1/"
 
 
     const val ID_PROGRAM = "ID_PROGRAM"

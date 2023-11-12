@@ -23,6 +23,7 @@
             android:id="@+id/cursos_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
             android:textSize="16sp"
             android:textColor="#000"
             android:text="Nombre del curso"/>
@@ -39,6 +40,33 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="start"
+            android:layout_marginTop="4dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:text="4.3"
+                android:textColor="#000"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/curso_rating_star"
+                android:layout_marginTop="2dp"
+                android:layout_marginLeft="4dp"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/star" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:orientation="horizontal"
             android:gravity="center_vertical">
 
@@ -57,13 +85,21 @@
                 android:layout_weight="3"
                 android:gravity="end"
                 android:textSize="14sp"
-                android:textColor="#666"
+                android:textColor="#000"
                 android:text="dd/MM/yyyy - dd/MM/yyyy"/>
+
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#D3D3D3"
+            android:layout_marginTop="8dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:orientation="horizontal"
             android:gravity="center_vertical">
 
@@ -82,13 +118,20 @@
                 android:layout_weight="2"
                 android:gravity="end"
                 android:textSize="14sp"
-                android:textColor="#666"
+                android:textColor="#000"
                 android:text="$130.0"/>
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#D3D3D3"
+            android:layout_marginTop="8dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:orientation="horizontal"
             android:gravity="center_vertical">
 
@@ -107,14 +150,14 @@
                 android:layout_weight="2"
                 android:gravity="end"
                 android:textSize="14sp"
-                android:textColor="#666"
+                android:textColor="#000"
                 android:text="Remoto"/>
         </LinearLayout>
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="15dp"
             android:text="Ver más"
             android:backgroundTint="#FF0000"
             android:textColor="#FFFFFF" />

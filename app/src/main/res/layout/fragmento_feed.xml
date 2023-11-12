@@ -4,71 +4,72 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/frag_feed"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
-
+    android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/imageView4"
-            android:layout_width="65dp"
-            android:layout_height="67dp"
-            android:layout_marginTop="4dp"
-            android:src="@drawable/logo"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/logo_robertoruiz"
+            app:layout_constraintDimensionRatio="W,1:1"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.901"
+            app:layout_constraintHorizontal_bias="0.916"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.15" />
 
         <TextView
             android:id="@+id/textView22"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:text="Empresas"
             android:textAlignment="center"
             android:textColor="#000000"
             android:textSize="25sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.025" />
-
+            app:layout_constraintTop_toTopOf="@+id/imageView4" />
 
         <Button
             android:id="@+id/button1"
-            android:layout_width="80dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:textColor="#FFFFFF"
             android:text="Eventos"
+            android:layout_marginTop="18dp"
+            android:textColor="#FFFFFF"
             android:background="@drawable/button_active"
-            app:layout_constraintEnd_toStartOf="@+id/button2"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView22" />
+            app:layout_constraintTop_toBottomOf="@+id/textView22"
+            app:layout_constraintEnd_toStartOf="@+id/button2"
+            app:layout_constraintWidth_default="wrap"/>
 
         <Button
             android:id="@+id/button2"
-            android:layout_width="140dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Publicaciones"
+            android:text="  Publicaciones  "
+            android:layout_marginTop="18dp"
             android:background="@drawable/button_inactive"
-            app:layout_constraintEnd_toStartOf="@+id/button3"
             app:layout_constraintStart_toEndOf="@+id/button1"
-            app:layout_constraintTop_toBottomOf="@+id/textView22" />
+            app:layout_constraintTop_toBottomOf="@+id/textView22"
+            app:layout_constraintEnd_toStartOf="@+id/button3"
+            app:layout_constraintWidth_default="wrap"/>
 
         <Button
             android:id="@+id/button3"
-            android:layout_width="110dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_inactive"
-            android:layout_marginTop="24dp"
             android:text="Empresas"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/button_inactive"
             app:layout_constraintStart_toEndOf="@+id/button2"
-            app:layout_constraintTop_toBottomOf="@+id/textView22" />
+            app:layout_constraintTop_toBottomOf="@+id/textView22"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintWidth_default="wrap"/>
 
         <ProgressBar
             android:id="@+id/progressBar"
@@ -77,33 +78,31 @@
             android:indeterminate="true"
             android:visibility="gone"
             android:indeterminateTint="@color/red"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <SearchView
             android:id="@+id/searchView"
-            android:layout_width="380dp"
+            android:layout_width="0dp"
             android:layout_height="30dp"
-            android:layout_marginTop="92dp"
+            android:layout_marginTop="18dp"
             android:background="@drawable/rounded_searchview"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.451"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView22" />
-
+            app:layout_constraintTop_toBottomOf="@+id/button1"
+            app:layout_constraintWidth_percent="0.9" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/empresa_list"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/searchView"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toBottomOf="@+id/searchView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+

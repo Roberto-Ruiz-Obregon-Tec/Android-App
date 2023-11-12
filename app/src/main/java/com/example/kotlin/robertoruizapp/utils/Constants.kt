@@ -6,6 +6,7 @@ object Constants {
     const val BASE_URL_PROYECTO = "https://us-central1-roberto-ruiz-obregon.cloudfunctions.net/test/v1/"
 
 
+
     const val SPLASHCREEN_DURATION = 1000L
     const val CURSO_ID_EXTRA = "cursoExtra"
     //Cambios por la nueva barra de navegación
@@ -21,6 +22,7 @@ object Constants {
 
 
     const val BASE_URL = "https://us-central1-roberto-ruiz-obregon.cloudfunctions.net/test/v1/"
+
 
 
     const val ID_PROGRAM = "ID_PROGRAM"

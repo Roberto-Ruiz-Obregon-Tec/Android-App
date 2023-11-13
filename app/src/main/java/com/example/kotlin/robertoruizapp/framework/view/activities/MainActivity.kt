@@ -7,7 +7,8 @@ import androidx.fragment.app.Fragment
 import com.example.kotlin.mypokedexapp.viewmodel.MainViewModel
 import com.example.kotlin.robertoruizapp.R
 import com.example.kotlin.robertoruizapp.databinding.ActivityMainBinding
-    import com.example.kotlin.robertoruizapp.framework.view.fragments.FragmentoInicio
+import com.example.kotlin.robertoruizapp.framework.view.fragments.FragmentoFRRO
+import com.example.kotlin.robertoruizapp.framework.view.fragments.FragmentoInicio
 import com.example.kotlin.robertoruizapp.framework.view.fragments.FragmentoPerfil
 import com.example.kotlin.robertoruizapp.framework.view.fragments.FragmentoFeed
 import com.example.kotlin.robertoruizapp.framework.view.fragments.FragmentoHome
@@ -95,10 +96,10 @@ class MainActivity : AppCompatActivity() {
                 FragmentoFeed(), //Crear fragmento feed
                 Constants.MENU_FEED
             )
-            //Constants.MENU_FRRO -> exchangeCurrentFragment(
-            //    FragmentoFRRO(), //Crear fragmento frro
-            //    Constants.MENU_FRRO
-            //)
+            Constants.MENU_FRRO -> exchangeCurrentFragment(
+                FragmentoFRRO(), //Crear fragmento frro
+                Constants.MENU_FRRO
+            )
             Constants.MENU_PERFIL -> exchangeCurrentFragment(
               FragmentoPerfil(), //Cambiar por los fragmentos que usaremos
               Constants.MENU_PERFIL

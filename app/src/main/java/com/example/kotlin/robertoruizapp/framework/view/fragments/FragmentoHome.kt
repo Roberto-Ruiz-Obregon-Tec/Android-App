@@ -169,7 +169,7 @@ class FragmentoHome : Fragment() {
             if (curso?.cost == 0) {
                 holder.costoCurso.text = "Gratuito"
             } else {
-                holder.costoCurso.text = "$${curso?.cost}"
+                holder.costoCurso.text = "$${curso?.cost} MXN"
             }
 
             holder.modalidadCurso.text = curso?.modality

@@ -50,7 +50,9 @@
 
         <View
             android:id="@+id/view3"
-            android:layout_width="350dp"
+            android:layout_width="match_parent"
+            android:layout_marginEnd="32dp"
+            android:layout_marginStart="32dp"
             android:layout_height="1dp"
             android:layout_marginTop="6dp"
             android:background="#E0E0E0"
@@ -61,10 +63,10 @@
 
         <TextView
             android:id="@+id/textView12"
-            android:layout_width="127dp"
-            android:layout_height="28dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="  Contraseña"
+            android:text="Contraseña"
             android:textColor="#000000"
             android:textSize="16sp"
             android:textStyle="bold"
@@ -75,7 +77,9 @@
 
         <EditText
             android:id="@+id/password_login"
-            android:layout_width="350dp"
+            android:layout_width="match_parent"
+            android:layout_marginEnd="32dp"
+            android:layout_marginStart="32dp"
             android:layout_height="40dp"
             android:autofillHints="password"
             android:background="@drawable/edit_text_bg"
@@ -90,8 +94,8 @@
 
         <TextView
             android:id="@+id/textView7"
-            android:layout_width="60dp"
-            android:layout_height="23dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Correo"
             android:textAlignment="center"
@@ -105,9 +109,11 @@
 
         <EditText
             android:id="@+id/email_login"
-            android:layout_width="350dp"
+            android:layout_width="match_parent"
             android:layout_height="40dp"
             android:autofillHints="emailAddress"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
             android:background="@drawable/edit_text_bg"
             android:ems="10"
             android:inputType="textEmailAddress"
@@ -118,7 +124,9 @@
 
         <View
             android:id="@+id/view4"
-            android:layout_width="350dp"
+            android:layout_width="match_parent"
+            android:layout_marginEnd="32dp"
+            android:layout_marginStart="32dp"
             android:layout_height="1dp"
             android:layout_marginTop="18dp"
             android:background="#E0E0E0"
@@ -129,7 +137,9 @@
 
         <Button
             android:id="@+id/button_login"
-            android:layout_width="350dp"
+            android:layout_width="match_parent"
+            android:layout_marginEnd="32dp"
+            android:layout_marginStart="32dp"
             android:layout_height="55dp"
             android:layout_marginTop="20dp"
             android:backgroundTint="@color/primary"
@@ -189,11 +199,6 @@
             app:layout_constraintVertical_bias="0.544"
             tools:layout_editor_absoluteX="0dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:alpha="0.8"
-                android:background="#000000" />
 
             <ProgressBar
                 android:id="@+id/progressBarLogin"

@@ -158,7 +158,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="580dp"
         android:background="@android:color/transparent"
-        android:text="Regístrarme"
+        android:text="Regístrarse"
         android:textColor="#949494"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -166,22 +166,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView23"
+    <Button
+        android:id="@+id/forgot_password_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="532dp"
+        android:background="@android:color/transparent"
         android:text="Olvide mi contraseña"
+        android:textColor="#949494"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="560dp"
-        android:text="o"
+        android:layout_marginTop="570dp"
+        android:text="O"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"

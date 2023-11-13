@@ -24,9 +24,10 @@ package com.example.kotlin.robertoruizapp.data.network.model.Course
  */
 data class Document(
     val _id: String,
-    val cost: Int,
+    val cost: Double,
     val capacity: Int,
-    val rating: Int,
+    val rating: Double,
+    val ratingCount: Int,
     val meetingCode: String,
     val accessCode: String,
     val name: String,

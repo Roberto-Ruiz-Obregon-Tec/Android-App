@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
@@ -41,6 +42,25 @@ class FragmentoHome : Fragment() {
 
     private val binding get() = _binding!!
 
+    interface OnCursoClickListener {
+        fun onCursoClicked(cursoId: String)
+    }
+    private val onCursoClickListener = object : OnCursoClickListener {
+        override fun onCursoClicked(cursoId: String) {
+            val fragmentoDetalles = FragmentoCursoDetalles().apply {
+                arguments = Bundle().apply {
+                    putString("CURSO_ID", cursoId)
+                }
+            }
+
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.nav_host_fragment_content_main, fragmentoDetalles)
+                .addToBackStack(null) // Permite volver al fragmento anterior
+                .commit()
+        }
+    }
+
+
     /**
      * Method called when the fragment view is created.
      */
@@ -49,8 +69,10 @@ class FragmentoHome : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         _binding = FragmentoHomeBinding.inflate(inflater, container, false)
         return binding.root
+
     }
 
     /**
@@ -111,8 +133,11 @@ class FragmentoHome : Fragment() {
      *
      * @param courses List of courses to display in the list.
      */
-    class CursoAdapter(private val cursos: List<Document?>) :
-        RecyclerView.Adapter<CursoAdapter.ViewHolder>() {
+    class CursoAdapter(
+        private val cursos: List<Document?>,
+        private val itemClickListener: OnCursoClickListener
+    ) : RecyclerView.Adapter<CursoAdapter.ViewHolder>() {
+
 
         /**
          * ViewHolder for course list items. Here I call it so that it appears in item_cursos.xml
@@ -173,6 +198,13 @@ class FragmentoHome : Fragment() {
             }
 
             holder.modalidadCurso.text = curso?.modality
+
+            holder.itemView.findViewById<Button>(R.id.btn_ver_mas).setOnClickListener {
+                curso?._id?.let { id ->
+                    itemClickListener.onCursoClicked(id)
+                }
+            }
+
         }
 
 
@@ -196,7 +228,7 @@ class FragmentoHome : Fragment() {
 
                 if (result != null) {
                     withContext(Dispatchers.Main) {
-                        val adapter = CursoAdapter(result.data)
+                        val adapter = CursoAdapter(result.data, onCursoClickListener)
                         binding.cursosList.adapter = adapter
                         binding.cursosList.layoutManager = LinearLayoutManager(context)
                     }

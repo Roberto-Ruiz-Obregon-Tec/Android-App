@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp"
+    android:layout_marginTop="10dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@drawable/rounded_searchview">
+
+    <TextView
+        android:id="@+id/titulo_programa"
+        android:layout_width="match_parent"
+        android:text="Compañía"
+        android:textStyle="bold"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:textColor="#000" />
+
+    <TextView
+        android:id="@+id/programa_description"
+        android:layout_width="match_parent"
+        android:text="Descripción"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textColor="#666" />
+    <TextView
+        android:id="@+id/prueba"
+        android:layout_width="match_parent"
+        android:text="Hlaaaaaaa"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textColor="#666" />
+
+
+</LinearLayout>

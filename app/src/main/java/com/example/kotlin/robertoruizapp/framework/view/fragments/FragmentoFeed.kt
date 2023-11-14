@@ -3,24 +3,23 @@ package com.example.kotlin.robertoruizapp.framework.view.fragments
 import android.os.Build
 import com.example.kotlin.robertoruizapp.databinding.FragmentoFeedBinding
 import android.os.Bundle
-import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlin.robertoruizapp.R
 import com.example.kotlin.robertoruizapp.data.Repository
+import com.example.kotlin.robertoruizapp.data.RepositoryPublication
 import com.example.kotlin.robertoruizapp.data.companyCertificationRepository
 import com.example.kotlin.robertoruizapp.data.network.model.Events.EventObject
-import com.example.kotlin.robertoruizapp.data.network.model.companyCertification.Document
 import com.example.kotlin.robertoruizapp.data.network.model.companyCertification.CertificacionEmpresaObj
+import com.example.kotlin.robertoruizapp.data.network.model.publication.PublicObjeto
+import com.example.kotlin.robertoruizapp.framework.adapters.EmpresaAdapter
 import com.example.kotlin.robertoruizapp.framework.adapters.EventsAdapter
+import com.example.kotlin.robertoruizapp.framework.adapters.PublicationAdapter
 import com.example.kotlin.robertoruizapp.framework.view.activities.LoginActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -36,6 +35,7 @@ import kotlinx.coroutines.withContext
 class FragmentoFeed : Fragment() {
 
     private var _binding: FragmentoFeedBinding? = null
+
     private val binding get() = _binding!!
 
     /**
@@ -81,6 +81,9 @@ class FragmentoFeed : Fragment() {
             // Cambia el drawable y color del texto de button1
             binding.button1.setBackgroundResource(R.drawable.button_inactive)
             binding.button1.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+            // Cambia el drawable y color del texto de button1
+            binding.button2.setBackgroundResource(R.drawable.button_inactive)
+            binding.button2.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
         }
 
         binding.button1.setOnClickListener {
@@ -93,43 +96,25 @@ class FragmentoFeed : Fragment() {
             // Cambia el drawable y color del texto de button3
             binding.button3.setBackgroundResource(R.drawable.button_inactive)
             binding.button3.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+            binding.button2.setBackgroundResource(R.drawable.button_inactive)
+            binding.button2.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+        }
+
+        binding.button2.setOnClickListener {
+            getPublication()
+
+            // Cambia el drawable y color del texto de button1
+            binding.button2.setBackgroundResource(R.drawable.button_active)
+            binding.button2.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+
+            // Cambia el drawable y color del texto de button3
+            binding.button3.setBackgroundResource(R.drawable.button_inactive)
+            binding.button3.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+            binding.button1.setBackgroundResource(R.drawable.button_inactive)
+            binding.button1.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
         }
     }
 
-    /**
-     * Adapter for company list.
-     *
-     * This adapter is responsible for linking the companies' data with the view in the RecyclerView.
-     *
-     * @param companies List of company documents that will be displayed.
-     */
-    class EmpresaAdapter(private val empresas: List<Document?>) :
-        RecyclerView.Adapter<EmpresaAdapter.ViewHolder>() {
-
-        class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-            val nombreEmpresa: TextView = view.findViewById(R.id.empresa_nombre)
-            val descripcionEmpresa: TextView = view.findViewById(R.id.empresa_description)
-            val certificacionEmpresa: TextView = view.findViewById(R.id.empresa_certificacion)
-        }
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-            val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_empresas_certificacion, parent, false)
-            return ViewHolder(view)
-        }
-
-        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            val empresa = empresas[position]
-            //Log.d("EmpresaAdapter", "Certificaciones: ${empresa?.certifications}")
-            holder.nombreEmpresa.text = empresa?.name
-            holder.descripcionEmpresa.text = empresa?.description
-            holder.certificacionEmpresa.text = empresa?.certifications?.joinToString(separator = ", ")
-
-        }
-
-
-        override fun getItemCount() = empresas.size
-    }
     /**
      * Obtain company certifications and update your view.
      *
@@ -149,6 +134,32 @@ class FragmentoFeed : Fragment() {
                     if (result != null) {
                         withContext(Dispatchers.Main) {
                         val adapter = EmpresaAdapter(result.data.companies)
+                        binding.empresaList.adapter = adapter
+                        binding.empresaList.layoutManager = LinearLayoutManager(context)
+                    }
+                }
+            } catch (e: Exception) {
+                e.printStackTrace() // Log the exception
+            } finally {
+                withContext(Dispatchers.Main) {
+                    hideProgressBar()
+                }
+            }
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    private fun getPublication() {
+        showProgressBar()
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val RepositoryPublication = RepositoryPublication()
+                val result: PublicObjeto? = RepositoryPublication.getPublication(LoginActivity.token)
+
+
+                if (result != null) {
+                    withContext(Dispatchers.Main) {
+                        val adapter = PublicationAdapter(result.data.publications)
                         binding.empresaList.adapter = adapter
                         binding.empresaList.layoutManager = LinearLayoutManager(context)
                     }

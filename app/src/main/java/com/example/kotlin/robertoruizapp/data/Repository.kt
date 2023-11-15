@@ -67,10 +67,10 @@ class Repository() {
      * @return the call to the [NetworkModuleDI] method [getEventsNoFilter]
      */
     
-    suspend fun getEventsNoFilter() : EventObject? {
+    suspend fun getEventsNoFilter(jwt: String) : EventObject? {
         api = NetworkModuleDI()
         return try {
-            api.getEventsNoFilter()
+            api.getEventsNoFilter(jwt)
         }
         catch (e:java.lang.Exception) {
             e.printStackTrace()
@@ -90,7 +90,7 @@ class Repository() {
      *
      * @return [EventObject] object
      */
-    suspend fun getEvents(eventName: String, location: String, description: String, startDate: String, endDate: String, topic: String): EventObject? {
+    suspend fun getEvents(eventName: String, location: String, description: String, startDate: String, endDate: String, imageUrl: String, topic: String): EventObject? {
         api = NetworkModuleDI()
         return try {
             api.getEvents(eventName, location, description, startDate, endDate, topic)

@@ -1,5 +1,6 @@
 package com.example.kotlin.robertoruizapp.framework.view.fragments
 
+import android.annotation.SuppressLint
 import android.os.Build
 import com.example.kotlin.robertoruizapp.databinding.FragmentoFeedBinding
 import android.os.Bundle
@@ -15,6 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlin.robertoruizapp.R
+import com.example.kotlin.robertoruizapp.data.EventRepository
 import com.example.kotlin.robertoruizapp.data.Repository
 import com.example.kotlin.robertoruizapp.data.companyCertificationRepository
 import com.example.kotlin.robertoruizapp.data.network.model.Events.EventObject
@@ -28,7 +30,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 /**
- * This fragment shows the companies with their certifications
+ * This fragment shows the companies with their certifications and events
  *
  * @property _binding Variable for the automatically generated view binding for this fragment.
  * @property binding Access property to `_binding` that ensures it is not null.
@@ -167,15 +169,24 @@ class FragmentoFeed : Fragment() {
     private fun getEvents() {
         showProgressBar()
         CoroutineScope(Dispatchers.IO).launch {
-            val eventsRepository = Repository()
-            val result: EventObject? = eventsRepository.getEventsNoFilter()
+            try {
+                val eventsRepository = EventRepository()
+                val result: EventObject? = eventsRepository.getEvent(LoginActivity.token)
 
-            withContext(Dispatchers.Main) {
-                hideProgressBar()
                 if (result != null) {
-                    val adapter = EventsAdapter(result.data.documents)
-                    binding.empresaList.adapter = adapter
-                    binding.empresaList.layoutManager = LinearLayoutManager(context)
+                   withContext(Dispatchers.Main) {
+                        val adapter = EventsAdapter(result.data.documents)
+                        binding.empresaList.adapter = adapter
+                        binding.empresaList.layoutManager = LinearLayoutManager(context)
+                    } 
+                }
+            }
+            catch (e: Exception) {
+                e.printStackTrace()
+            }
+            finally {
+                withContext(Dispatchers.Main) {
+                    hideProgressBar()
                 }
             }
         }

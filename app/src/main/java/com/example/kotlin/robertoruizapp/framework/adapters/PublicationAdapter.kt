@@ -7,6 +7,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlin.robertoruizapp.R
 import com.example.kotlin.robertoruizapp.data.network.model.publication.Document
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 /**
  * Adapter for company list.
@@ -21,6 +24,9 @@ class PublicationAdapter(private val empresas: List<Document?>) :
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val nombreEmpresa: TextView = view.findViewById(R.id.titulo_programa)
         val descripcionEmpresa: TextView = view.findViewById(R.id.programa_description)
+        val fechapublicacion: TextView = view.findViewById(R.id.fecha_publicacion)
+        val likesTextView: TextView = view.findViewById(R.id.like_total)
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -34,6 +40,29 @@ class PublicationAdapter(private val empresas: List<Document?>) :
         //Log.d("EmpresaAdapter", "Certificaciones: ${empresa?.certifications}")
         holder.nombreEmpresa.text = empresa?.title
         holder.descripcionEmpresa.text = empresa?.description
+        holder.likesTextView.text = empresa?.likes.toString()
+
+        val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US)
+        val outputFormat = SimpleDateFormat("dd/MM/yyyy", Locale.US)
+        val createdAt = empresa?.createdAt
+
+        val startDate = if (!createdAt.isNullOrEmpty()) {
+            try {
+                inputFormat.parse(createdAt)
+            } catch (e: ParseException) {
+                null
+            }
+        } else {
+            null
+        }
+
+        holder.fechapublicacion.text = startDate?.let {
+            outputFormat.format(it)
+        } ?: "Fecha no disponible"
+
+
+
+
     }
 
 

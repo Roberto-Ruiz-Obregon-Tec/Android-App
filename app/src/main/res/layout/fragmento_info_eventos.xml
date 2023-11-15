@@ -24,13 +24,13 @@
             android:padding="16dp">
 
             <ImageView
-                android:id="@+id/imgEvento"
+                android:id="@+id/eventImage"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:src="@drawable/eventos_test" />
 
             <TextView
-                android:id="@+id/txtNombreEvento"
+                android:id="@+id/eventName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Carrera 5km con causa"
@@ -52,7 +52,7 @@
                     android:src="@drawable/ping" />
 
                 <TextView
-                    android:id="@+id/txtUbicacionEvento"
+                    android:id="@+id/eventLocation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Querétaro"
@@ -62,7 +62,7 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/txtDescripcionEvento"
+                android:id="@+id/eventDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="El evento consta de una carrera de 5km que recorrerá la ciudad de Querétaro desde Antea hasta la entrada a la fundación Ruiz Obregon. Los fondos recaudados de este evento irán a los niños palestinos. Israel no es un estado legitmo"
@@ -91,7 +91,7 @@
                     android:text="Fecha: " />
 
                 <TextView
-                    android:id="@+id/txtFechaEvento"
+                    android:id="@+id/eventDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"

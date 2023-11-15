@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Build
 import com.example.kotlin.robertoruizapp.databinding.FragmentoFeedBinding
 import android.os.Bundle
+import android.util.Log
 import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
@@ -23,6 +24,7 @@ import com.example.kotlin.robertoruizapp.data.network.model.Events.EventObject
 import com.example.kotlin.robertoruizapp.data.network.model.companyCertification.Document
 import com.example.kotlin.robertoruizapp.data.network.model.companyCertification.CertificacionEmpresaObj
 import com.example.kotlin.robertoruizapp.framework.adapters.EventsAdapter
+import com.example.kotlin.robertoruizapp.framework.adapters.OnEventClickListener
 import com.example.kotlin.robertoruizapp.framework.view.activities.LoginActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -40,6 +42,25 @@ class FragmentoFeed : Fragment() {
     private var _binding: FragmentoFeedBinding? = null
     private val binding get() = _binding!!
 
+    
+    
+    private val onEventClickListener = object : OnEventClickListener {
+        override fun onEventClick(eventID: String) {
+            Log.d("FragmentoFeed", "Event clicked: $eventID")
+            val fragmentDetails = FragmentoInfoEventos().apply { 
+                arguments = Bundle().apply {
+                    putString("eventID", eventID)
+                }
+            }
+
+            parentFragmentManager.beginTransaction().apply {
+                replace(R.id.nav_host_fragment_content_main, fragmentDetails) 
+                addToBackStack(null)
+                commit()
+            }
+        }
+    }
+    
     /**
      * Create the fragment view.
      *
@@ -175,7 +196,7 @@ class FragmentoFeed : Fragment() {
 
                 if (result != null) {
                    withContext(Dispatchers.Main) {
-                        val adapter = EventsAdapter(result.data.documents)
+                        val adapter = EventsAdapter(result.data.documents, onEventClickListener)
                         binding.empresaList.adapter = adapter
                         binding.empresaList.layoutManager = LinearLayoutManager(context)
                     } 

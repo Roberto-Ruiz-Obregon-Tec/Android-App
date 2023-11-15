@@ -1,314 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<androidx.core.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" style="@android:style/Widget.Holo.Light.ScrollView"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fadeScrollbars="true"
-    android:fillViewport="true"
-    android:scrollbarFadeDuration="250"
-    android:scrollbarSize="8dp"
-    android:scrollbarStyle="insideOverlay">
 <androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/InfoCurso"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".framework.view.activities.MainActivity"
-    tools:layout_editor_absoluteX="61dp"
-    tools:layout_editor_absoluteY="242dp">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:cropToPadding="false"
-        android:scaleType="fitXY"
-        app:layout_constraintTop_toBottomOf="@+id/VerEvento"
-        app:srcCompat="@drawable/curso1" tools:ignore="MissingConstraints"/>
-
-    <TextView
-        android:id="@+id/nombre_curso_info"
-        android:layout_width="match_parent"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="12dp"
-        android:fontFamily="@font/roboto_slab"
-        android:text="Nombre del evento"
-        android:textAlignment="center"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_marginEnd="16dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="10dp"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        tools:ignore="MissingConstraints"/>
-    <ImageView
-        android:id="@+id/imagen_ponente"
-        android:layout_width="33dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="12dp"
-        android:paddingLeft="8sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nombre_curso_info"
-        app:srcCompat="@drawable/usuario"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintEnd_toEndOf="parent">
 
-    <TextView
-        android:id="@+id/nombre_ponente"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="16dp"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
 
-        android:fontFamily="@font/roboto"
-        android:text=" José Fernandez"
-        app:layout_constraintStart_toEndOf="@+id/imagen_ponente"
-        app:layout_constraintTop_toBottomOf="@+id/nombre_curso_info"
-        tools:ignore="MissingConstraints" />
+            <ImageView
+                android:id="@+id/imgEvento"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:src="@drawable/eventos_test" />
 
-    <TextView
-        android:id="@+id/fecha_curso"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:fontFamily="@font/roboto"
-        android:text="10 de marzo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.123"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/label_fecha"
-        tools:ignore="MissingConstraints" />
+            <TextView
+                android:id="@+id/txtNombreEvento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Evento"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:gravity="center" />
 
-    <TextView
-        android:id="@+id/tipo_modalidad"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:fontFamily="@font/roboto"
-        android:text="Curso en línea"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/label_modalidad"
-        tools:ignore="MissingConstraints" />
+            <TextView
+                android:id="@+id/txtUbicacionEvento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ubicacion"
+                android:textSize="16sp"
+                android:gravity="center" />
 
-    <TextView
-        android:id="@+id/tipo_pago"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="17dp"
-        android:layout_marginBottom="84dp"
-        android:fontFamily="@font/roboto"
-        android:text="Gratis"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.804"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/label_cobro"
-        app:layout_constraintVertical_bias="0.036"
-        tools:ignore="MissingConstraints" />
+            <TextView
+                android:id="@+id/txtDescripcionEvento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Descripción del evento..."
+                android:textSize="14sp" />
 
-    <TextView
-        android:id="@+id/label_fecha"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:fontFamily="@font/roboto"
-        android:text="Fecha de inicio:"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.13"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/icon_calendario"
-        tools:ignore="MissingConstraints" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal">
 
-    <TextView
-        android:id="@+id/label_cobro"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:fontFamily="@font/roboto"
-        android:text="Cobro:"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.813"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4"
-        app:layout_constraintVertical_bias="0.0"
-        tools:ignore="MissingConstraints" />
+                <TextView
+                    android:id="@+id/txtFechaEvento"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="10 Marzo - 10 de Marzo"
+                    android:textSize="14sp" />
 
-    <TextView
-        android:id="@+id/label_modalidad"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:fontFamily="@font/roboto"
-        android:text="Modalidad:"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ping_icon"
-        tools:ignore="MissingConstraints" />
+                <TextView
+                    android:id="@+id/txtHorarioEvento"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:text="10 am - 11 am"
+                    android:textSize="14sp" />
 
-    <TextView
-        android:id="@+id/descripcion_curso"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="96dp"
-        android:fontFamily="@font/roboto"
-        android:paddingLeft="20sp"
-        android:paddingRight="20sp"
-        android:text="Lorem ipsum dolor sit amet. Est quia consequatur ut culpa natus sed consequuntur veritatis et quia dolorem ea eaque tempore. In consequatur neque 33 saepe consequuntur ut nulla vitae ea magni nostrum ex incidunt aperiam non culpa exercitationem et quos commodi."
-        android:textAlignment="center"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nombre_curso_info"
-        tools:ignore="MissingConstraints" />
+            </LinearLayout>
 
-    <TextView
-        android:id="@+id/ubicacion_curso"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="14dp"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal">
 
-        android:fontFamily="@font/roboto"
-        android:text="Querétaro"
-        app:layout_constraintBottom_toTopOf="@+id/descripcion_curso"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/imageView3"
-        app:layout_constraintTop_toBottomOf="@+id/nombre_ponente"
-        app:layout_constraintVertical_bias="0.0"
-        tools:ignore="MissingConstraints" />
+                <TextView
+                    android:id="@+id/txtCapacidadEvento"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Capacidad: 200 personas"
+                    android:textSize="14sp" />
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="20dp"
-        android:layout_height="44dp"
+                <TextView
+                    android:id="@+id/txtCostoEvento"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:text="Costos: $0.0"
+                    android:textSize="14sp" />
 
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="5dp"
-        app:layout_constraintBottom_toTopOf="@+id/descripcion_curso"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.145"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nombre_ponente"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/ping" />
+            </LinearLayout>
 
-    <ImageView
-        android:id="@+id/icon_calendario"
-        android:layout_width="36dp"
-        android:layout_height="27dp"
-        android:layout_marginTop="36dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.152"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/descripcion_curso"
-        app:srcCompat="@drawable/calendario" />
+            <Button
+                android:id="@+id/btnVerMas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@color/nav_bar"
+                android:text="Inscribirme"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
 
-    <ImageView
-        android:id="@+id/ping_icon"
-        android:layout_width="56dp"
-        android:layout_height="28dp"
-        android:layout_marginTop="36dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/descripcion_curso"
-        app:srcCompat="@drawable/ping"/>
-    <Button
-        android:id="@+id/button_inscribirme"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Inscribirme"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/horario"
-        app:layout_constraintVertical_bias="0.517" />
-
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="60dp"
-        android:layout_height="35dp"
-        android:layout_marginTop="28dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.834"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/descripcion_curso"
-        app:srcCompat="@drawable/pago" />
-
-    <TextView
-        android:id="@+id/Fecha_fin_Titulo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:fontFamily="@font/roboto"
-        android:text="Fecha de Fin:"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.116"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fecha_curso" />
-
-    <TextView
-        android:id="@+id/fechafin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="25 de Mayo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.116"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Fecha_fin_Titulo" />
-
-
-    <TextView
-        android:id="@+id/Horario"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="68dp"
-        android:text="Horario:"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tipo_modalidad"
-        app:drawableStartCompat="@drawable/horario_c"/>
-
-    <TextView
-        android:id="@+id/horario"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="6dp"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/roboto"
-        android:paddingLeft="20sp"
-        android:paddingRight="20sp"
-        android:text="Lorem it culpa natus sed conse commodi."
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Horario"
-        tools:ignore="MissingConstraints" />
-    <TextView
-        android:id="@+id/VerEvento"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" android:text="Ver Evento"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"/>
-
-
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.core.widget.NestedScrollView>

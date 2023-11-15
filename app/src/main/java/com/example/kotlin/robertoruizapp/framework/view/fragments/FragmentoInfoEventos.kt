@@ -18,6 +18,8 @@ import kotlinx.coroutines.withContext
 import com.example.kotlin.robertoruizapp.data.network.model.Events.Document
 import com.example.kotlin.robertoruizapp.data.network.model.Events.EventObject
 import com.example.kotlin.robertoruizapp.framework.view.activities.LoginActivity
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class FragmentoInfoEventos : Fragment() {
@@ -55,8 +57,17 @@ class FragmentoInfoEventos : Fragment() {
                     if (result != null) {
                         binding.eventName.text = result.eventName
                         binding.eventDescription.text = result.description
-                        binding.eventDate.text = result.startDate
                         binding.eventLocation.text = result.location
+
+                        val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+                        val outputFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                        val date = inputFormat.parse(result.startDate)
+                        val endDate = inputFormat.parse(result.endDate)
+                        val formattedDate = outputFormat.format(date)
+                        val endFormatDate = outputFormat.format(endDate)
+
+                        binding.eventDate.text = formattedDate
+                        // binding.eventEndDate.text = endFormatDate
                     }
                 }
             }

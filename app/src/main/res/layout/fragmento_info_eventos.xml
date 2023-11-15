@@ -65,9 +65,9 @@
                 android:id="@+id/eventDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:text="El evento consta de una carrera de 5km que recorrerá la ciudad de Querétaro desde Antea hasta la entrada a la fundación Ruiz Obregon. Los fondos recaudados de este evento irán a los niños palestinos. Israel no es un estado legitmo"
-                android:textSize="14sp"
-                android:layout_marginTop="8dp" />
+                android:textAlignment="center" android:textSize="14sp"/>
 
 
             <LinearLayout
@@ -113,23 +113,6 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:gravity="center_horizontal">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Lugar"
-                        android:gravity="start"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Ubicación"
-                        android:gravity="end"
-                        android:textStyle="bold"
-                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -137,23 +120,6 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:gravity="center_horizontal">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Horario"
-                        android:gravity="start"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="10am - 11am"
-                        android:gravity="end"
-                        android:textStyle="bold"
-                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -161,23 +127,6 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:gravity="center_horizontal">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Capacidad"
-                        android:gravity="start"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="100 personas"
-                        android:gravity="end"
-                        android:textStyle="bold"
-                        android:textSize="14sp" />
                 </LinearLayout>
 
             </LinearLayout>

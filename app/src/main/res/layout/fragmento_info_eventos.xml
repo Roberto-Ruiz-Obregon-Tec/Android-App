@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -34,78 +33,105 @@
                 android:id="@+id/txtNombreEvento"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Evento"
+                android:text="Carrera 5km con causa"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                android:gravity="center" />
-
-            <TextView
-                android:id="@+id/txtUbicacionEvento"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Ubicacion"
-                android:textSize="16sp"
-                android:gravity="center" />
+                android:gravity="center"
+                android:layout_marginTop="16dp" />
 
             <TextView
                 android:id="@+id/txtDescripcionEvento"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Descripción del evento..."
-                android:textSize="14sp" />
+                android:text="El evento consta de una carrera de 5km que recorrerá la ciudad de Querétaro desde Antea hasta la entrada a la fundación Ruiz Obregon. Los fondos recaudados de este evento irán a los niños palestinos. Israel no es un estado legitmo"
+                android:textSize="14sp"
+                android:layout_marginTop="8dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center_horizontal">
+                android:gravity="start"
+                android:layout_marginTop="16dp">
+
+                <ImageView
+                    android:layout_width="26dp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ping" />
+
+                <TextView
+                    android:id="@+id/txtUbicacionEvento"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Querétaro"
+                    android:textSize="16sp"
+                    android:gravity="center_vertical"
+                    android:layout_marginStart="8dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="start"
+                android:layout_marginTop="8dp">
+
+                <ImageView
+                    android:layout_width="23dp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/calendario" />
 
                 <TextView
                     android:id="@+id/txtFechaEvento"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="10 Marzo - 10 de Marzo"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:gravity="center_vertical"
+                    android:layout_marginStart="8dp" />
 
                 <TextView
                     android:id="@+id/txtHorarioEvento"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
                     android:text="10 am - 11 am"
-                    android:textSize="14sp" />
-
+                    android:textSize="14sp"
+                    android:gravity="center_vertical"
+                    android:layout_marginStart="8dp" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center_horizontal">
+                android:gravity="start"
+                android:layout_marginTop="8dp">
 
                 <TextView
                     android:id="@+id/txtCapacidadEvento"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Capacidad: 200 personas"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:gravity="center_vertical"
+                    android:layout_marginStart="8dp" />
 
                 <TextView
                     android:id="@+id/txtCostoEvento"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
                     android:text="Costos: $0.0"
-                    android:textSize="14sp" />
-
+                    android:textSize="14sp"
+                    android:gravity="center_vertical"
+                    android:layout_marginStart="8dp" />
             </LinearLayout>
 
             <Button
-                android:id="@+id/btnVerMas"
+                android:id="@+id/btnInscribirme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
                 android:background="@color/nav_bar"
                 android:text="Inscribirme"
                 android:textColor="@color/white"
@@ -114,3 +140,4 @@
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
+

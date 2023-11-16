@@ -12,8 +12,21 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 
 
+/**
+ * Scholarship adapter
+ *
+ * @property becas: Receives the list of Becas and modifies the view.
+ * @constructor Create empty Scholarship adapter
+ */
 class ScholarshipAdapter(private val becas: List<Document>) :
     RecyclerView.Adapter<ScholarshipAdapter.ViewHolder>() {
+    /**
+     * View holder
+     *
+     * @constructor
+     *
+     * @param view: Hold the card that is going to be modified
+     */
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val becaName: TextView = view.findViewById(R.id.titulo_beca_card)
         val becaDescription: TextView = view.findViewById(R.id.des_beca)

@@ -230,17 +230,26 @@ class FragmentoHome : Fragment() {
     }
     @RequiresApi(Build.VERSION_CODES.N)
     private fun getScholarship() {
+        showProgressBar()
         CoroutineScope(Dispatchers.IO).launch {
-            val ScholarshipRepository = ScholarshipRepository()
-            val result: BecasObjeto? = ScholarshipRepository.getScholarship(LoginActivity.token)
+            try{
+                val ScholarshipRepository = ScholarshipRepository()
+                val result: BecasObjeto? = ScholarshipRepository.getScholarship(LoginActivity.token)
 
-            if (result != null) {
-                withContext(Dispatchers.Main) {
-                    val adapter = ScholarshipAdapter(result.data.documents)
-                    binding.cursosList.adapter = adapter
-                    binding.cursosList.layoutManager = LinearLayoutManager(context)
+                if (result != null) {
+                    withContext(Dispatchers.Main) {
+
+                        val adapter = ScholarshipAdapter(result.data.documents)
+                        binding.cursosList.adapter = adapter
+                        binding.cursosList.layoutManager = LinearLayoutManager(context)
+                    }
                 }
-
+            } catch (e: Exception) {
+                e.printStackTrace() // Log the exception
+            } finally {
+                withContext(Dispatchers.Main) {
+                    hideProgressBar()
+                }
             }
         }
     }

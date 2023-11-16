@@ -1,69 +1,38 @@
 package com.example.kotlin.robertoruizapp.framework.adapters
 
-import android.content.Context
-import android.view.LayoutInflater
-import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
+import com.example.kotlin.robertoruizapp.R
 import com.example.kotlin.robertoruizapp.data.network.model.Becas.Document
-import com.example.kotlin.robertoruizapp.databinding.ItemProgramaBinding
-import com.example.kotlin.robertoruizapp.databinding.ListElementBecasBinding
-import com.example.kotlin.robertoruizapp.framework.adapters.viewholder.ProgramViewHolder
-import com.example.kotlin.robertoruizapp.framework.adapters.viewholder.ScholarshipViewHolder
 
-/**
- * ProgramAdapter class that has ProgramAdapter Constructor, onCreateViewholder,
- * onBindViewHolder and getItemCount methods to bind information
- *
- */
-class ScholarshipAdapter : RecyclerView.Adapter<ScholarshipViewHolder>() {
-    lateinit var data: ArrayList<Document>
-    private lateinit var context: Context
 
-    /**
-     * Constructor for ProgramAdapter
-     *
-     * @param basicData list of the data acquired from API
-     * @param context view context
-     */
-    fun ProgramAdapter(basicData: List<Document>, context: Context){
-        this.data = basicData as ArrayList<Document>
-        this.context = context
+class ScholarshipAdapter(private val becas: List<Document>) :
+    RecyclerView.Adapter<ScholarshipAdapter.ViewHolder>() {
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val becaName: TextView = view.findViewById(R.id.titulo_beca_card)
+        val becaDescription: TextView = view.findViewById(R.id.des_beca)
+        val becaDate: TextView = view.findViewById(R.id.fecha_beca)
+        val becaSector: TextView = view.findViewById(R.id.tipo_beca)
+        val becaOrga: TextView = view.findViewById(R.id.orga_beca)
     }
 
-    /**
-     * Overrides the fun onCreateViewHolder to bin the information extracted from the [ListElementsBeca]
-     * and set up the LayoutInflater
-     *
-     * @param parent gets the ViewGroup
-     * @param viewType in an Integer
-     *
-     * @return ProgramViewHolder type with the information binded
-     */
-
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ScholarshipViewHolder {
-        val binding = ListElementBecasBinding.inflate(LayoutInflater.from(parent.context), parent,
-            false)
-        return ScholarshipViewHolder(binding)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.list_element_becas, parent, false)
+        return ViewHolder(view)
     }
 
-    /**
-     * Overrides the fun onBindViewHolder to assign the information to the cell view
-     *
-     * @param holder a ScholarshipViewHolder Object that will have the information binded
-     * @param position the position of the holder in the data[position]
-     */
-    override fun onBindViewHolder(holder: ScholarshipViewHolder, position: Int){
-        val item = data[position]
-        holder.bind(item,context)
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val beca = becas[position]
+        holder.becaName.text = beca?.name
+        holder.becaDescription.text = beca?.description
+        holder.becaDate.text = "25/12/2023"
+        holder.becaSector.text = beca?.sector
+        holder.becaOrga.text = beca?.organization
     }
 
-    /**
-     * returns the number of items in the data object received from the API
-     *
-     * @return an n Integer representing the number of items
-     */
-    override fun getItemCount(): Int {
-        return data.size
-    }
+    override fun getItemCount() = becas.size
 }

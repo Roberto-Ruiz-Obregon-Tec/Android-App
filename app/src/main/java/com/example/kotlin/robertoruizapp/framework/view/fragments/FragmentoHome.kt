@@ -232,11 +232,11 @@ class FragmentoHome : Fragment() {
     private fun getScholarship() {
         CoroutineScope(Dispatchers.IO).launch {
             val ScholarshipRepository = ScholarshipRepository()
-            val result: BecasObjeto? = ScholarshipRepository.getScholarship()
+            val result: BecasObjeto? = ScholarshipRepository.getScholarship(LoginActivity.token)
 
             if (result != null) {
                 withContext(Dispatchers.Main) {
-                    val adapter = ScholarshipAdapter(result.data.becas)
+                    val adapter = ScholarshipAdapter(result.data.documents)
                     binding.cursosList.adapter = adapter
                     binding.cursosList.layoutManager = LinearLayoutManager(context)
                 }

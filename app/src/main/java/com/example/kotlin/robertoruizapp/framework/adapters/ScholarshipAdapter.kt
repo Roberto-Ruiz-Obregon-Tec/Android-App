@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.example.kotlin.robertoruizapp.R
 import com.example.kotlin.robertoruizapp.data.network.model.Becas.Document
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 
 class ScholarshipAdapter(private val becas: List<Document>) :
@@ -27,12 +29,25 @@ class ScholarshipAdapter(private val becas: List<Document>) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val beca = becas[position]
+        val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+        val outputFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+
+        if (beca.startDate != null)
+        {
+            val date = inputFormat.parse(beca.startDate)
+            val formattedDate = outputFormat.format(date)
+            holder.becaDate.text = formattedDate
+        }
+        else{
+            holder.becaDate.text = "25/12/2023"
+        }
         holder.becaName.text = beca?.name
         holder.becaDescription.text = beca?.description
-        holder.becaDate.text = "25/12/2023"
         holder.becaSector.text = beca?.sector
         holder.becaOrga.text = beca?.organization
     }
 
     override fun getItemCount() = becas.size
 }
+
+

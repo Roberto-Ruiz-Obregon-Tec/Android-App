@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="28dp"
             android:fontFamily="@font/roboto_slab"
-            android:text="Ricardo Pérez Mendieta"
+            android:text="Ricardo Pérez Push"
             android:textColor="@color/textIcons"
             android:textSize="25sp"
             app:layout_constraintEnd_toEndOf="parent"

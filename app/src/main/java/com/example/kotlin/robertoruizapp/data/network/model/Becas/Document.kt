@@ -8,7 +8,11 @@ class Document (
     val description: String,
     val organization: String,
     val sector: String,
-    val startDate: Date,
-    val endDate: Date,
+    val location: String,
+    val email:String,
+    val image:String,
+    val phone:String,
+    val startDate: String,
+    val endDate: String,
 )
 

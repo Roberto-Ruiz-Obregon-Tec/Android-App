@@ -36,7 +36,7 @@ class ScholarshipAdapter(private val becas: List<Document>) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.list_element_becas, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_becas, parent, false)
         return ViewHolder(view)
     }
 

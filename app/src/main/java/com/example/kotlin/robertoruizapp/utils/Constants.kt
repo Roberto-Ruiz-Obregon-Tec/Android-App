@@ -26,6 +26,7 @@ object Constants {
 
 
     const val ID_PROGRAM = "ID_PROGRAM"
+    const val ID_SCHOLARSHIP = "ID_SCHOLARSHIP"
     const val ID_PERFIL = "641e2e746f6fd2c83702ca33"
 
 }

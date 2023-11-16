@@ -8,4 +8,5 @@ import com.example.kotlin.robertoruizapp.data.network.model.Becas.BecasObjeto
 class ScholarshipListRequirement {
     private val ScholarshipRepository = ScholarshipRepository()
     suspend operator fun invoke(): BecasObjeto? = ScholarshipRepository.getScholarship()
+
 }

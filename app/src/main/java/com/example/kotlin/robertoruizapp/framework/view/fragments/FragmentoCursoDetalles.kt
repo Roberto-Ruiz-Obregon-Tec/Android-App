@@ -22,6 +22,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 
 class FragmentoCursoDetalles: Fragment() {
@@ -83,9 +85,52 @@ class FragmentoCursoDetalles: Fragment() {
     }
 
     private fun updateUIWithCourseDetails(course: Document) {
-        // Asegúrate de que estás llamando a las vistas correctas aquí
         binding.nombreCursoInfo.text = course.name
-        // ... etc. Actualiza todas las vistas que necesites con la información del curso
+        //binding.imagenCurso.drawable = course.courseImage
+        binding.nombrePonente.text = course.speaker
+        binding.ratingCurso.text = course.rating.toString()
+
+        val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US)
+        val outputFormat = SimpleDateFormat("dd/MM/yyyy", Locale.US)
+
+        val startDate = inputFormat.parse(course.startDate)
+        val endDate = inputFormat.parse(course.endDate)
+
+        val formattedStartDate = if (startDate != null) {
+            outputFormat.format(startDate)
+        } else {
+            ""
+        }
+        val formattedEndDate = if (endDate != null) {
+            outputFormat.format(endDate)
+        } else {
+            ""
+        }
+        val fechaCursoInfo = "$formattedStartDate - $formattedEndDate"
+        binding.fechaCursoInfo.text = fechaCursoInfo
+
+        //binding.fechaInicio.text = course.startDate
+        //binding.fechaFin.text = course.endDate
+        binding.descripcionCursoInfo.text = course.description
+        binding.modalidadCurso.text = course.modality
+        binding.ubicacionCurso.text = course.location
+        binding.horarioCurso.text = course.schedule
+
+        val costo = course.cost
+        val costoTexto = if (costo == 0.0) {
+            "Gratuito" // Si el costo es 0, mostrar "Gratuito"
+        } else {
+            String.format(Locale.US, "$%.2f MXN", costo) // De lo contrario, mostrar el formato de moneda
+        }
+        binding.costoCurso.text = costoTexto
+
+        binding.capacidadFaltanteCurso.text = course.remaining.toString()
+
+        val fechaLimite = SimpleDateFormat("dd/MM/yyyy", Locale.US).parse(course.startDate)
+        val fechaLimiteFormateada = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US).format(fechaLimite)
+
+        binding.fechaLimiteInscripcion.text = fechaLimiteFormateada
+
     }
 
     override fun onDestroyView() {

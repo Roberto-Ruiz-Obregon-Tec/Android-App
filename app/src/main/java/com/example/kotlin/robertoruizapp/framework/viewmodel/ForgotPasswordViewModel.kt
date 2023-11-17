@@ -7,10 +7,8 @@ import com.example.kotlin.robertoruizapp.data.network.ForgotPasswordRequest
 import kotlinx.coroutines.Dispatchers
 
 class ForgotPasswordViewModel : ViewModel() {
-
     // Obtener directamente la instancia del servicio
     private val apiService = NetworkModuleDIForgotPassword.provideForgotPasswordService()
-
     fun forgotPassword(email: String) = liveData(Dispatchers.IO) {
         emit(Resource.Loading())
         try {
@@ -18,8 +16,11 @@ class ForgotPasswordViewModel : ViewModel() {
             if (response.isSuccessful && response.body() != null) {
                 emit(Resource.Success(response.body()!!))
             } else {
-                emit(Resource.Error("Error: ${response.errorBody()?.string()}", null))
+                // Loguear el código de estado y la respuesta de error para diagnóstico
+                val errorBody = response.errorBody()?.string()
+                emit(Resource.Error("Error al reestablecer: Código ${response.code()} - $errorBody", null))
             }
+
         } catch (e: Exception) {
             emit(Resource.Error("Exception: ${e.localizedMessage}", null))
         }

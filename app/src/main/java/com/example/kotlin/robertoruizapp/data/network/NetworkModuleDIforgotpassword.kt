@@ -7,6 +7,7 @@ import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.Response
 import com.example.kotlin.robertoruizapp.utils.Constants
+import com.google.gson.JsonElement
 
 
 object NetworkModuleDIForgotPassword {
@@ -23,11 +24,11 @@ object NetworkModuleDIForgotPassword {
 }
 
 interface ForgotPasswordAPIService {
-    @POST("/user/forgotpassword")
-    suspend fun forgotPassword(@Body request: ForgotPasswordRequest): Response<ApiResponse> //
+    @POST("user/forgotpassword")
+    suspend fun forgotPassword(@Body request: ForgotPasswordRequest): Response<ApiResponse<JsonElement>> //
 
-    @POST("/user/resetpassword/{token}")
-    suspend fun ResetPassword(@Path("token") token: String, @Body request: ResetPasswordRequest): Response<ApiResponse> //
+    @POST("user/resetpassword/{token}")
+    suspend fun ResetPassword(@Path("token") token: String, @Body request: ResetPasswordRequest): Response<ApiResponse<JsonElement>> // Usa Any si el tipo de datos es desconocido o varía
 }
 
 

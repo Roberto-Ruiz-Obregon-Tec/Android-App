@@ -1,8 +1,11 @@
 package com.example.kotlin.robertoruizapp.framework.view.fragments
 
+import android.annotation.SuppressLint
 import android.os.Build
 import com.example.kotlin.robertoruizapp.databinding.FragmentoFeedBinding
 import android.os.Bundle
+import android.util.Log
+import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +14,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kotlin.robertoruizapp.R
+import com.example.kotlin.robertoruizapp.data.EventRepository
 import com.example.kotlin.robertoruizapp.data.Repository
 import com.example.kotlin.robertoruizapp.data.RepositoryPublication
 import com.example.kotlin.robertoruizapp.data.companyCertificationRepository
@@ -19,6 +23,7 @@ import com.example.kotlin.robertoruizapp.data.network.model.companyCertification
 import com.example.kotlin.robertoruizapp.data.network.model.publication.PublicObjeto
 import com.example.kotlin.robertoruizapp.framework.adapters.EmpresaAdapter
 import com.example.kotlin.robertoruizapp.framework.adapters.EventsAdapter
+import com.example.kotlin.robertoruizapp.framework.adapters.OnEventClickListener
 import com.example.kotlin.robertoruizapp.framework.adapters.PublicationAdapter
 import com.example.kotlin.robertoruizapp.framework.view.activities.LoginActivity
 import kotlinx.coroutines.CoroutineScope
@@ -27,7 +32,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 /**
- * This fragment shows the companies with their certifications
+ * This fragment shows the companies with their certifications and events
  *
  * @property _binding Variable for the automatically generated view binding for this fragment.
  * @property binding Access property to `_binding` that ensures it is not null.
@@ -38,6 +43,25 @@ class FragmentoFeed : Fragment() {
 
     private val binding get() = _binding!!
 
+    
+    
+    private val onEventClickListener = object : OnEventClickListener {
+        override fun onEventClick(eventID: String) {
+            Log.d("FragmentoFeed", "Event clicked: $eventID")
+            val fragmentDetails = FragmentoInfoEventos().apply { 
+                arguments = Bundle().apply {
+                    putString("eventID", eventID)
+                }
+            }
+
+            parentFragmentManager.beginTransaction().apply {
+                replace(R.id.nav_host_fragment_content_main, fragmentDetails) 
+                addToBackStack(null)
+                commit()
+            }
+        }
+    }
+    
     /**
      * Create the fragment view.
      *
@@ -178,15 +202,24 @@ class FragmentoFeed : Fragment() {
     private fun getEvents() {
         showProgressBar()
         CoroutineScope(Dispatchers.IO).launch {
-            val eventsRepository = Repository()
-            val result: EventObject? = eventsRepository.getEventsNoFilter()
+            try {
+                val eventsRepository = EventRepository()
+                val result: EventObject? = eventsRepository.getEvent(LoginActivity.token)
 
-            withContext(Dispatchers.Main) {
-                hideProgressBar()
                 if (result != null) {
-                    val adapter = EventsAdapter(result.data.documents)
-                    binding.empresaList.adapter = adapter
-                    binding.empresaList.layoutManager = LinearLayoutManager(context)
+                   withContext(Dispatchers.Main) {
+                        val adapter = EventsAdapter(result.data.documents, onEventClickListener)
+                        binding.empresaList.adapter = adapter
+                        binding.empresaList.layoutManager = LinearLayoutManager(context)
+                    } 
+                }
+            }
+            catch (e: Exception) {
+                e.printStackTrace()
+            }
+            finally {
+                withContext(Dispatchers.Main) {
+                    hideProgressBar()
                 }
             }
         }

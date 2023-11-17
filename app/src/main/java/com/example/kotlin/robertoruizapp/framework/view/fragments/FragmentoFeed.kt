@@ -153,13 +153,13 @@ class FragmentoFeed : Fragment() {
         showProgressBar()
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val RepositoryPublication = RepositoryPublication()
-                val result: PublicObjeto? = RepositoryPublication.getPublication(LoginActivity.token)
+                val repositoryPublication = RepositoryPublication()
+                val result: PublicObjeto? = repositoryPublication.getPublication(LoginActivity.token)
 
 
                 if (result != null) {
                     withContext(Dispatchers.Main) {
-                        val adapter = PublicationAdapter(result.data.publications)
+                        val adapter = PublicationAdapter(result.data)
                         binding.empresaList.adapter = adapter
                         binding.empresaList.layoutManager = LinearLayoutManager(context)
                     }

@@ -3,8 +3,10 @@ package com.example.kotlin.robertoruizapp.framework.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.kotlin.robertoruizapp.R
 import com.example.kotlin.robertoruizapp.data.network.model.publication.Document
 import java.text.ParseException
@@ -26,6 +28,7 @@ class PublicationAdapter(private val empresas: List<Document?>) :
         val descripcionEmpresa: TextView = view.findViewById(R.id.programa_description)
         val fechapublicacion: TextView = view.findViewById(R.id.fecha_publicacion)
         val likesTextView: TextView = view.findViewById(R.id.like_total)
+        val imagenpublicacion: ImageView = view.findViewById(R.id.imagenpublicacion)
 
     }
 
@@ -41,6 +44,16 @@ class PublicationAdapter(private val empresas: List<Document?>) :
         holder.nombreEmpresa.text = empresa?.title
         holder.descripcionEmpresa.text = empresa?.description
         holder.likesTextView.text = empresa?.likes.toString()
+
+        if (empresa?.image?.isNotEmpty() == true) {
+            Glide.with(holder.itemView.context)
+                .load(empresa.image)
+                .into(holder.imagenpublicacion)
+        } else {
+
+            holder.imagenpublicacion.setImageResource(R.drawable.curso1)
+        }
+
 
         val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US)
         val outputFormat = SimpleDateFormat("dd/MM/yyyy", Locale.US)

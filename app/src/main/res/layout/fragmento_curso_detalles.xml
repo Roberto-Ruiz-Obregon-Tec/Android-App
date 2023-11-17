@@ -48,7 +48,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Curso de Programación"
         android:textAlignment="center"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -60,7 +59,6 @@
         android:id="@+id/nombre_ponente"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="José Fernández"
         android:layout_marginTop="8dp"
         app:layout_constraintTop_toBottomOf="@id/nombre_curso_info"
         app:layout_constraintStart_toStartOf="parent"
@@ -70,7 +68,6 @@
         android:id="@+id/rating_curso"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="4.3 ★"
         app:layout_constraintBottom_toBottomOf="@id/nombre_ponente"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/nombre_ponente" />
@@ -80,7 +77,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textColor="#736F6F"
-        android:text="El curso de Fundamentos de Programación es una introducción completa al mundo de la programación informática..."
         android:layout_marginTop="8dp"
         app:layout_constraintTop_toBottomOf="@+id/nombre_ponente"
         app:layout_constraintStart_toStartOf="parent"
@@ -104,7 +100,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#000000"
-        android:text="10 marzo - 3 de abril"
         android:layout_marginTop="4dp"
         app:layout_constraintTop_toBottomOf="@id/fecha_title"
         app:layout_constraintStart_toStartOf="parent"
@@ -134,12 +129,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textColor="#000000"
-            android:text="Presencial"
             android:layout_marginStart="6dp"
             android:gravity="end"
             app:layout_constraintStart_toEndOf="@id/modalidad_title"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/modalidad_title" />
+            app:layout_constraintTop_toTopOf="@id/modalidad_title"
+            app:layout_constraintTop_toBottomOf="@id/modalidad_title" />/>
 
         <TextView
             android:id="@+id/ubicacion_title"
@@ -157,12 +152,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textColor="#000000"
-            android:text="Santiago de Querétaro 992 Col. Lomas Finas Qro, Qro."
             android:gravity="end"
             android:layout_marginStart="10dp"
             app:layout_constraintStart_toEndOf="@id/ubicacion_title"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/ubicacion_title" />
+            app:layout_constraintTop_toTopOf="@id/ubicacion_title"
+            app:layout_constraintTop_toBottomOf="@id/modalidad_curso"/>/>
 
         <TextView
             android:id="@+id/horario_title"
@@ -180,12 +175,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textColor="#000000"
-            android:text="11 hrs - 15 hrs"
             android:gravity="end"
             android:layout_marginStart="25dp"
             app:layout_constraintStart_toEndOf="@id/horario_title"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/horario_title" />
+            app:layout_constraintTop_toTopOf="@id/horario_title"
+            app:layout_constraintTop_toBottomOf="@id/modalidad_curso"/>
 
         <TextView
             android:id="@+id/costo_title"
@@ -203,12 +198,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textColor="#000000"
-            android:text="$200.0 MXN"
             android:gravity="end"
             android:layout_marginStart="36dp"
             app:layout_constraintStart_toEndOf="@id/costo_title"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/costo_title" />
+            app:layout_constraintTop_toTopOf="@id/costo_title"
+            app:layout_constraintTop_toBottomOf="@id/modalidad_curso"/>
 
         <TextView
             android:id="@+id/cupos_title"
@@ -226,12 +221,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textColor="#000000"
-            android:text="20"
             android:gravity="end"
             android:layout_marginStart="7dp"
             app:layout_constraintStart_toEndOf="@id/cupos_title"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/cupos_title" />
+            app:layout_constraintTop_toTopOf="@id/cupos_title"
+            app:layout_constraintTop_toBottomOf="@id/modalidad_curso"/>
 
         <TextView
             android:id="@+id/fecha_limite_title"
@@ -249,12 +244,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textColor="#000000"
-            android:text="10/03/23"
             android:gravity="end"
             android:layout_marginStart="7dp"
             app:layout_constraintStart_toEndOf="@id/fecha_limite_title"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/fecha_limite_title" />
+            app:layout_constraintTop_toTopOf="@id/fecha_limite_title"
+            app:layout_constraintTop_toBottomOf="@id/modalidad_curso"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

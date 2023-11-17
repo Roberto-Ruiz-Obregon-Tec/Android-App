@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.kotlin.robertoruizapp.R
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -69,7 +70,7 @@ class FragmentoCursoDetalles: Fragment() {
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
-                    showError("Error al obtener los detalles del curso: ${e.message}")
+                    //showError("Error al obtener los detalles del curso: ${e.message}")
                 }
                 e.printStackTrace() // Log the exception
             } finally {
@@ -114,21 +115,61 @@ class FragmentoCursoDetalles: Fragment() {
         binding.descripcionCursoInfo.text = course.description
         binding.modalidadCurso.text = course.modality
         binding.ubicacionCurso.text = course.location
+
+        // Establecer la visibilidad de ubicación basada en la modalidad del curso
+        if (course.modality.equals("Remoto", ignoreCase = true)) {
+            binding.ubicacionTitle.visibility = View.GONE
+            binding.ubicacionCurso.visibility = View.GONE
+
+            // Actualiza las restricciones de las vistas que estaban debajo de ubicación
+            val layoutParamsHorarioTitle = binding.horarioTitle.layoutParams as ConstraintLayout.LayoutParams
+            layoutParamsHorarioTitle.topToBottom = binding.modalidadCurso.id
+            binding.horarioTitle.layoutParams = layoutParamsHorarioTitle
+
+            val layoutParamsCostoTitle = binding.costoTitle.layoutParams as ConstraintLayout.LayoutParams
+            layoutParamsCostoTitle.topToBottom = binding.horarioCurso.id
+            binding.costoTitle.layoutParams = layoutParamsCostoTitle
+
+            val layoutParamsCuposTitle = binding.cuposTitle.layoutParams as ConstraintLayout.LayoutParams
+            layoutParamsCuposTitle.topToBottom = binding.costoCurso.id
+            binding.cuposTitle.layoutParams = layoutParamsCuposTitle
+
+            val layoutParamsFechaLimiteTitle = binding.fechaLimiteTitle.layoutParams as ConstraintLayout.LayoutParams
+            layoutParamsFechaLimiteTitle.topToBottom = binding.capacidadFaltanteCurso.id
+            binding.fechaLimiteTitle.layoutParams = layoutParamsFechaLimiteTitle
+
+            // Solicitar a la vista que se reorganice con las nuevas restricciones
+            binding.detailsContainer.requestLayout()
+
+        } else {
+            // Restablecer la visibilidad de las vistas de ubicación
+            binding.ubicacionTitle.visibility = View.VISIBLE
+            binding.ubicacionCurso.visibility = View.VISIBLE
+
+            // Restablecer las restricciones de las vistas debajo de la ubicación
+            val layoutParamsHorarioTitle = binding.horarioTitle.layoutParams as ConstraintLayout.LayoutParams
+            layoutParamsHorarioTitle.topToBottom = binding.ubicacionCurso.id
+            binding.horarioTitle.layoutParams = layoutParamsHorarioTitle
+
+            val layoutParamsCostoTitle = binding.costoTitle.layoutParams as ConstraintLayout.LayoutParams
+            layoutParamsCostoTitle.topToBottom = binding.horarioCurso.id
+            binding.costoTitle.layoutParams = layoutParamsCostoTitle
+        }
+
         binding.horarioCurso.text = course.schedule
 
         val costo = course.cost
         val costoTexto = if (costo == 0.0) {
-            "Gratuito" // Si el costo es 0, mostrar "Gratuito"
+            "Gratuito"
         } else {
-            String.format(Locale.US, "$%.2f MXN", costo) // De lo contrario, mostrar el formato de moneda
+            String.format(Locale.US, "$%.2f MXN", costo)
         }
         binding.costoCurso.text = costoTexto
 
         binding.capacidadFaltanteCurso.text = course.remaining.toString()
 
-        val fechaLimite = SimpleDateFormat("dd/MM/yyyy", Locale.US).parse(course.startDate)
-        val fechaLimiteFormateada = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US).format(fechaLimite)
-
+        val fechaLimite = startDate
+        val fechaLimiteFormateada = fechaLimite?.let { outputFormat.format(it) } ?: ""
         binding.fechaLimiteInscripcion.text = fechaLimiteFormateada
 
     }

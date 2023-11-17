@@ -51,6 +51,11 @@ class FragmentoCursoDetalles: Fragment() {
 
         // Obtener la información del curso con ese ID
         getInfoCourse(cursoId)
+
+        binding.backContainer.setOnClickListener {
+            // Volver al fragmento anterior
+            parentFragmentManager.popBackStack()
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
@@ -112,8 +117,6 @@ class FragmentoCursoDetalles: Fragment() {
         val fechaCursoInfo = "$formattedStartDate - $formattedEndDate"
         binding.fechaCursoInfo.text = fechaCursoInfo
 
-        //binding.fechaInicio.text = course.startDate
-        //binding.fechaFin.text = course.endDate
         binding.descripcionCursoInfo.text = course.description
         binding.modalidadCurso.text = course.modality
         binding.ubicacionCurso.text = course.location
@@ -183,7 +186,6 @@ class FragmentoCursoDetalles: Fragment() {
 
     private fun hideProgressBar() {
         binding.progressBar.visibility = View.GONE
-        // Vuelve a mostrar otros elementos de la interfaz de usuario si es necesario
     }
 
     override fun onDestroyView() {

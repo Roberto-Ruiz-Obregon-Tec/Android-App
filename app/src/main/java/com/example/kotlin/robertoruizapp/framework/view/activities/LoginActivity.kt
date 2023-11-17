@@ -56,7 +56,8 @@ class LoginActivity : AppCompatActivity() {
             goToHome()*/
 
         val loadingPanel = findViewById<RelativeLayout>(R.id.loadingPanel)
-        progressBar = findViewById(R.id.progressBarLogin)
+//        progressBar = findViewById(R.id.progressBarLogin)
+        progressBar = findViewById(R.id.progressBar)
         val btnGoMenu = findViewById<Button>(R.id.button_login)
         val btnSign = findViewById<Button>(R.id.signup)
         val emailLogin = findViewById<TextView>(R.id.email_login)

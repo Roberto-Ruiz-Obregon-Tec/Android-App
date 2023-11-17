@@ -26,6 +26,7 @@ data class Document(
     val _id: String,
     val cost: Double,
     val capacity: Int,
+    val remaining: Int,
     val rating: Double,
     val ratingCount: Int,
     val meetingCode: String,

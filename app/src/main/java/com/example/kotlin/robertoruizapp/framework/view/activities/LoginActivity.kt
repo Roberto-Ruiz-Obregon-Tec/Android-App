@@ -21,7 +21,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
-import com.example.kotlin.robertoruizapp.framework.view.activities.ResContrasena
+import com.example.kotlin.robertoruizapp.framework.view.activities.ForgotPasswordActivity
 
 
 /**
@@ -56,7 +56,8 @@ class LoginActivity : AppCompatActivity() {
             goToHome()*/
 
         val loadingPanel = findViewById<RelativeLayout>(R.id.loadingPanel)
-        progressBar = findViewById(R.id.progressBarLogin)
+//        progressBar = findViewById(R.id.progressBarLogin)
+        progressBar = findViewById(R.id.progressBar)
         val btnGoMenu = findViewById<Button>(R.id.button_login)
         val btnSign = findViewById<Button>(R.id.signup)
         val emailLogin = findViewById<TextView>(R.id.email_login)
@@ -81,7 +82,7 @@ class LoginActivity : AppCompatActivity() {
         val forgotPasswordButton = findViewById<Button>(R.id.forgot_password_button)
         forgotPasswordButton.setOnClickListener {
             // Starts the activity ResContrasena
-            val intent = Intent(this, ResContrasena::class.java)
+            val intent = Intent(this, ForgotPasswordActivity::class.java)
             startActivity(intent)
         }
 

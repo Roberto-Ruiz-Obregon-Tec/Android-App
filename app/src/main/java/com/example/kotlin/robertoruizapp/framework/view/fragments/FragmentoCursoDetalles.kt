@@ -55,7 +55,7 @@ class FragmentoCursoDetalles: Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.N)
     private fun getInfoCourse(cursoId: String) {
-
+        showProgressBar()
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val courseRepository = CourseRepository()
@@ -67,10 +67,12 @@ class FragmentoCursoDetalles: Fragment() {
                     } else {
                         showError("No se encontraron detalles del curso.")
                     }
+                    hideProgressBar()
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
                     //showError("Error al obtener los detalles del curso: ${e.message}")
+                    hideProgressBar()
                 }
                 e.printStackTrace() // Log the exception
             } finally {
@@ -172,6 +174,16 @@ class FragmentoCursoDetalles: Fragment() {
         val fechaLimiteFormateada = fechaLimite?.let { outputFormat.format(it) } ?: ""
         binding.fechaLimiteInscripcion.text = fechaLimiteFormateada
 
+    }
+
+    private fun showProgressBar() {
+        binding.progressBar.visibility = View.VISIBLE
+        // Puede querer ocultar también otros elementos de la interfaz de usuario
+    }
+
+    private fun hideProgressBar() {
+        binding.progressBar.visibility = View.GONE
+        // Vuelve a mostrar otros elementos de la interfaz de usuario si es necesario
     }
 
     override fun onDestroyView() {

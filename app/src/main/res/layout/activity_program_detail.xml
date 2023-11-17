@@ -142,6 +142,25 @@
                 android:contentDescription="@string/whatsapp_icon"
                 app:srcCompat="@drawable/whatsapp" />
 
+            <!-- Otros elementos de diseño según sea necesario -->
+
+            <RatingBar
+                android:id="@+id/ratingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numStars="5"
+                android:progressTint="@color/yellow"
+                android:rating="5"
+                android:stepSize="1.0" />
+
+            <Button
+                android:id="@+id/submitButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:onClick="submitRating"
+                android:text="Enviar" />
+
         </RelativeLayout>
 
     </ScrollView>

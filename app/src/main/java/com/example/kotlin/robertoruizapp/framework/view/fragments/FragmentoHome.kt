@@ -166,7 +166,7 @@ class FragmentoHome : Fragment() {
             //Glide.with(holder.imagenCurso.context).load(curso?.courseImage).into(holder.imagenCurso)
 
             // Show the cost
-            if (curso?.cost == 0) {
+            if (curso?.cost == 0.0) {
                 holder.costoCurso.text = "Gratuito"
             } else {
                 holder.costoCurso.text = "$${curso?.cost} MXN"

@@ -34,25 +34,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageView4" />
 
+
     <TextView
         android:id="@+id/textView22"
         android:layout_width="334dp"
         android:layout_height="38dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="12dp"
         android:text="Roberto Ruíz Obregón"
         android:textAlignment="center"
         android:textColor="#6A6A6A"
         android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fundacion" />
 
-
     <TextView
         android:id="@+id/descripcion_fun"
-        android:layout_width="345dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="26dp"
+        android:layout_marginEnd="26dp"
         android:gravity="center"
         android:textSize="10sp"
         android:textStyle="italic"
@@ -63,9 +66,11 @@
 
     <View
         android:id="@+id/view2"
-        android:layout_width="350dp"
+        android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_marginStart="26dp"
         android:layout_marginTop="108dp"
+        android:layout_marginEnd="26dp"
         android:background="#E0E0E0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.54"
@@ -75,9 +80,11 @@
 
     <View
         android:id="@+id/view5"
-        android:layout_width="350dp"
+        android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_marginStart="26dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="26dp"
         android:background="#E0E0E0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -104,10 +111,10 @@
         android:layout_height="40dp"
         android:layout_centerInParent="true"
         android:layout_gravity="center"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:src="@drawable/face_logo"
         app:layout_constraintEnd_toStartOf="@+id/instagram"
-        app:layout_constraintHorizontal_bias="0.691"
+        app:layout_constraintHorizontal_bias="0.788"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nuestras_redes" />
 
@@ -117,10 +124,11 @@
         android:layout_height="42dp"
         android:layout_centerInParent="true"
         android:layout_gravity="center"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="36dp"
+        android:layout_marginTop="8dp"
         android:src="@drawable/ig_icon"
         app:layout_constraintEnd_toStartOf="@+id/TikTok"
+        app:layout_constraintHorizontal_bias="0.852"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nuestras_redes"
         tools:ignore="MissingConstraints" />
 
@@ -130,10 +138,11 @@
         android:layout_height="40dp"
         android:layout_centerInParent="true"
         android:layout_gravity="center"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="40dp"
+        android:layout_marginTop="8dp"
         android:src="@drawable/tiktok_icon"
         app:layout_constraintEnd_toStartOf="@+id/twitter"
+        app:layout_constraintHorizontal_bias="0.91"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nuestras_redes"
         tools:ignore="MissingConstraints" />
 
@@ -143,19 +152,21 @@
         android:layout_height="40dp"
         android:layout_centerInParent="true"
         android:layout_gravity="center"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="76dp"
+        android:layout_marginTop="8dp"
         android:src="@drawable/twiitter_icon"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.768"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nuestras_redes"
         tools:ignore="MissingConstraints" />
 
-
     <View
         android:id="@+id/view"
-        android:layout_width="350dp"
+        android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_marginStart="26dp"
         android:layout_marginTop="12dp"
+        android:layout_marginEnd="26dp"
         android:background="#E0E0E0"
         app:layout_constraintBottom_toTopOf="@+id/view2"
         app:layout_constraintEnd_toEndOf="parent"

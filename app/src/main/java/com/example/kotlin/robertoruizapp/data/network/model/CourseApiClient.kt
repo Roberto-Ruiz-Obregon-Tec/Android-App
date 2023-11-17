@@ -17,13 +17,11 @@ class CourseApiClient {
      * @return CourseObject Objet that represents the obtained course (NULL in case of error).
      */
     suspend fun getCourse(token: String): CourseObject? {
-        var result: CourseObject? = null
         try {
-            return api.getCourse("Bearer $LoginActivity.token")
+            return api.getCourse("Bearer $token")
         } catch (e: Exception) {
             Log.d("Catch", "Error: ${e.message}")
-            null
+            return null
         }
-        return result
     }
 }

@@ -148,6 +148,9 @@
                 android:id="@+id/ratingBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/tvDetailProgramTelefono"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
                 android:numStars="5"
                 android:progressTint="@color/yellow"
                 android:rating="5"
@@ -155,11 +158,17 @@
 
             <Button
                 android:id="@+id/submitButton"
+                android:backgroundTint="@color/green_aprove"
+                android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/ratingBar"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
                 android:clickable="true"
                 android:onClick="submitRating"
-                android:text="Enviar" />
+                android:text="Enviar"
+                android:layout_marginBottom="16dp"/>
 
         </RelativeLayout>
 

@@ -2,6 +2,7 @@ package com.example.kotlin.robertoruizapp.domain
 
 import com.example.kotlin.robertoruizapp.data.network.model.certificaciones.CertificacionesObjeto
 import com.example.kotlin.robertoruizapp.data.CertificacionesRepository
+import com.example.kotlin.robertoruizapp.framework.view.activities.LoginActivity
 
 /*
     * Created by Dante Perez 2/11/2023
@@ -20,5 +21,7 @@ class CertificacionesListRequirement {
 
     private val certificacionesRepository = CertificacionesRepository()
 
-    suspend operator fun invoke(): CertificacionesObjeto? = certificacionesRepository.getCertificaciones()
+    suspend operator fun invoke(token: String): CertificacionesObjeto? = certificacionesRepository.getCertificaciones(
+        LoginActivity.token
+    )
 }

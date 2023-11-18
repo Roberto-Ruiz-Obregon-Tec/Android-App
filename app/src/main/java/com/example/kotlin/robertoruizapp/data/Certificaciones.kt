@@ -3,6 +3,7 @@ package com.example.kotlin.robertoruizapp.data
 import com.example.kotlin.robertoruizapp.data.network.model.NetworkModuleDICertificaciones
 import com.example.kotlin.robertoruizapp.data.network.model.certificaciones.CertificacionesObjeto
 import com.example.kotlin.robertoruizapp.data.network.model.CertificacionApiService
+import com.example.kotlin.robertoruizapp.framework.view.activities.LoginActivity
 
 /**
  * Created by Dante Perez 2/11/2023
@@ -22,6 +23,6 @@ class Certificaciones {
      */
     suspend fun getCertificaciones(): CertificacionesObjeto { // A suspending function.
         api = NetworkModuleDICertificaciones() // Initializes the api property.
-        return api.getCertificaciones() // Returns a CertificacionesObjeto object.
+        return api.getCertificaciones(LoginActivity.token) // Returns a CertificacionesObjeto object.
     }
 }

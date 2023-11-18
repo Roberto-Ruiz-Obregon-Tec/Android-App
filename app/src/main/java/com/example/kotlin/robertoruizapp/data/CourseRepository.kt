@@ -2,8 +2,10 @@ package com.example.kotlin.robertoruizapp.data
 
 import com.example.kotlin.robertoruizapp.data.network.NetworkModuleDICourse
 import com.example.kotlin.robertoruizapp.data.network.model.Course.CourseObject
+import com.example.kotlin.robertoruizapp.data.network.model.Course.Document
 import com.example.kotlin.robertoruizapp.data.network.model.CourseApiService
 import com.example.kotlin.robertoruizapp.framework.view.activities.LoginActivity
+import retrofit2.http.GET
 
 
 /**
@@ -21,4 +23,24 @@ class CourseRepository {
     suspend fun getCourse(token: String): CourseObject? {
         return api.getCourse("Bearer ${LoginActivity.token}")
     }
+
+    /**
+     * Retrieves a course by its ID.
+     *
+     * @param courseId The ID of the course to retrieve.
+     * @param token The authentication token for the request.
+     * @return A [Document] object representing the course if the request was successful and
+     *         the 'data' field contains at least one element. Otherwise, it returns null.
+     */
+    suspend fun getCourseById(cursoId: String, token: String): Document? {
+        val response = api.getCourseById(cursoId, "Bearer $token")
+        // Verify that the response is successful and that the 'data' list contains at least one element
+        return if (response.status == "success" && response.data.isNotEmpty()) {
+            response.data.first()  // Returns the first Document in the list
+        } else {
+            null
+        }
+    }
+
+
 }

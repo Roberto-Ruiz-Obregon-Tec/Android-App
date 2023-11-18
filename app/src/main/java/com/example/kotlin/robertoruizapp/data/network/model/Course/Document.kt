@@ -6,7 +6,9 @@ package com.example.kotlin.robertoruizapp.data.network.model.Course
  * @property _id Unique identifier of a document.
  * @property cost Cost of a course.
  * @property capacity Number maximum of people in a course.
+ * @property remaining Number of people left that can be in a course.
  * @property rating Rating of a course.
+ * @property ratingCount Number of people that have rated the course.
  * @property meetingCode Zoom meeting code to enter to a course.
  * @property accessCode Zoom access code to enter to a meeting.
  * @property name Name of a course.
@@ -24,9 +26,11 @@ package com.example.kotlin.robertoruizapp.data.network.model.Course
  */
 data class Document(
     val _id: String,
-    val cost: Int,
+    val cost: Double,
     val capacity: Int,
-    val rating: Int,
+    val remaining: Int,
+    val rating: Double,
+    val ratingCount: Int,
     val meetingCode: String,
     val accessCode: String,
     val name: String,

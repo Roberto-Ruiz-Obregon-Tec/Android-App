@@ -6,11 +6,11 @@ import com.example.kotlin.robertoruizapp.data.network.model.Becas.BecasObjeto
 import com.example.kotlin.robertoruizapp.data.network.model.Course.CourseObject
 import com.example.kotlin.robertoruizapp.data.network.model.CourseApiService
 import com.example.kotlin.robertoruizapp.data.network.model.ScholarshipApiService
+import com.example.kotlin.robertoruizapp.framework.view.activities.LoginActivity
 
 class ScholarshipRepository {
-    private lateinit var api: ScholarshipApiService
-    suspend fun getScholarship(): BecasObjeto {
-        api = NetworkModuleDIScholarship()
-        return api.getScholarship()
+    private  var api: ScholarshipApiService = NetworkModuleDIScholarship()
+    suspend fun getScholarship(token: String): BecasObjeto {
+        return api.getScholarship("Bearer ${LoginActivity.token}")
     }
 }

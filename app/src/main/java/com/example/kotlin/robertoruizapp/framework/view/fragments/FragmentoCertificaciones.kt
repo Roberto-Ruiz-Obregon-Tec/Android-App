@@ -19,6 +19,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import com.example.kotlin.robertoruizapp.framework.view.activities.LoginActivity
 import java.util.*
 
 /*
@@ -142,7 +143,7 @@ class FragmentoCertificaciones : Fragment() {
     private fun getCertificaciones() {
         CoroutineScope(Dispatchers.IO).launch {
             val certificacionesRepository = CertificacionesRepository()
-            val result: CertificacionesObjeto? = certificacionesRepository.getCertificaciones()
+            val result: CertificacionesObjeto? = certificacionesRepository.getCertificaciones(LoginActivity.token)
 
             if (result != null) {
                 withContext(Dispatchers.Main) {

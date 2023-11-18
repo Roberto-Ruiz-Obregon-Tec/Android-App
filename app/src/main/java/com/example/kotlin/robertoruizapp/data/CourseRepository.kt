@@ -24,11 +24,19 @@ class CourseRepository {
         return api.getCourse("Bearer ${LoginActivity.token}")
     }
 
+    /**
+     * Retrieves a course by its ID.
+     *
+     * @param courseId The ID of the course to retrieve.
+     * @param token The authentication token for the request.
+     * @return A [Document] object representing the course if the request was successful and
+     *         the 'data' field contains at least one element. Otherwise, it returns null.
+     */
     suspend fun getCourseById(cursoId: String, token: String): Document? {
         val response = api.getCourseById(cursoId, "Bearer $token")
-        // Verifica que la respuesta es exitosa y que la lista 'data' contiene al menos un elemento
+        // Verify that the response is successful and that the 'data' list contains at least one element
         return if (response.status == "success" && response.data.isNotEmpty()) {
-            response.data.first()  // Retorna el primer Documento de la lista
+            response.data.first()  // Returns the first Document in the list
         } else {
             null
         }

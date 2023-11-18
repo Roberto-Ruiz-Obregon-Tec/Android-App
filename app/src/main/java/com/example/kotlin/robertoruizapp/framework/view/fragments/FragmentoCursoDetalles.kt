@@ -26,12 +26,22 @@ import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-
+/**
+ * Fragment displaying detailed information about a course.
+ */
 class FragmentoCursoDetalles: Fragment() {
     private var _binding: FragmentoCursoDetallesBinding? = null
 
     private val binding get() = _binding!!
 
+    /**
+     * Creates the view of the Fragment.
+     *
+     * @param inflater The LayoutInflater object that can be used to inflate any views in the fragment.
+     * @param container The parent view that the fragment's UI should be attached to.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed from a previous saved state.
+     * @return The View for the fragment's UI.
+     */
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,23 +51,34 @@ class FragmentoCursoDetalles: Fragment() {
         return binding.root
     }
 
+    /**
+     * Initializes the Fragment's UI and fetches course details based on the provided course ID.
+     *
+     * @param view The view returned by [onCreateView].
+     * @param savedInstanceState If non-null, this fragment is being re-constructed from a previous saved state.
+     */
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Obtener el ID del curso de los argumentos
+        // Get the course ID from the arguments
         val cursoId = arguments?.getString("CURSO_ID") ?: return
         Log.d("CursoDetalles", "ID del curso recibido: $cursoId")
 
-        // Obtener la información del curso con ese ID
+        // Get course information for the given ID
         getInfoCourse(cursoId)
 
         binding.backContainer.setOnClickListener {
-            // Volver al fragmento anterior
+            // Return to the previous fragment
             parentFragmentManager.popBackStack()
         }
     }
 
+    /**
+     * Fetches and displays course details based on the provided course ID.
+     *
+     * @param cursoId The ID of the course to retrieve and display details for.
+     */
     @RequiresApi(Build.VERSION_CODES.N)
     private fun getInfoCourse(cursoId: String) {
         showProgressBar()
@@ -87,11 +108,22 @@ class FragmentoCursoDetalles: Fragment() {
         }
     }
 
+    /**
+     * Displays an error message.
+     *
+     * @param message The error message to display.
+     */
+
     private fun showError(message: String) {
-        // Mostrar un Toast o un diálogo con el mensaje de error
+        // Show a Toast or a dialog with the error message
         Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 
+    /**
+     * Updates the UI with course details.
+     *
+     * @param course The course object containing details to display.
+     */
     private fun updateUIWithCourseDetails(course: Document) {
         binding.nombreCursoInfo.text = course.name
         //binding.imagenCurso.drawable = course.courseImage
@@ -121,12 +153,12 @@ class FragmentoCursoDetalles: Fragment() {
         binding.modalidadCurso.text = course.modality
         binding.ubicacionCurso.text = course.location
 
-        // Establecer la visibilidad de ubicación basada en la modalidad del curso
+        // Set location visibility based on course modality
         if (course.modality.equals("Remoto", ignoreCase = true)) {
             binding.ubicacionTitle.visibility = View.GONE
             binding.ubicacionCurso.visibility = View.GONE
 
-            // Actualiza las restricciones de las vistas que estaban debajo de ubicación
+            // Updates the restrictions of the views that were under location
             val layoutParamsHorarioTitle = binding.horarioTitle.layoutParams as ConstraintLayout.LayoutParams
             layoutParamsHorarioTitle.topToBottom = binding.modalidadCurso.id
             binding.horarioTitle.layoutParams = layoutParamsHorarioTitle
@@ -147,11 +179,11 @@ class FragmentoCursoDetalles: Fragment() {
             binding.detailsContainer.requestLayout()
 
         } else {
-            // Restablecer la visibilidad de las vistas de ubicación
+            // Request the view to reorganize with the new constraints
             binding.ubicacionTitle.visibility = View.VISIBLE
             binding.ubicacionCurso.visibility = View.VISIBLE
 
-            // Restablecer las restricciones de las vistas debajo de la ubicación
+            // Reset view restrictions below location
             val layoutParamsHorarioTitle = binding.horarioTitle.layoutParams as ConstraintLayout.LayoutParams
             layoutParamsHorarioTitle.topToBottom = binding.ubicacionCurso.id
             binding.horarioTitle.layoutParams = layoutParamsHorarioTitle
@@ -179,15 +211,24 @@ class FragmentoCursoDetalles: Fragment() {
 
     }
 
+    /**
+     * Displays the progress bar.
+     */
     private fun showProgressBar() {
         binding.progressBar.visibility = View.VISIBLE
         // Puede querer ocultar también otros elementos de la interfaz de usuario
     }
 
+    /**
+     * Hides the progress bar.
+     */
     private fun hideProgressBar() {
         binding.progressBar.visibility = View.GONE
     }
 
+    /**
+     * Called when the fragment's view is destroyed.
+     */
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

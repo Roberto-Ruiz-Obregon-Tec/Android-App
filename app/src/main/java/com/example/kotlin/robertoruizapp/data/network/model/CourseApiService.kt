@@ -18,7 +18,14 @@ interface CourseApiService {
      */
     @GET("course")
     suspend fun getCourse(@Header("Authorization") authToken: String): CourseObject
-    // En tu CourseApiService
+
+    /**
+     * Retrieves a course by its ID from the server.
+     *
+     * @param courseId The ID of the course to retrieve.
+     * @param authToken The authentication token for the request.
+     * @return A [CourseObject] representing the course if the request is successful.
+     */
     @GET("course/{id}")
     suspend fun getCourseById(@Path("id") cursoId: String, @Header("Authorization") authToken: String): CourseObject
 

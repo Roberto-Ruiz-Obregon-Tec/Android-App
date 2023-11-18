@@ -45,9 +45,20 @@ class FragmentoHome : Fragment() {
 
     private val binding get() = _binding!!
 
+    /**
+     * Interface for handling curso (course) click events.
+     */
     interface OnCursoClickListener {
+        /**
+         * Called when a curso (course) item is clicked.
+         *
+         * @param cursoId The ID of the clicked curso (course).
+         */
         fun onCursoClicked(cursoId: String)
     }
+    /**
+     * An instance of [OnCursoClickListener] used to handle curso (course) click events.
+     */
     private val onCursoClickListener = object : OnCursoClickListener {
         override fun onCursoClicked(cursoId: String) {
             val fragmentoDetalles = FragmentoCursoDetalles().apply {
@@ -58,7 +69,7 @@ class FragmentoHome : Fragment() {
 
             parentFragmentManager.beginTransaction()
                 .replace(R.id.nav_host_fragment_content_main, fragmentoDetalles)
-                .addToBackStack(null) // Permite volver al fragmento anterior
+                .addToBackStack(null) // Allows returning to the previous fragment
                 .commit()
         }
     }
@@ -340,11 +351,18 @@ class FragmentoHome : Fragment() {
             }
         }
     }
+
+    /**
+     * Displays the progress bar and hides the course list.
+     */
     private fun showProgressBar() {
         binding.progressBar.visibility = View.VISIBLE
         binding.cursosList.visibility = View.INVISIBLE
     }
 
+    /**
+     * Hides the progress bar and displays the course list.
+     */
     private fun hideProgressBar() {
         binding.progressBar.visibility = View.GONE
         binding.cursosList.visibility = View.VISIBLE

@@ -19,11 +19,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlin.robertoruizapp.R
 import com.example.kotlin.robertoruizapp.data.CertificacionesRepository
 import com.example.kotlin.robertoruizapp.data.CourseRepository
+import com.example.kotlin.robertoruizapp.data.ProgramsRepository
 import com.example.kotlin.robertoruizapp.data.ScholarshipRepository
 import com.example.kotlin.robertoruizapp.data.network.model.Becas.BecasObjeto
 import com.example.kotlin.robertoruizapp.data.network.model.Course.CourseObject
+import com.example.kotlin.robertoruizapp.data.network.model.Programs.ProgramsObj
 import com.example.kotlin.robertoruizapp.data.network.model.certificaciones.CertificacionesObjeto
 import com.example.kotlin.robertoruizapp.databinding.FragmentoHomeBinding
+import com.example.kotlin.robertoruizapp.framework.adapters.ProgramsAdapter
 import com.example.kotlin.robertoruizapp.framework.adapters.ScholarshipAdapter
 import com.example.kotlin.robertoruizapp.framework.view.activities.LoginActivity
 import kotlinx.coroutines.CoroutineScope
@@ -100,6 +103,25 @@ class FragmentoHome : Fragment() {
             binding.button1.setBackgroundResource(R.drawable.button_active)
             binding.button1.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
 
+            binding.button2.setBackgroundResource(R.drawable.button_inactive)
+            binding.button2.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+
+            binding.button3.setBackgroundResource(R.drawable.button_inactive)
+            binding.button3.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+
+            binding.button4.setBackgroundResource(R.drawable.button_inactive)
+            binding.button4.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+        }
+
+        binding.button2.setOnClickListener {
+            getPrograms()
+
+            binding.button2.setBackgroundResource(R.drawable.button_active)
+            binding.button2.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+
+            binding.button1.setBackgroundResource(R.drawable.button_inactive)
+            binding.button1.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+
             binding.button3.setBackgroundResource(R.drawable.button_inactive)
             binding.button3.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
 
@@ -112,6 +134,9 @@ class FragmentoHome : Fragment() {
 
             binding.button1.setBackgroundResource(R.drawable.button_inactive)
             binding.button1.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+
+            binding.button2.setBackgroundResource(R.drawable.button_inactive)
+            binding.button2.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
 
             binding.button3.setBackgroundResource(R.drawable.button_active)
             binding.button3.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
@@ -126,6 +151,9 @@ class FragmentoHome : Fragment() {
 
             binding.button1.setBackgroundResource(R.drawable.button_inactive)
             binding.button1.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+
+            binding.button2.setBackgroundResource(R.drawable.button_inactive)
+            binding.button2.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
 
             binding.button3.setBackgroundResource(R.drawable.button_inactive)
             binding.button3.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
@@ -257,6 +285,33 @@ class FragmentoHome : Fragment() {
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
+    private fun getPrograms() {
+        showProgressBar()
+        CoroutineScope(Dispatchers.IO).launch {
+            try{
+                val programsRepository = ProgramsRepository()
+                val result: ProgramsObj? = programsRepository.getPrograms(LoginActivity.token)
+
+                if (result != null) {
+                    withContext(Dispatchers.Main) {
+                        val adapter = ProgramsAdapter(result.data.programs)
+                        binding.cursosList.adapter = adapter
+                        binding.cursosList.layoutManager = LinearLayoutManager(context)
+                    }
+
+                }
+
+            } catch (e: Exception) {
+                e.printStackTrace() // Log the exception
+            } finally {
+                withContext(Dispatchers.Main) {
+                    hideProgressBar()
+                }
+            }
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
     private fun getCertificaciones() {
         CoroutineScope(Dispatchers.IO).launch {
             val certificacionesRepository = CertificacionesRepository()
@@ -273,17 +328,26 @@ class FragmentoHome : Fragment() {
     }
     @RequiresApi(Build.VERSION_CODES.N)
     private fun getScholarship() {
+        showProgressBar()
         CoroutineScope(Dispatchers.IO).launch {
-            val ScholarshipRepository = ScholarshipRepository()
-            val result: BecasObjeto? = ScholarshipRepository.getScholarship()
+            try{
+                val ScholarshipRepository = ScholarshipRepository()
+                val result: BecasObjeto? = ScholarshipRepository.getScholarship(LoginActivity.token)
 
-            if (result != null) {
-                withContext(Dispatchers.Main) {
-                    val adapter = ScholarshipAdapter(result.data.becas)
-                    binding.cursosList.adapter = adapter
-                    binding.cursosList.layoutManager = LinearLayoutManager(context)
+                if (result != null) {
+                    withContext(Dispatchers.Main) {
+
+                        val adapter = ScholarshipAdapter(result.data.documents)
+                        binding.cursosList.adapter = adapter
+                        binding.cursosList.layoutManager = LinearLayoutManager(context)
+                    }
                 }
-
+            } catch (e: Exception) {
+                e.printStackTrace() // Log the exception
+            } finally {
+                withContext(Dispatchers.Main) {
+                    hideProgressBar()
+                }
             }
         }
     }

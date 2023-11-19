@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.kotlin.robertoruizapp.R
 import com.example.kotlin.robertoruizapp.data.network.model.Course.Document
 import com.example.kotlin.robertoruizapp.framework.view.fragments.FragmentoHome
@@ -39,6 +41,7 @@ class CursoAdapter(
         val fechaCurso: TextView = view.findViewById(R.id.curso_fecha)
         val costoCurso: TextView = view.findViewById(R.id.curso_costo)
         val modalidadCurso: TextView = view.findViewById(R.id.curso_modalidad)
+        val imagencurso: ImageView = view.findViewById(R.id.imagencursos)
 
     }
 
@@ -90,8 +93,14 @@ class CursoAdapter(
             }
         }
 
+        if (curso?.courseImage?.isNotEmpty() == true) {
+            Glide.with(holder.itemView.context)
+                .load(curso.courseImage)
+                .into(holder.imagencurso)
+        } else {
+            holder.imagencurso.setImageResource(R.drawable.curso1)
+        }
     }
-
 
     /**
      * Method called to get the number of elements in the list.

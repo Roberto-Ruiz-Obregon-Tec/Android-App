@@ -78,13 +78,29 @@
         android:layout_height="wrap_content"
         android:textSize="14sp"
         android:textColor="#666" />
-    <TextView
-        android:id="@+id/programa_description"
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Descripción"
-        android:textSize="14sp"
-        android:textColor="#666" />
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/programa_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Descripción"
+            android:textSize="14sp"
+            android:textColor="#666" />
+
+        <TextView
+            android:id="@+id/ver_mas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ver más"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+
 
 
     <ImageView
@@ -120,21 +136,34 @@
 
 
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#D3D3D3"
         android:layout_marginTop="4dp"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:clickable="true"
+            android:focusable="true"
+            android:id="@+id/boton_like">
+
         <ImageView
             android:id="@+id/like_reaccion"
             android:layout_width="18dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginStart="6dp"
+            android:layout_marginStart="50dp"
             android:layout_height="18dp"
             android:src="@drawable/like_inactivo" />
 
@@ -142,34 +171,39 @@
             android:id="@+id/likes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
             android:layout_marginLeft="2dp"
             android:text="Me gusta"
             android:textSize="14sp"
             android:textColor="#666" />
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/icono_comentario"
-                android:layout_width="match_parent"
-                android:layout_height="18dp"
-                android:layout_marginStart="70dp"
-                android:layout_marginTop="2dp"
-                android:src="@drawable/comentario" />
-
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="3dp"
-            android:layout_marginTop="2dp"
-            android:text="Comentar"
-            android:textColor="#666"
-            android:textSize="14sp" />
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:clickable="true"
+        android:focusable="true"
+        android:id="@+id/boton_comentar">
+
+    <ImageView
+        android:id="@+id/icono_comentario"
+        android:layout_width="18dp"
+        android:layout_marginStart="50dp"
+        android:layout_height="18dp"
+        android:src="@drawable/comentario" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="2dp"
+        android:text="Comentar"
+        android:textColor="#666"
+        android:textSize="14sp" />
+
+    </LinearLayout>
+        </LinearLayout>
+
 </LinearLayout>
+
+

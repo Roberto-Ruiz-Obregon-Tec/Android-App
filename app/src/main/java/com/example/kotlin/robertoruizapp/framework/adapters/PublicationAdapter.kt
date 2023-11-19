@@ -20,16 +20,69 @@ import java.util.Locale
  *
  * @param companies List of company documents that will be displayed.
  */
-class PublicationAdapter(private val empresas: List<Document?>) :
+class PublicationAdapter(private val publicaciones: List<Document?>) :
     RecyclerView.Adapter<PublicationAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val nombreEmpresa: TextView = view.findViewById(R.id.titulo_programa)
-        val descripcionEmpresa: TextView = view.findViewById(R.id.programa_description)
+        val nombrePublicacion: TextView = view.findViewById(R.id.titulo_programa)
+        val descripcionPublicacion: TextView = view.findViewById(R.id.programa_description)
+        val verMas: TextView = view.findViewById(R.id.ver_mas)
         val fechapublicacion: TextView = view.findViewById(R.id.fecha_publicacion)
         val likesTextView: TextView = view.findViewById(R.id.like_total)
         val imagenpublicacion: ImageView = view.findViewById(R.id.imagenpublicacion)
 
+        fun bind(publicacion: Document?) {
+            nombrePublicacion.text = publicacion?.title
+            descripcionPublicacion.text = publicacion?.description
+            likesTextView.text = publicacion?.likes.toString()
+
+            if (publicacion?.image?.isNotEmpty() == true) {
+                Glide.with(itemView.context)
+                    .load(publicacion.image)
+                    .into(imagenpublicacion)
+            } else {
+                imagenpublicacion.setImageResource(R.drawable.curso1)
+            }
+
+            val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US)
+            val outputFormat = SimpleDateFormat("dd/MM/yyyy", Locale.US)
+            val createdAt = publicacion?.createdAt
+
+            val startDate = if (!createdAt.isNullOrEmpty()) {
+                try {
+                    inputFormat.parse(createdAt)
+                } catch (e: ParseException) {
+                    null
+                }
+            } else {
+                null
+            }
+
+            fechapublicacion.text = startDate?.let {
+                outputFormat.format(it)
+            } ?: "Fecha no disponible"
+
+            // Lógica para "Ver más/Ver menos"
+            val descripcion = publicacion?.description.orEmpty()
+            if (descripcion.length > 30) {
+                descripcionPublicacion.text = "${descripcion.take(30)}..."
+                verMas.visibility = View.VISIBLE
+                verMas.text = "Ver más"
+                verMas.setOnClickListener {
+                    if (verMas.text == "Ver más") {
+                        descripcionPublicacion.text = descripcion
+                        verMas.text = "Ver menos"
+                    } else {
+                        descripcionPublicacion.text = "${descripcion.take(30)}..."
+                        verMas.text = "Ver más"
+                    }
+                    verMas.visibility = View.GONE
+                }
+            } else {
+                descripcionPublicacion.text = descripcion
+                verMas.visibility = View.GONE
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -39,45 +92,9 @@ class PublicationAdapter(private val empresas: List<Document?>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val empresa = empresas[position]
-        //Log.d("EmpresaAdapter", "Certificaciones: ${empresa?.certifications}")
-        holder.nombreEmpresa.text = empresa?.title
-        holder.descripcionEmpresa.text = empresa?.description
-        holder.likesTextView.text = empresa?.likes.toString()
-
-        if (empresa?.image?.isNotEmpty() == true) {
-            Glide.with(holder.itemView.context)
-                .load(empresa.image)
-                .into(holder.imagenpublicacion)
-        } else {
-
-            holder.imagenpublicacion.setImageResource(R.drawable.curso1)
-        }
-
-
-        val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US)
-        val outputFormat = SimpleDateFormat("dd/MM/yyyy", Locale.US)
-        val createdAt = empresa?.createdAt
-
-        val startDate = if (!createdAt.isNullOrEmpty()) {
-            try {
-                inputFormat.parse(createdAt)
-            } catch (e: ParseException) {
-                null
-            }
-        } else {
-            null
-        }
-
-        holder.fechapublicacion.text = startDate?.let {
-            outputFormat.format(it)
-        } ?: "Fecha no disponible"
-
-
-
-
+        val publicacion = publicaciones[position]
+        holder.bind(publicacion)
     }
 
-
-    override fun getItemCount() = empresas.size
+    override fun getItemCount() = publicaciones.size
 }

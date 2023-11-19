@@ -116,7 +116,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:gravity="center"
-            android:text="10 Marzo - 10 de Marzo"
             android:textSize="14sp"
             android:textStyle="bold" />
     </LinearLayout>
@@ -143,7 +142,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:gravity="center_vertical"
-            android:text="Querétaro"
             android:textSize="16sp" />
     </LinearLayout>
 
@@ -152,7 +150,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="El evento consta de una carrera de 5km que recorrerá la ciudad de Querétaro desde Antea hasta la entrada a la fundación Ruiz Obregon. Los fondos recaudados de este evento irán a los niños palestinos. Israel no es un estado legitmo"
+
         android:textAlignment="center"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"

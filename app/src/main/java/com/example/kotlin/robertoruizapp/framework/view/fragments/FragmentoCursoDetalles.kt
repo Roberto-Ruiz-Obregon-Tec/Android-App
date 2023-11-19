@@ -13,6 +13,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.kotlin.robertoruizapp.R
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.kotlin.robertoruizapp.data.CourseRepository
 import com.example.kotlin.robertoruizapp.data.network.model.Course.CourseObject
 import com.example.kotlin.robertoruizapp.data.network.model.Course.Document
@@ -208,6 +209,15 @@ class FragmentoCursoDetalles: Fragment() {
         val fechaLimite = startDate
         val fechaLimiteFormateada = fechaLimite?.let { outputFormat.format(it) } ?: ""
         binding.fechaLimiteInscripcion.text = fechaLimiteFormateada
+
+        val imageUrl = course.courseImage
+        if (!imageUrl.isNullOrEmpty()) {
+            Glide.with(this@FragmentoCursoDetalles)
+                .load(imageUrl)
+                .into(binding.ivCourseImage)
+        } else {
+            binding.ivCourseImage.setImageResource(R.drawable.curso1)
+        }
 
     }
 

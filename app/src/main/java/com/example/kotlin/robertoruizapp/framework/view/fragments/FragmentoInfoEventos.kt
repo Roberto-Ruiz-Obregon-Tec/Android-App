@@ -10,6 +10,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.bumptech.glide.Glide
+import com.example.kotlin.robertoruizapp.R
 import com.example.kotlin.robertoruizapp.data.EventRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -44,6 +46,10 @@ class FragmentoInfoEventos : Fragment() {
         Log.d("FragmentoInfoEventos", "Event ID: $eventID")
         
         getEventInfo(eventID)
+        binding.backContainer.setOnClickListener {
+            // Return to the previous fragment
+            parentFragmentManager.popBackStack()
+        }
     }
     
     @RequiresApi(Build.VERSION_CODES.N)
@@ -68,6 +74,15 @@ class FragmentoInfoEventos : Fragment() {
 
                         binding.eventDate.text = formattedDate
                         // binding.eventEndDate.text = endFormatDate
+
+                        val imageUrl = result.imageUrl
+                        if (!imageUrl.isNullOrEmpty()) {
+                            Glide.with(this@FragmentoInfoEventos)
+                                .load(imageUrl)
+                                .into(binding.eventImage)
+                        } else {
+                            binding.eventImage.setImageResource(R.drawable.curso1)
+                        }
                     }
                 }
             }

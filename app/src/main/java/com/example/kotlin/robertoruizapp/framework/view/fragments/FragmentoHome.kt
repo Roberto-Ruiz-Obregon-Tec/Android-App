@@ -35,6 +35,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.Calendar
 import java.util.Locale
 
 /**
@@ -176,17 +179,28 @@ class FragmentoHome : Fragment() {
     private fun getCourse() {
         showProgressBar()
         CoroutineScope(Dispatchers.IO).launch {
-            try{
-                val CourseRepository = CourseRepository()
-                val result: CourseObject? = CourseRepository.getCourse(LoginActivity.token)
+            try {
+                val courseRepository = CourseRepository()
+                val result: CourseObject? = courseRepository.getCourse(LoginActivity.token)
 
                 if (result != null) {
+                    // Filter courses by startDate and by remaining, so they don't appear on the view
+                    val filteredCourses = result.data.filter { course ->
+                        val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+                        val startDate = sdf.parse(course.startDate)
+                        val today = Calendar.getInstance().time
+
+                        val isDateValid = startDate != null && (startDate.after(today) || startDate.compareTo(today) == 0)
+                        val isRemainingValid = course.remaining > 0 // Validate the capacity of the courses
+
+                        isDateValid && isRemainingValid // The course must follow both conditions
+                    }
+
                     withContext(Dispatchers.Main) {
-                        val adapter = CursoAdapter(result.data, onCursoClickListener)
+                        val adapter = CursoAdapter(filteredCourses, onCursoClickListener)
                         binding.cursosList.adapter = adapter
                         binding.cursosList.layoutManager = LinearLayoutManager(context)
                     }
-
                 }
 
             } catch (e: Exception) {

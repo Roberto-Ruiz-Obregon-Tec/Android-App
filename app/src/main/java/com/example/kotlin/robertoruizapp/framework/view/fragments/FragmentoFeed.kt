@@ -43,8 +43,11 @@ class FragmentoFeed : Fragment() {
 
     private val binding get() = _binding!!
 
-    
-    
+
+    interface OnCommentClickListener {
+        fun OnCommentClicked(commentID: String)
+    }
+
     private val onEventClickListener = object : OnEventClickListener {
         override fun onEventClick(eventID: String) {
             Log.d("FragmentoFeed", "Event clicked: $eventID")
@@ -59,6 +62,20 @@ class FragmentoFeed : Fragment() {
                 addToBackStack(null)
                 commit()
             }
+        }
+    }
+    private val onCommentClickListener = object : OnCommentClickListener {
+        override fun OnCommentClicked(commentID: String) {
+            val fragmentoCommentDetalles = FragmentoCommentsPublication().apply {
+                arguments = Bundle().apply {
+                    putString("Comment_ID", commentID)
+                }
+            }
+
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.nav_host_fragment_content_main, fragmentoCommentDetalles)
+                .addToBackStack(null)
+                .commit()
         }
     }
     
@@ -183,7 +200,7 @@ class FragmentoFeed : Fragment() {
 
                 if (result != null) {
                     withContext(Dispatchers.Main) {
-                        val adapter = PublicationAdapter(result.data)
+                        val adapter = PublicationAdapter(result.data, onCommentClickListener)
                         binding.empresaList.adapter = adapter
                         binding.empresaList.layoutManager = LinearLayoutManager(context)
                     }

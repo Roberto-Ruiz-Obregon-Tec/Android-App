@@ -39,6 +39,8 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Locale
+import androidx.appcompat.widget.SearchView
+import java.text.Normalizer
 
 /**
  * Fragment that represents the home screen of the application.
@@ -48,6 +50,9 @@ class FragmentoHome : Fragment() {
     private var _binding: FragmentoHomeBinding? = null
 
     private val binding get() = _binding!!
+
+    private lateinit var fullCoursesList: List<Document>
+    private lateinit var emptyTextView: TextView
 
     /**
      * Interface for handling curso (course) click events.
@@ -101,8 +106,38 @@ class FragmentoHome : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         getCourse()
 
+        emptyTextView = view.findViewById(R.id.emptyTextView)
+
+        val searchView: SearchView = view.findViewById(R.id.search_view)
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                newText?.let {
+                    filterCourses(it)
+                }
+                return true
+            }
+        })
+
         binding.button1.setOnClickListener {
             getCourse()
+
+            val searchView: SearchView = view.findViewById(R.id.search_view)
+            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    return false
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    newText?.let {
+                        filterCourses(it)
+                    }
+                    return true
+                }
+            })
 
             binding.button1.setBackgroundResource(R.drawable.button_active)
             binding.button1.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
@@ -115,6 +150,19 @@ class FragmentoHome : Fragment() {
 
             binding.button4.setBackgroundResource(R.drawable.button_inactive)
             binding.button4.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+
+            binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    return false
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    newText?.let {
+                        filterCourses(it)
+                    }
+                    return true
+                }
+            })
         }
 
         binding.button2.setOnClickListener {
@@ -171,6 +219,35 @@ class FragmentoHome : Fragment() {
 
     }
 
+    private fun filterCourses(query: String) {
+        val today = Calendar.getInstance().time
+        val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+        val normalizedQuery = query.normalize()
+
+        val filteredList = fullCoursesList.filter { course ->
+            val startDate = sdf.parse(course.startDate)
+            val isDateValid = startDate != null && !startDate.before(today)
+            val isRemainingValid = course.remaining > 0
+            val normalizedCourseName = course.name.normalize()
+
+            normalizedCourseName.contains(normalizedQuery, ignoreCase = true) && isDateValid && isRemainingValid
+        }
+
+        val adapter = binding.cursosList.adapter
+        if (adapter is CursoAdapter) {
+            adapter.updateList(filteredList)
+        } else {
+            binding.cursosList.visibility = View.VISIBLE
+            emptyTextView.visibility = View.GONE
+            (binding.cursosList.adapter as? CursoAdapter)?.updateList(filteredList)
+        }
+    }
+
+    fun String.normalize(): String {
+        val normalized = Normalizer.normalize(this, Normalizer.Form.NFD)
+        return normalized.replace("[\\p{InCombiningDiacriticalMarks}]".toRegex(), "").toLowerCase(Locale.getDefault())
+    }
+
 
     /**
      * Method to get the list of courses and display it in the UI.
@@ -184,6 +261,7 @@ class FragmentoHome : Fragment() {
                 val result: CourseObject? = courseRepository.getCourse(LoginActivity.token)
 
                 if (result != null) {
+                    fullCoursesList = result.data
                     // Filter courses by startDate and by remaining, so they don't appear on the view
                     val filteredCourses = result.data.filter { course ->
                         val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
@@ -306,4 +384,5 @@ class FragmentoHome : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
 }

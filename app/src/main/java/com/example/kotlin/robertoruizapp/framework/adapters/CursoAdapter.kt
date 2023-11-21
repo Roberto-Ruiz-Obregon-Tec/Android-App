@@ -21,9 +21,14 @@ import java.util.Locale
  * @param courses List of courses to display in the list.
  */
 class CursoAdapter(
-    private val cursos: List<Document?>,
+    private var courses: List<Document>,
     private val itemClickListener: FragmentoHome.OnCursoClickListener
 ) : RecyclerView.Adapter<CursoAdapter.ViewHolder>() {
+
+    fun updateList(newList: List<Document>) {
+        courses = newList
+        notifyDataSetChanged()
+    }
 
 
     /**
@@ -59,7 +64,7 @@ class CursoAdapter(
      * Method called to display the data in a specific ViewHolder. This is what I have in my document list.
      */
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val curso = cursos[position]
+        val curso = courses[position]
         Log.d("Cursos", "Cursos: ${curso?.name}")
         holder.nombreCurso.text = curso?.name
         holder.descripcionCurso.text = curso?.description
@@ -105,5 +110,5 @@ class CursoAdapter(
     /**
      * Method called to get the number of elements in the list.
      */
-    override fun getItemCount() = cursos.size
+    override fun getItemCount() = courses.size
 }

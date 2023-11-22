@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
@@ -18,11 +19,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlin.robertoruizapp.R
 import com.example.kotlin.robertoruizapp.data.CertificacionesRepository
 import com.example.kotlin.robertoruizapp.data.CourseRepository
+import com.example.kotlin.robertoruizapp.data.ProgramsRepository
 import com.example.kotlin.robertoruizapp.data.ScholarshipRepository
 import com.example.kotlin.robertoruizapp.data.network.model.Becas.BecasObjeto
 import com.example.kotlin.robertoruizapp.data.network.model.Course.CourseObject
+import com.example.kotlin.robertoruizapp.data.network.model.Programs.ProgramsObj
 import com.example.kotlin.robertoruizapp.data.network.model.certificaciones.CertificacionesObjeto
 import com.example.kotlin.robertoruizapp.databinding.FragmentoHomeBinding
+import com.example.kotlin.robertoruizapp.framework.adapters.CursoAdapter
+import com.example.kotlin.robertoruizapp.framework.adapters.ProgramsAdapter
 import com.example.kotlin.robertoruizapp.framework.adapters.ScholarshipAdapter
 import com.example.kotlin.robertoruizapp.framework.view.activities.LoginActivity
 import kotlinx.coroutines.CoroutineScope
@@ -30,6 +35,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.Calendar
 import java.util.Locale
 
 /**
@@ -42,6 +50,36 @@ class FragmentoHome : Fragment() {
     private val binding get() = _binding!!
 
     /**
+     * Interface for handling curso (course) click events.
+     */
+    interface OnCursoClickListener {
+        /**
+         * Called when a curso (course) item is clicked.
+         *
+         * @param cursoId The ID of the clicked curso (course).
+         */
+        fun onCursoClicked(cursoId: String)
+    }
+    /**
+     * An instance of [OnCursoClickListener] used to handle curso (course) click events.
+     */
+    private val onCursoClickListener = object : OnCursoClickListener {
+        override fun onCursoClicked(cursoId: String) {
+            val fragmentoDetalles = FragmentoCursoDetalles().apply {
+                arguments = Bundle().apply {
+                    putString("CURSO_ID", cursoId)
+                }
+            }
+
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.nav_host_fragment_content_main, fragmentoDetalles)
+                .addToBackStack(null) // Allows returning to the previous fragment
+                .commit()
+        }
+    }
+
+
+    /**
      * Method called when the fragment view is created.
      */
     @RequiresApi(Build.VERSION_CODES.N)
@@ -49,8 +87,10 @@ class FragmentoHome : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         _binding = FragmentoHomeBinding.inflate(inflater, container, false)
         return binding.root
+
     }
 
     /**
@@ -67,6 +107,25 @@ class FragmentoHome : Fragment() {
             binding.button1.setBackgroundResource(R.drawable.button_active)
             binding.button1.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
 
+            binding.button2.setBackgroundResource(R.drawable.button_inactive)
+            binding.button2.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+
+            binding.button3.setBackgroundResource(R.drawable.button_inactive)
+            binding.button3.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+
+            binding.button4.setBackgroundResource(R.drawable.button_inactive)
+            binding.button4.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+        }
+
+        binding.button2.setOnClickListener {
+            getPrograms()
+
+            binding.button2.setBackgroundResource(R.drawable.button_active)
+            binding.button2.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+
+            binding.button1.setBackgroundResource(R.drawable.button_inactive)
+            binding.button1.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+
             binding.button3.setBackgroundResource(R.drawable.button_inactive)
             binding.button3.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
 
@@ -79,6 +138,9 @@ class FragmentoHome : Fragment() {
 
             binding.button1.setBackgroundResource(R.drawable.button_inactive)
             binding.button1.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+
+            binding.button2.setBackgroundResource(R.drawable.button_inactive)
+            binding.button2.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
 
             binding.button3.setBackgroundResource(R.drawable.button_active)
             binding.button3.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
@@ -94,6 +156,9 @@ class FragmentoHome : Fragment() {
             binding.button1.setBackgroundResource(R.drawable.button_inactive)
             binding.button1.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
 
+            binding.button2.setBackgroundResource(R.drawable.button_inactive)
+            binding.button2.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+
             binding.button3.setBackgroundResource(R.drawable.button_inactive)
             binding.button3.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
 
@@ -106,82 +171,6 @@ class FragmentoHome : Fragment() {
 
     }
 
-    /**
-     * Adapter for course list.
-     *
-     * @param courses List of courses to display in the list.
-     */
-    class CursoAdapter(private val cursos: List<Document?>) :
-        RecyclerView.Adapter<CursoAdapter.ViewHolder>() {
-
-        /**
-         * ViewHolder for course list items. Here I call it so that it appears in item_cursos.xml
-         *
-         * @param view View of a list item.
-         */
-        class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-            val nombreCurso: TextView = view.findViewById(R.id.cursos_list)
-            val descripcionCurso: TextView = view.findViewById(R.id.curso_description)
-            //val fechaInicioCurso: TextView = view.findViewById(R.id.curso_fecha_inicio)
-            //val fechaFinCurso: TextView = view.findViewById(R.id.curso_fecha_fin)
-            //Put this when you have the correct urls of the images
-            //val imagenCurso: ImageView = view.findViewById(R.id.curso_imagen)
-            val fechaCurso: TextView = view.findViewById(R.id.curso_fecha)
-            val costoCurso: TextView = view.findViewById(R.id.curso_costo)
-            val modalidadCurso: TextView = view.findViewById(R.id.curso_modalidad)
-
-        }
-
-        /**
-         * Method called when a new ViewHolder is created.
-         */
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-            val view = LayoutInflater.from(parent.context).inflate(R.layout.item_cursos, parent, false)
-            return ViewHolder(view)
-
-
-        }
-
-        /**
-         * Method called to display the data in a specific ViewHolder. This is what I have in my document list.
-         */
-        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            val curso = cursos[position]
-            Log.d("Cursos", "Cursos: ${curso?.name}")
-            holder.nombreCurso.text = curso?.name
-            holder.descripcionCurso.text = curso?.description
-
-            // Convert and display the date
-            val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US)
-            val outputFormat = SimpleDateFormat("dd/MM/yyyy", Locale.US)
-            val startDate = inputFormat.parse(curso?.startDate ?: "")
-            val endDate = inputFormat.parse(curso?.endDate ?: "")
-            holder.fechaCurso.text = if (startDate != null && endDate != null) {
-                "${outputFormat.format(startDate)} - ${outputFormat.format(endDate)}"
-            } else {
-                "Fechas no disponibles"
-            }
-
-            //Put this when you have the correct urls of the images
-            //Glide.with(holder.imagenCurso.context).load(curso?.courseImage).into(holder.imagenCurso)
-
-            // Show the cost
-            if (curso?.cost == 0) {
-                holder.costoCurso.text = "Gratuito"
-            } else {
-                holder.costoCurso.text = "$${curso?.cost} MXN"
-            }
-
-            holder.modalidadCurso.text = curso?.modality
-        }
-
-
-        /**
-         * Method called to get the number of elements in the list.
-         */
-        override fun getItemCount() = cursos.size
-    }
-
 
     /**
      * Method to get the list of courses and display it in the UI.
@@ -190,13 +179,51 @@ class FragmentoHome : Fragment() {
     private fun getCourse() {
         showProgressBar()
         CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val courseRepository = CourseRepository()
+                val result: CourseObject? = courseRepository.getCourse(LoginActivity.token)
+
+                if (result != null) {
+                    // Filter courses by startDate and by remaining, so they don't appear on the view
+                    val filteredCourses = result.data.filter { course ->
+                        val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+                        val startDate = sdf.parse(course.startDate)
+                        val today = Calendar.getInstance().time
+
+                        val isDateValid = startDate != null && (startDate.after(today) || startDate.compareTo(today) == 0)
+                        val isRemainingValid = course.remaining > 0 // Validate the capacity of the courses
+
+                        isDateValid && isRemainingValid // The course must follow both conditions
+                    }
+
+                    withContext(Dispatchers.Main) {
+                        val adapter = CursoAdapter(filteredCourses, onCursoClickListener)
+                        binding.cursosList.adapter = adapter
+                        binding.cursosList.layoutManager = LinearLayoutManager(context)
+                    }
+                }
+
+            } catch (e: Exception) {
+                e.printStackTrace() // Log the exception
+            } finally {
+                withContext(Dispatchers.Main) {
+                    hideProgressBar()
+                }
+            }
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    private fun getPrograms() {
+        showProgressBar()
+        CoroutineScope(Dispatchers.IO).launch {
             try{
-                val CourseRepository = CourseRepository()
-                val result: CourseObject? = CourseRepository.getCourse(LoginActivity.token)
+                val programsRepository = ProgramsRepository()
+                val result: ProgramsObj? = programsRepository.getPrograms(LoginActivity.token)
 
                 if (result != null) {
                     withContext(Dispatchers.Main) {
-                        val adapter = CursoAdapter(result.data)
+                        val adapter = ProgramsAdapter(result.data.programs)
                         binding.cursosList.adapter = adapter
                         binding.cursosList.layoutManager = LinearLayoutManager(context)
                     }
@@ -221,7 +248,7 @@ class FragmentoHome : Fragment() {
 
             if (result != null) {
                 withContext(Dispatchers.Main) {
-                    val adapter = FragmentoCertificaciones.CertificacionesAdapter(result.data.documents)
+                    val adapter = FragmentoCertificaciones.CertificacionesAdapter(result.data)
                     binding.cursosList.adapter = adapter
                     binding.cursosList.layoutManager = LinearLayoutManager(context)
                 }
@@ -230,25 +257,41 @@ class FragmentoHome : Fragment() {
     }
     @RequiresApi(Build.VERSION_CODES.N)
     private fun getScholarship() {
+        showProgressBar()
         CoroutineScope(Dispatchers.IO).launch {
-            val ScholarshipRepository = ScholarshipRepository()
-            val result: BecasObjeto? = ScholarshipRepository.getScholarship()
+            try{
+                val ScholarshipRepository = ScholarshipRepository()
+                val result: BecasObjeto? = ScholarshipRepository.getScholarship(LoginActivity.token)
 
-            if (result != null) {
-                withContext(Dispatchers.Main) {
-                    val adapter = ScholarshipAdapter(result.data.becas)
-                    binding.cursosList.adapter = adapter
-                    binding.cursosList.layoutManager = LinearLayoutManager(context)
+                if (result != null) {
+                    withContext(Dispatchers.Main) {
+
+                        val adapter = ScholarshipAdapter(result.data.documents)
+                        binding.cursosList.adapter = adapter
+                        binding.cursosList.layoutManager = LinearLayoutManager(context)
+                    }
                 }
-
+            } catch (e: Exception) {
+                e.printStackTrace() // Log the exception
+            } finally {
+                withContext(Dispatchers.Main) {
+                    hideProgressBar()
+                }
             }
         }
     }
+
+    /**
+     * Displays the progress bar and hides the course list.
+     */
     private fun showProgressBar() {
         binding.progressBar.visibility = View.VISIBLE
         binding.cursosList.visibility = View.INVISIBLE
     }
 
+    /**
+     * Hides the progress bar and displays the course list.
+     */
     private fun hideProgressBar() {
         binding.progressBar.visibility = View.GONE
         binding.cursosList.visibility = View.VISIBLE

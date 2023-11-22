@@ -101,8 +101,8 @@ class MainActivity : AppCompatActivity() {
                 Constants.MENU_FRRO
             )
             Constants.MENU_PERFIL -> exchangeCurrentFragment(
-              FragmentoPerfil(), //Cambiar por los fragmentos que usaremos
-              Constants.MENU_PERFIL
+                FragmentoPerfil(), //Cambiar por los fragmentos que usaremos
+                Constants.MENU_PERFIL
             )
         }
     }

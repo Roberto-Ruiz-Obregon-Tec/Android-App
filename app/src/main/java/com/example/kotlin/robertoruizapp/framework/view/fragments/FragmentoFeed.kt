@@ -44,10 +44,6 @@ class FragmentoFeed : Fragment() {
     private val binding get() = _binding!!
 
 
-    interface OnCommentClickListener {
-        fun OnCommentClicked(commentID: String)
-    }
-
     private val onEventClickListener = object : OnEventClickListener {
         override fun onEventClick(eventID: String) {
             Log.d("FragmentoFeed", "Event clicked: $eventID")
@@ -64,11 +60,11 @@ class FragmentoFeed : Fragment() {
             }
         }
     }
-    private val onCommentClickListener = object : OnCommentClickListener {
-        override fun OnCommentClicked(commentID: String) {
+    private val onCommentClickListener = object : PublicationAdapter.OnCommentClickListener {
+        override fun OnCommentClicked(publicationId: String) {
             val fragmentoCommentDetalles = FragmentoCommentsPublication().apply {
                 arguments = Bundle().apply {
-                    putString("Comment_ID", commentID)
+                    putString("PUBLICACION_ID", publicationId)
                 }
             }
 

@@ -8,6 +8,7 @@ data class Document (
     val description: String,
     val image: String,
     val createdAt: String,
-    val updatedAt: String
+    val updatedAt: String,
+    val comments: List<Comment>
 
 )

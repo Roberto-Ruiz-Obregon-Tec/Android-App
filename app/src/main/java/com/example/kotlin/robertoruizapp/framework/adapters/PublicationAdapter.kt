@@ -23,18 +23,23 @@ import java.util.Locale
  *
  * @param companies List of company documents that will be displayed.
  */
+
 class PublicationAdapter(private val publicaciones: List<Document?>,
-                         private val commentClickListener: FragmentoFeed.OnCommentClickListener
+                         private val commentClickListener: OnCommentClickListener
 ) :
     RecyclerView.Adapter<PublicationAdapter.ViewHolder>() {
+    interface OnCommentClickListener {
+        fun OnCommentClicked(publicationId: String)
+    }
 
-    class ViewHolder(view: View, private val commentClickListener: FragmentoFeed.OnCommentClickListener) : RecyclerView.ViewHolder(view) {
+    class ViewHolder(view: View, private val commentClickListener:OnCommentClickListener) : RecyclerView.ViewHolder(view) {
         val nombrePublicacion: TextView = view.findViewById(R.id.titulo_programa)
         val descripcionPublicacion: TextView = view.findViewById(R.id.programa_description)
         val verMas: TextView = view.findViewById(R.id.ver_mas)
         val fechapublicacion: TextView = view.findViewById(R.id.fecha_publicacion)
         val likesTextView: TextView = view.findViewById(R.id.like_total)
         val imagenpublicacion: ImageView = view.findViewById(R.id.imagenpublicacion)
+
         fun bind(publicacion: Document?) {
             nombrePublicacion.text = publicacion?.title
             descripcionPublicacion.text = publicacion?.description

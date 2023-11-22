@@ -40,6 +40,8 @@ import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Locale
 import androidx.appcompat.widget.SearchView
+import androidx.fragment.app.activityViewModels
+import com.example.kotlin.robertoruizapp.framework.viewmodel.SharedViewModel
 import java.text.Normalizer
 
 /**
@@ -53,6 +55,7 @@ class FragmentoHome : Fragment() {
 
     private lateinit var fullCoursesList: List<Document>
     private lateinit var emptyTextView: TextView
+    private val viewModel: SharedViewModel by activityViewModels()
 
     /**
      * Interface for handling curso (course) click events.
@@ -99,7 +102,7 @@ class FragmentoHome : Fragment() {
     }
 
     /**
-     * Method called when the fragment view has been completely created.
+     * Method called when the fragment view is created.
      */
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -122,101 +125,29 @@ class FragmentoHome : Fragment() {
             }
         })
 
-        binding.button1.setOnClickListener {
-            getCourse()
+        setupSearchView()
 
-            val searchView: SearchView = view.findViewById(R.id.search_view)
-            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-                override fun onQueryTextSubmit(query: String?): Boolean {
-                    return false
+    }
+
+    private fun setupSearchView() {
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                newText?.let {
+                    viewModel.setFiltroActual(it)
+                    filterCourses(it)
                 }
+                return true
+            }
+        })
 
-                override fun onQueryTextChange(newText: String?): Boolean {
-                    newText?.let {
-                        filterCourses(it)
-                    }
-                    return true
-                }
-            })
-
-            binding.button1.setBackgroundResource(R.drawable.button_active)
-            binding.button1.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
-
-            binding.button2.setBackgroundResource(R.drawable.button_inactive)
-            binding.button2.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-
-            binding.button3.setBackgroundResource(R.drawable.button_inactive)
-            binding.button3.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-
-            binding.button4.setBackgroundResource(R.drawable.button_inactive)
-            binding.button4.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-
-            binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-                override fun onQueryTextSubmit(query: String?): Boolean {
-                    return false
-                }
-
-                override fun onQueryTextChange(newText: String?): Boolean {
-                    newText?.let {
-                        filterCourses(it)
-                    }
-                    return true
-                }
-            })
+        // Observar el filtroActual del ViewModel
+        viewModel.filtroActual.observe(viewLifecycleOwner) { filtro ->
+            filterCourses(filtro)
         }
-
-        binding.button2.setOnClickListener {
-            getPrograms()
-
-            binding.button2.setBackgroundResource(R.drawable.button_active)
-            binding.button2.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
-
-            binding.button1.setBackgroundResource(R.drawable.button_inactive)
-            binding.button1.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-
-            binding.button3.setBackgroundResource(R.drawable.button_inactive)
-            binding.button3.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-
-            binding.button4.setBackgroundResource(R.drawable.button_inactive)
-            binding.button4.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-        }
-
-        binding.button3.setOnClickListener {
-            getCertificaciones()
-
-            binding.button1.setBackgroundResource(R.drawable.button_inactive)
-            binding.button1.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-
-            binding.button2.setBackgroundResource(R.drawable.button_inactive)
-            binding.button2.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-
-            binding.button3.setBackgroundResource(R.drawable.button_active)
-            binding.button3.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
-
-            binding.button4.setBackgroundResource(R.drawable.button_inactive)
-            binding.button4.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-
-
-        }
-        binding.button4.setOnClickListener {
-            getScholarship()
-
-            binding.button1.setBackgroundResource(R.drawable.button_inactive)
-            binding.button1.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-
-            binding.button2.setBackgroundResource(R.drawable.button_inactive)
-            binding.button2.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-
-            binding.button3.setBackgroundResource(R.drawable.button_inactive)
-            binding.button3.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-
-            binding.button4.setBackgroundResource(R.drawable.button_active)
-            binding.button4.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
-        }
-
-
-
-
     }
 
     private fun filterCourses(query: String) {
@@ -358,6 +289,14 @@ class FragmentoHome : Fragment() {
             }
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.filtroActual.value?.let {
+            filterCourses(it)
+        }
+    }
+
 
     /**
      * Displays the progress bar and hides the course list.

@@ -18,7 +18,6 @@ import com.example.kotlin.robertoruizapp.data.CourseRepository
 import com.example.kotlin.robertoruizapp.data.network.model.Course.CourseObject
 import com.example.kotlin.robertoruizapp.data.network.model.Course.Document
 import com.example.kotlin.robertoruizapp.databinding.FragmentoCursoDetallesBinding
-import com.example.kotlin.robertoruizapp.databinding.FragmentoHomeBinding
 import com.example.kotlin.robertoruizapp.framework.view.activities.LoginActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

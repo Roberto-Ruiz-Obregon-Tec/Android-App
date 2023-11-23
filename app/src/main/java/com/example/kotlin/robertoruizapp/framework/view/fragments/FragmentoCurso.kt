@@ -16,10 +16,8 @@ import com.example.kotlin.robertoruizapp.data.CourseRepository
 import com.example.kotlin.robertoruizapp.data.network.model.Course.CourseObject
 import com.example.kotlin.robertoruizapp.data.network.model.Course.Document
 import com.example.kotlin.robertoruizapp.databinding.FragmentoCursoBinding
-import com.example.kotlin.robertoruizapp.databinding.FragmentoHomeBinding
 import com.example.kotlin.robertoruizapp.framework.adapters.CursoAdapter
 import com.example.kotlin.robertoruizapp.framework.view.activities.LoginActivity
-import com.example.kotlin.robertoruizapp.framework.view.fragments.FragmentoHome.OnCursoClickListener
 import com.example.kotlin.robertoruizapp.framework.viewmodel.SharedViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -55,7 +53,7 @@ class FragmentoCurso : Fragment() {
     /**
      * An instance of [OnCursoClickListener] used to handle curso (course) click events.
      */
-    private val onCursoClickListener = object : FragmentoHome.OnCursoClickListener {
+    private val onCursoClickListener = object : OnCursoClickListener {
         override fun onCursoClicked(cursoId: String) {
             val fragmentoDetalles = FragmentoCursoDetalles().apply {
                 arguments = Bundle().apply {

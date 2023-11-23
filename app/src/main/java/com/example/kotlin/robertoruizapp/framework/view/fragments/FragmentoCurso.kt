@@ -35,9 +35,10 @@ class FragmentoCurso : Fragment() {
     private val binding get() = _binding!!
 
     // Variables adicionales
-    private lateinit var fullCoursesList: List<Document>
+    private var fullCoursesList: List<Document> = listOf()
     private lateinit var emptyTextView: TextView
     private val viewModel: SharedViewModel by activityViewModels()
+
 
     /**
      * Interface for handling curso (course) click events.
@@ -98,12 +99,18 @@ class FragmentoCurso : Fragment() {
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 newText?.let {
-                    filterCourses(it)
+                    viewModel.setFiltroActual(it)
                 }
                 return true
             }
         })
         setupSearchView()
+
+        viewModel.filtroActual.observe(viewLifecycleOwner) { filtro ->
+            if (filtro.isNotEmpty()) {
+                filterCourses(filtro)
+            }
+        }
     }
 
     /**
@@ -173,6 +180,7 @@ class FragmentoCurso : Fragment() {
         val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
         val normalizedQuery = query.normalize()
 
+        // Filtrar la lista basándose en el query. No es necesario verificar si está inicializada.
         val filteredList = fullCoursesList.filter { course ->
             val startDate = sdf.parse(course.startDate)
             val isDateValid = startDate != null && !startDate.before(today)
@@ -183,12 +191,12 @@ class FragmentoCurso : Fragment() {
         }
 
         val adapter = binding.cursosList.adapter
-        if (adapter is CursoAdapter) {
-            adapter.updateList(filteredList)
-        } else {
-            binding.cursosList.visibility = View.VISIBLE
-            emptyTextView.visibility = View.GONE
-            (binding.cursosList.adapter as? CursoAdapter)?.updateList(filteredList)
+        if (binding.cursosList.adapter == null) {
+            val adapter = CursoAdapter(filteredList, onCursoClickListener)
+            binding.cursosList.adapter = adapter
+            binding.cursosList.layoutManager = LinearLayoutManager(context)
+        } else if (binding.cursosList.adapter is CursoAdapter) {
+            (binding.cursosList.adapter as CursoAdapter).updateList(filteredList)
         }
     }
 
@@ -200,9 +208,12 @@ class FragmentoCurso : Fragment() {
     override fun onResume() {
         super.onResume()
         viewModel.filtroActual.value?.let {
-            filterCourses(it)
+            if (it.isNotEmpty()) {
+                filterCourses(it)
+            }
         }
     }
+
 
     /**
      * Displays the progress bar and hides the course list.

@@ -257,7 +257,7 @@ class FragmentoHome : Fragment() {
 
             if (result != null) {
                 withContext(Dispatchers.Main) {
-                    val adapter = FragmentoCertificaciones.CertificacionesAdapter(result.data.documents)
+                    val adapter = FragmentoCertificaciones.CertificacionesAdapter(result.data)
                     binding.cursosList.adapter = adapter
                     binding.cursosList.layoutManager = LinearLayoutManager(context)
                 }

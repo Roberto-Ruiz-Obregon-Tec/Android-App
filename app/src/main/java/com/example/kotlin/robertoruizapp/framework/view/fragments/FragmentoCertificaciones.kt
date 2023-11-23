@@ -147,7 +147,7 @@ class FragmentoCertificaciones : Fragment() {
 
             if (result != null) {
                 withContext(Dispatchers.Main) {
-                    val adapter = CertificacionesAdapter(result.data.documents)
+                    val adapter = CertificacionesAdapter(result.data)
                     binding.certificacionesList.adapter = adapter
                     binding.certificacionesList.layoutManager = LinearLayoutManager(context)
                 }

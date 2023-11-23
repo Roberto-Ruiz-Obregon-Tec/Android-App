@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.kotlin.robertoruizapp.R
 import com.example.kotlin.robertoruizapp.data.network.model.Course.Document
-import com.example.kotlin.robertoruizapp.framework.view.fragments.FragmentoHome
+import com.example.kotlin.robertoruizapp.framework.view.fragments.FragmentoCurso
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -22,7 +22,7 @@ import java.util.Locale
  */
 class CursoAdapter(
     private var courses: List<Document>,
-    private val itemClickListener: FragmentoHome.OnCursoClickListener
+    private val itemClickListener: FragmentoCurso.OnCursoClickListener
 ) : RecyclerView.Adapter<CursoAdapter.ViewHolder>() {
 
     fun updateList(newList: List<Document>) {

@@ -8,11 +8,9 @@ import androidx.fragment.app.Fragment
 import com.example.kotlin.mypokedexapp.viewmodel.MainViewModel
 import com.example.kotlin.robertoruizapp.R
 import com.example.kotlin.robertoruizapp.databinding.ActivityMainBinding
-import com.example.kotlin.robertoruizapp.framework.view.fragments.FragmentoCurso
 import com.example.kotlin.robertoruizapp.framework.view.fragments.FragmentoFRRO
 import com.example.kotlin.robertoruizapp.framework.view.fragments.FragmentoPerfil
 import com.example.kotlin.robertoruizapp.framework.view.fragments.FragmentoFeed
-import com.example.kotlin.robertoruizapp.framework.view.fragments.FragmentoHome
 import com.example.kotlin.robertoruizapp.utils.Constants
 
 /**

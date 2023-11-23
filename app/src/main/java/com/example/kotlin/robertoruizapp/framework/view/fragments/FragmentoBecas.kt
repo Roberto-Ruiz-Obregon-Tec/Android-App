@@ -85,6 +85,4 @@ class FragmentoBecas : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
-    // ... otros métodos como showProgressBar, hideProgressBar, etc.
 }

@@ -32,8 +32,11 @@ import java.util.Locale
 class FragmentoCommentsPublication: Fragment() {
     private lateinit var binding: FragmentoCommentsPublicationBinding
     private lateinit var currentFragment: Fragment
+    private var backToPublicationListener: OnBackToPublicationListener? = null
 
-
+    fun setOnBackToPublicationListener(listener: OnBackToPublicationListener) {
+        backToPublicationListener = listener
+    }
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,10 +54,13 @@ class FragmentoCommentsPublication: Fragment() {
         getInfoComment(publicationId)
 
         binding.backContainer.setOnClickListener {
-
-            parentFragmentManager.popBackStack()
+            backToPublicationListener?.onBackToPublication()
         }
     }
+    interface OnBackToPublicationListener {
+        fun onBackToPublication()
+    }
+
     @RequiresApi(Build.VERSION_CODES.N)
     private fun getInfoComment(publicationId: String) {
         showProgressBar()
@@ -63,16 +69,18 @@ class FragmentoCommentsPublication: Fragment() {
                 val repositoryPublication = RepositoryPublication()
                 val result: Document? = repositoryPublication.getPublicationId(publicationId, LoginActivity.token)
                 withContext(Dispatchers.Main) {
-                    if (result != null) {
+                    if (result != null && result.comments.isNotEmpty()) {
                         if (result.comments.isNotEmpty()) {
                             val adapter = CommentsAdapter(result.comments)
                             binding.comentariosList.adapter = adapter
                             binding.comentariosList.layoutManager = LinearLayoutManager(context)
+                            binding.textViewNoComments.visibility = View.GONE
+
                         } else {
-                            showError("No se encontraron comentarios.")
+                            binding.textViewNoComments.visibility = View.VISIBLE
                         }
                     } else {
-                        showError("No se encontraron comentarios.")
+                        binding.textViewNoComments.visibility = View.VISIBLE
                     }
                     hideProgressBar()
                 }

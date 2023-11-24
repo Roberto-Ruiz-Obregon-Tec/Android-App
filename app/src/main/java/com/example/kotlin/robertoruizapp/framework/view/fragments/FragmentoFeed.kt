@@ -37,12 +37,16 @@ import kotlinx.coroutines.withContext
  * @property _binding Variable for the automatically generated view binding for this fragment.
  * @property binding Access property to `_binding` that ensures it is not null.
  */
-class FragmentoFeed : Fragment() {
+class FragmentoFeed : Fragment(), FragmentoCommentsPublication.OnBackToPublicationListener {
 
     private var _binding: FragmentoFeedBinding? = null
 
     private val binding get() = _binding!!
 
+    @RequiresApi(Build.VERSION_CODES.N)
+    override fun onBackToPublication() {
+        handleButton2Click()
+    }
 
     private val onEventClickListener = object : OnEventClickListener {
         override fun onEventClick(eventID: String) {
@@ -136,21 +140,26 @@ class FragmentoFeed : Fragment() {
             binding.button2.setBackgroundResource(R.drawable.button_inactive)
             binding.button2.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
         }
-
         binding.button2.setOnClickListener {
-            getPublication()
-
-            // Cambia el drawable y color del texto de button1
-            binding.button2.setBackgroundResource(R.drawable.button_active)
-            binding.button2.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
-
-            // Cambia el drawable y color del texto de button3
-            binding.button3.setBackgroundResource(R.drawable.button_inactive)
-            binding.button3.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-            binding.button1.setBackgroundResource(R.drawable.button_inactive)
-            binding.button1.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+            handleButton2Click()
         }
+
     }
+    @RequiresApi(Build.VERSION_CODES.N)
+    private fun handleButton2Click() {
+        getPublication()
+
+        // Cambia el drawable y color del texto de button1
+        binding.button2.setBackgroundResource(R.drawable.button_active)
+        binding.button2.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+
+        // Cambia el drawable y color del texto de button3
+        binding.button3.setBackgroundResource(R.drawable.button_inactive)
+        binding.button3.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+        binding.button1.setBackgroundResource(R.drawable.button_inactive)
+        binding.button1.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+    }
+
 
     /**
      * Obtain company certifications and update your view.

@@ -16,10 +16,23 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+/**
+ * A Fragment responsible for displaying a list of programs.
+ */
 class FragmentoProgramas : Fragment() {
     private var _binding: FragmentoProgramasBinding? = null
     private val binding get() = _binding!!
 
+    /**
+     * Called when the fragment's view is created. Inflates the layout for programs
+     * and returns the root view.
+     *
+     * @param inflater The LayoutInflater object that can be used to inflate views.
+     * @param container The parent view that the fragment's UI should be attached to.
+     * @param savedInstanceState The saved instance state of the fragment, if any.
+     *
+     * @return The root View for the fragment's UI.
+     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -27,11 +40,21 @@ class FragmentoProgramas : Fragment() {
         return binding.root
     }
 
+    /**
+     * Called when the fragment's view has been created. This method initiates the process
+     * of fetching program data and displaying it in the UI.
+     *
+     * @param view The root View of the fragment's UI.
+     * @param savedInstanceState The saved instance state of the fragment, if any.
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         getPrograms()
     }
 
+    /**
+     * Fetches program data and populates the UI with the retrieved information.
+     */
     private fun getPrograms() {
         showProgressBar()
         CoroutineScope(Dispatchers.IO).launch {
@@ -74,6 +97,10 @@ class FragmentoProgramas : Fragment() {
         binding.programasList.visibility = View.VISIBLE
     }
 
+    /**
+     * Method called when the fragment view is destroyed.
+     * Clear the reference to the object to avoid memory leaks.
+     */
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

@@ -21,21 +21,44 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+/**
+ * A Fragment responsible for displaying a list of scholarships.
+ */
 class FragmentoBecas : Fragment() {
     private var _binding: FragmentoBecasBinding? = null
     private val binding get() = _binding!!
 
+    /**
+     * Called when the fragment's view is created. Inflates the layout for scholarships
+     * and returns the root view.
+     *
+     * @param inflater The LayoutInflater object that can be used to inflate views.
+     * @param container The parent view that the fragment's UI should be attached to.
+     * @param savedInstanceState The saved instance state of the fragment, if any.
+     *
+     * @return The root View for the fragment's UI.
+     */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentoBecasBinding.inflate(inflater, container, false)
         return binding.root
     }
 
+    /**
+     * Called when the fragment's view has been created. This method initiates the process
+     * of fetching scholarship data and displaying it in the UI.
+     *
+     * @param view The root View of the fragment's UI.
+     * @param savedInstanceState The saved instance state of the fragment, if any.
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         showProgressBar()
         getScholarship()
     }
 
+    /**
+     * Fetches scholarship data and populates the UI with the retrieved information.
+     */
     private fun getScholarship() {
         showProgressBar()
         CoroutineScope(Dispatchers.IO).launch {

@@ -12,21 +12,39 @@ import com.example.kotlin.robertoruizapp.framework.view.fragments.FragmentoCurso
 import com.example.kotlin.robertoruizapp.framework.view.fragments.FragmentoCursos
 import com.example.kotlin.robertoruizapp.framework.view.fragments.FragmentoProgramas
 
+/**
+ * Fragment for displaying the home screen with navigation buttons to different sections.
+ */
 class FragmentoInicio : Fragment() {
     private var _binding: FragmentoInicioBinding? = null
     private val binding get() = _binding!!
 
+    /**
+     * Called when the fragment's view is created. Inflates the layout for the home screen
+     * and returns the root view.
+     *
+     * @param inflater The LayoutInflater object that can be used to inflate views.
+     * @param container The parent view that the fragment's UI should be attached to.
+     * @param savedInstanceState The saved instance state of the fragment, if any.
+     *
+     * @return The root View for the fragment's UI.
+     */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentoInicioBinding.inflate(inflater, container, false)
         return binding.root
     }
 
+    /**
+     * Called when the fragment's view has been created. This method is used to set up
+     * the initial state of the UI elements, such as buttons and navigation.
+     *
+     * @param view The root View of the fragment's UI.
+     * @param savedInstanceState The saved instance state of the fragment, if any.
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        selectButton(binding.button1) // Seleccionar el botón de cursos
-        navigateToFragment(FragmentoCurso()) // Cargar el fragmento de cursos
 
-        // Inicializar el estado de los botones
+        // Initialize the buttons with the FragmentoCurso fragment on Inicio
         selectButton(binding.button1)
         navigateToFragment(FragmentoCurso())
 
@@ -51,6 +69,11 @@ class FragmentoInicio : Fragment() {
         }
     }
 
+    /**
+     * Navigates to the specified fragment.
+     *
+     * @param fragment The fragment to navigate to.
+     */
     private fun navigateToFragment(fragment: Fragment) {
         parentFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, fragment)
@@ -58,14 +81,19 @@ class FragmentoInicio : Fragment() {
             .commit()
     }
 
+    /**
+     * Selects the specified button and deselects all other buttons.
+     *
+     * @param selectedButton The button to select.
+     */
     private fun selectButton(selectedButton: Button) {
-        // Desactivar todos los botones
+        // Deselect all buttons
         binding.button1.isSelected = false
         binding.button2.isSelected = false
         binding.button3.isSelected = false
         binding.button4.isSelected = false
 
-        // Activar el botón seleccionado
+        // Select the specified button
         selectedButton.isSelected = true
     }
 

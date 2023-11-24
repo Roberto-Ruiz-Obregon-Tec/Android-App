@@ -1,5 +1,6 @@
 package com.example.kotlin.robertoruizapp.framework.view.activities
 
+import FragmentoInicio
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -8,10 +9,8 @@ import com.example.kotlin.mypokedexapp.viewmodel.MainViewModel
 import com.example.kotlin.robertoruizapp.R
 import com.example.kotlin.robertoruizapp.databinding.ActivityMainBinding
 import com.example.kotlin.robertoruizapp.framework.view.fragments.FragmentoFRRO
-import com.example.kotlin.robertoruizapp.framework.view.fragments.FragmentoInicio
 import com.example.kotlin.robertoruizapp.framework.view.fragments.FragmentoPerfil
 import com.example.kotlin.robertoruizapp.framework.view.fragments.FragmentoFeed
-import com.example.kotlin.robertoruizapp.framework.view.fragments.FragmentoHome
 import com.example.kotlin.robertoruizapp.utils.Constants
 
 /**
@@ -35,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         initializeBinding()
         initializeListeners()
-        exchangeCurrentFragment(FragmentoHome(), Constants.MENU_INICIO)
+        exchangeCurrentFragment(FragmentoInicio(), Constants.MENU_INICIO)
     }
 
     /**
@@ -89,7 +88,7 @@ class MainActivity : AppCompatActivity() {
         }
         when (menuOption) {
             Constants.MENU_INICIO -> exchangeCurrentFragment(
-                FragmentoHome(), //Crear fragmento inicio, se usa home temporalmente
+                FragmentoInicio(), //Crear fragmento inicio, se usa home temporalmente
                 Constants.MENU_INICIO
             )
             Constants.MENU_FEED -> exchangeCurrentFragment(

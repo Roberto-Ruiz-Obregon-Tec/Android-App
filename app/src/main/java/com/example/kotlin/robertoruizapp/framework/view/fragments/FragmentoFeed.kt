@@ -52,7 +52,7 @@ class FragmentoFeed : Fragment(){
 
         binding.button3.setOnClickListener {
             selectButton(binding.button3)
-            navigateToFragment(FragmentoCertificaciones())
+            navigateToFragment(FragmentoEmpresas())
         }
 
 

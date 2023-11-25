@@ -5,31 +5,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.kotlin.robertoruizapp.data.ScholarshipRepository
-import com.example.kotlin.robertoruizapp.data.network.model.Becas.BecasObjeto
-import com.example.kotlin.robertoruizapp.databinding.FragmentoBecasBinding
-import com.example.kotlin.robertoruizapp.databinding.FragmentoInicioBinding
-import com.example.kotlin.robertoruizapp.framework.adapters.ScholarshipAdapter
+import com.example.kotlin.robertoruizapp.data.ProgramsRepository
+import com.example.kotlin.robertoruizapp.data.network.model.Programs.ProgramsObj
+import com.example.kotlin.robertoruizapp.databinding.FragmentoProgramasBinding
+import com.example.kotlin.robertoruizapp.framework.adapters.ProgramsAdapter
 import com.example.kotlin.robertoruizapp.framework.view.activities.LoginActivity
-import com.example.kotlin.robertoruizapp.framework.viewmodel.BecasViewModel
-import com.example.kotlin.robertoruizapp.framework.viewmodel.InicioViewModel
-import com.example.kotlin.robertoruizapp.utils.PreferenceHelper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 /**
- * A Fragment responsible for displaying a list of scholarships.
+ * A Fragment responsible for displaying a list of programs.
  */
-class FragmentoBecas : Fragment() {
-    private var _binding: FragmentoBecasBinding? = null
+class FragmentoProgramas : Fragment() {
+    private var _binding: FragmentoProgramasBinding? = null
     private val binding get() = _binding!!
 
     /**
-     * Called when the fragment's view is created. Inflates the layout for scholarships
+     * Called when the fragment's view is created. Inflates the layout for programs
      * and returns the root view.
      *
      * @param inflater The LayoutInflater object that can be used to inflate views.
@@ -38,42 +33,44 @@ class FragmentoBecas : Fragment() {
      *
      * @return The root View for the fragment's UI.
      */
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        _binding = FragmentoBecasBinding.inflate(inflater, container, false)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentoProgramasBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     /**
      * Called when the fragment's view has been created. This method initiates the process
-     * of fetching scholarship data and displaying it in the UI.
+     * of fetching program data and displaying it in the UI.
      *
      * @param view The root View of the fragment's UI.
      * @param savedInstanceState The saved instance state of the fragment, if any.
      */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        showProgressBar()
-        getScholarship()
+        getPrograms()
     }
 
     /**
-     * Fetches scholarship data and populates the UI with the retrieved information.
+     * Fetches program data and populates the UI with the retrieved information.
      */
-    private fun getScholarship() {
+    private fun getPrograms() {
         showProgressBar()
         CoroutineScope(Dispatchers.IO).launch {
             try{
-                val ScholarshipRepository = ScholarshipRepository()
-                val result: BecasObjeto? = ScholarshipRepository.getScholarship(LoginActivity.token)
+                val programsRepository = ProgramsRepository()
+                val result: ProgramsObj? = programsRepository.getPrograms(LoginActivity.token)
 
                 if (result != null) {
                     withContext(Dispatchers.Main) {
-
-                        val adapter = ScholarshipAdapter(result.data.documents)
-                        binding.recyclerbecas.adapter = adapter
-                        binding.recyclerbecas.layoutManager = LinearLayoutManager(context)
+                        val adapter = ProgramsAdapter(result.data.programs)
+                        binding.programasList.adapter = adapter
+                        binding.programasList.layoutManager = LinearLayoutManager(context)
                     }
+
                 }
+
             } catch (e: Exception) {
                 e.printStackTrace() // Log the exception
             } finally {
@@ -89,7 +86,7 @@ class FragmentoBecas : Fragment() {
      */
     private fun showProgressBar() {
         binding.progressBar.visibility = View.VISIBLE
-        binding.recyclerbecas.visibility = View.INVISIBLE
+        binding.programasList.visibility = View.INVISIBLE
     }
 
     /**
@@ -97,7 +94,7 @@ class FragmentoBecas : Fragment() {
      */
     private fun hideProgressBar() {
         binding.progressBar.visibility = View.GONE
-        binding.recyclerbecas.visibility = View.VISIBLE
+        binding.programasList.visibility = View.VISIBLE
     }
 
     /**

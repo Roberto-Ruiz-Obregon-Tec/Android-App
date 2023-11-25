@@ -1,114 +1,104 @@
-package com.example.kotlin.robertoruizapp.framework.view.fragments
-
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.widget.Button
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.ViewModelProvider
 import com.example.kotlin.robertoruizapp.R
-import com.example.kotlin.robertoruizapp.data.network.model.ApiService
-import com.example.kotlin.robertoruizapp.data.network.model.NetworkModuleDI
 import com.example.kotlin.robertoruizapp.databinding.FragmentoInicioBinding
-import com.example.kotlin.robertoruizapp.databinding.FragmentoPerfilBinding
-import com.example.kotlin.robertoruizapp.framework.view.activities.EditProfileActivity
-import com.example.kotlin.robertoruizapp.framework.view.activities.LoginActivity
-import com.example.kotlin.robertoruizapp.framework.viewmodel.InicioViewModel
-import com.example.kotlin.robertoruizapp.framework.viewmodel.PerfilViewModel
-import com.example.kotlin.robertoruizapp.utils.Constants
-import com.example.kotlin.robertoruizapp.utils.PreferenceHelper
-import com.example.kotlin.robertoruizapp.utils.PreferenceHelper.get
-import com.example.kotlin.robertoruizapp.utils.PreferenceHelper.set
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.example.kotlin.robertoruizapp.framework.view.fragments.FragmentoBecas
+import com.example.kotlin.robertoruizapp.framework.view.fragments.FragmentoCertificaciones
+import com.example.kotlin.robertoruizapp.framework.view.fragments.FragmentoCurso
+import com.example.kotlin.robertoruizapp.framework.view.fragments.FragmentoCursos
+import com.example.kotlin.robertoruizapp.framework.view.fragments.FragmentoProgramas
 
 /**
- *
- * FragmentoPerfil class for displaying the profile info of a user
- *
- * @return the view component of profile with the logout and edit methods
- *
+ * Fragment for displaying the home screen with navigation buttons to different sections.
  */
-class FragmentoInicio: Fragment() {
-    private var _binding : FragmentoInicioBinding? = null
+class FragmentoInicio : Fragment() {
+    private var _binding: FragmentoInicioBinding? = null
     private val binding get() = _binding!!
-    private lateinit var viewModel: InicioViewModel
-    private var currentMenuOption: String? = null
-    private lateinit var currentFragment: Fragment
-    private val preferences by lazy {
-        PreferenceHelper.defaultPrefs(this@FragmentoInicio.requireActivity())
-    }
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        viewModel = ViewModelProvider(this)[InicioViewModel::class.java]
+
+    /**
+     * Called when the fragment's view is created. Inflates the layout for the home screen
+     * and returns the root view.
+     *
+     * @param inflater The LayoutInflater object that can be used to inflate views.
+     * @param container The parent view that the fragment's UI should be attached to.
+     * @param savedInstanceState The saved instance state of the fragment, if any.
+     *
+     * @return The root View for the fragment's UI.
+     */
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentoInicioBinding.inflate(inflater, container, false)
-
-        val root: View = binding.root
-
-        initializeListeners()
-
-        return root
+        return binding.root
     }
 
-    private fun initializeListeners() {
-        binding.inicioSelectBar.buttonBecas.setOnClickListener {
-            selectMenuOption(Constants.MENU_BECAS)
-        }
-        binding.inicioSelectBar.buttonCursos.setOnClickListener {
-            selectMenuOption(Constants.MENU_CURSOS)
-        }
-        binding.inicioSelectBar.buttonCertificaciones.setOnClickListener {
-            selectMenuOption(Constants.MENU_CERTIFICACIONES)
-        }
-        binding.inicioSelectBar.buttonProgramas.setOnClickListener {
-            selectMenuOption(Constants.MENU_PROGRAMAS)
-        }
-    }
+    /**
+     * Called when the fragment's view has been created. This method is used to set up
+     * the initial state of the UI elements, such as buttons and navigation.
+     *
+     * @param view The root View of the fragment's UI.
+     * @param savedInstanceState The saved instance state of the fragment, if any.
+     */
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    private fun exchangeCurrentFragment(newFragment: Fragment, newMenuOption: String) {
-        currentFragment = newFragment
-        val transaction = (context as FragmentActivity).supportFragmentManager.beginTransaction()
+        // Initialize the buttons with the FragmentoCurso fragment on Inicio
+        selectButton(binding.button1)
+        navigateToFragment(FragmentoCurso())
 
-        transaction.replace(R.id.nav_host_fragment_inicio, currentFragment)
-        transaction.commit()
-        currentMenuOption = newMenuOption
-    }
-    private fun selectMenuOption(menuOption: String) {
-        if (menuOption == currentMenuOption) {
-            return
+        binding.button1.setOnClickListener {
+            selectButton(binding.button1)
+            navigateToFragment(FragmentoCurso())
         }
-        when (menuOption) {
-            Constants.MENU_BECAS -> exchangeCurrentFragment(
-                FragmentoBecas(),
-                Constants.MENU_BECAS
-            )
 
-            Constants.MENU_CERTIFICACIONES -> exchangeCurrentFragment(
-                FragmentoCertificaciones(),
-                Constants.MENU_CERTIFICACIONES
-            )
-            //Constants.MENU_CURSOS -> exchangeCurrentFragment(
-            //    FragmentoCursos(), //Crear fragmento cursos
-            //    Constants.MENU_CURSOS
-            //)
-            //Constants.MENU_CERTIFICACIONES -> exchangeCurrentFragment(
-            //    FragmentoCertificaciones(), //Crear fragmento certificaciones
-            //    Constants.MENU_CERTIFICACIONES
-            //)
-            // Constants.MENU_PROGRAMAS -> exchangeCurrentFragment(
-            //    FragmentoProgramas(), //Cambiar por los fragmentos programas
-            //    Constants.MENU_PROGRAMAS
-            //)
+        binding.button2.setOnClickListener {
+            selectButton(binding.button2)
+            navigateToFragment(FragmentoProgramas())
+        }
+
+        binding.button3.setOnClickListener {
+            selectButton(binding.button3)
+            navigateToFragment(FragmentoCertificaciones())
+        }
+
+        binding.button4.setOnClickListener {
+            selectButton(binding.button4)
+            navigateToFragment(FragmentoBecas())
         }
     }
 
+    /**
+     * Navigates to the specified fragment.
+     *
+     * @param fragment The fragment to navigate to.
+     */
+    private fun navigateToFragment(fragment: Fragment) {
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .addToBackStack(null)
+            .commit()
+    }
 
+    /**
+     * Selects the specified button and deselects all other buttons.
+     *
+     * @param selectedButton The button to select.
+     */
+    private fun selectButton(selectedButton: Button) {
+        // Deselect all buttons
+        binding.button1.isSelected = false
+        binding.button2.isSelected = false
+        binding.button3.isSelected = false
+        binding.button4.isSelected = false
+
+        // Select the specified button
+        selectedButton.isSelected = true
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

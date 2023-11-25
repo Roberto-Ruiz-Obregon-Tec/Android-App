@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.kotlin.robertoruizapp.R
@@ -32,11 +33,7 @@ import java.util.Locale
 class FragmentoCommentsPublication: Fragment() {
     private lateinit var binding: FragmentoCommentsPublicationBinding
     private lateinit var currentFragment: Fragment
-    private var backToPublicationListener: OnBackToPublicationListener? = null
 
-    fun setOnBackToPublicationListener(listener: OnBackToPublicationListener) {
-        backToPublicationListener = listener
-    }
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,11 +51,9 @@ class FragmentoCommentsPublication: Fragment() {
         getInfoComment(publicationId)
 
         binding.backContainer.setOnClickListener {
-            backToPublicationListener?.onBackToPublication()
+            // Return to the previous fragment
+            parentFragmentManager.popBackStack()
         }
-    }
-    interface OnBackToPublicationListener {
-        fun onBackToPublication()
     }
 
     @RequiresApi(Build.VERSION_CODES.N)

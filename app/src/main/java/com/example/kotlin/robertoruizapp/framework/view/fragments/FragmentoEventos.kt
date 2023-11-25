@@ -77,7 +77,7 @@ class FragmentoEventos : Fragment() {
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
                     Log.e("FragmentoEventos", "Error al obtener eventos", e)
-                    // Considera mostrar un mensaje de error al usuario aquí
+
                 }
             } finally {
                 withContext(Dispatchers.Main) {

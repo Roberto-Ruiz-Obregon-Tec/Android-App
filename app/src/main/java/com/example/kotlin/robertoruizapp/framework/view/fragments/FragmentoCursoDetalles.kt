@@ -32,8 +32,8 @@ import java.util.Locale
  */
 class FragmentoCursoDetalles: Fragment() {
     private var _binding: FragmentoCursoDetallesBinding? = null
-
     private val binding get() = _binding!!
+    private var currentCourse: Document? = null
 
     /**
      * Creates the view of the Fragment.
@@ -61,16 +61,9 @@ class FragmentoCursoDetalles: Fragment() {
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        // Get the course ID from the arguments
         val cursoId = arguments?.getString("CURSO_ID") ?: return
-        Log.d("CursoDetalles", "ID del curso recibido: $cursoId")
-
-        // Get course information for the given ID
         getInfoCourse(cursoId)
-
         binding.backContainer.setOnClickListener {
-            // Return to the previous fragment
             parentFragmentManager.popBackStack()
         }
     }
@@ -87,24 +80,20 @@ class FragmentoCursoDetalles: Fragment() {
             try {
                 val courseRepository = CourseRepository()
                 val result: Document? = courseRepository.getCourseById(cursoId, LoginActivity.token)
-                Log.d("CursoDetalles", "Detalles del curso obtenidos: ${result?.name}")
                 withContext(Dispatchers.Main) {
-                    if (result != null) {
-                        updateUIWithCourseDetails(result)
-                    } else {
-                        showError("No se encontraron detalles del curso.")
-                    }
+                    result?.let {
+                        currentCourse = it // Asigna el curso a la variable de instancia.
+                        updateUIWithCourseDetails(it)
+                        setupEnrollButton() // Configura el botón después de obtener el curso.
+                    } ?: showError("No se encontraron detalles del curso.")
                     hideProgressBar()
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
-                    //showError("Error al obtener los detalles del curso: ${e.message}")
+                    showError("Error al obtener los detalles del curso: ${e.message}")
                     hideProgressBar()
                 }
-                e.printStackTrace() // Log the exception
-            } finally {
-                withContext(Dispatchers.Main) {
-                }
+                e.printStackTrace()
             }
         }
     }
@@ -221,12 +210,14 @@ class FragmentoCursoDetalles: Fragment() {
 
     }
 
-    private fun setupInscripcionButton(course: Document) {
+    private fun setupEnrollButton() {
         binding.btnEnroll.setOnClickListener {
-            if (course.cost > 0) {
-                navigateToInscripcionDePago(course._id)
-            } else {
-                navigateToInscripcionGratuita(course._id)
+            currentCourse?.let { course ->
+                if (course.cost > 0) {
+                    navigateToInscripcionDePago(course._id)
+                } else {
+                    navigateToInscripcionGratuita(course._id)
+                }
             }
         }
     }

@@ -12,6 +12,7 @@ import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.kotlin.robertoruizapp.R
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.kotlin.robertoruizapp.data.CourseRepository
@@ -218,6 +219,40 @@ class FragmentoCursoDetalles: Fragment() {
             binding.ivCourseImage.setImageResource(R.drawable.curso1)
         }
 
+    }
+
+    private fun setupInscripcionButton(course: Document) {
+        binding.btnEnroll.setOnClickListener {
+            if (course.cost > 0) {
+                navigateToInscripcionDePago(course._id)
+            } else {
+                navigateToInscripcionGratuita(course._id)
+            }
+        }
+    }
+
+    private fun navigateToInscripcionDePago(cursoId: String) {
+        val inscripcionPagoFragment = FragmentoInscripcionDePago().apply {
+            arguments = Bundle().apply {
+                putString("cursoId", cursoId)
+            }
+        }
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.nav_host_fragment_content_main, inscripcionPagoFragment)
+            .addToBackStack(null) // Permite volver al fragmento anterior
+            .commit()
+    }
+
+    private fun navigateToInscripcionGratuita(cursoId: String) {
+        val inscripcionGratuitaFragment = FragmentoInscripcionGratuita().apply {
+            arguments = Bundle().apply {
+                putString("cursoId", cursoId)
+            }
+        }
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.nav_host_fragment_content_main, inscripcionGratuitaFragment)
+            .addToBackStack(null) // Permite volver al fragmento anterior
+            .commit()
     }
 
     /**

@@ -1,6 +1,7 @@
 package com.example.kotlin.robertoruizapp.framework.view.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +16,7 @@ import com.example.kotlin.robertoruizapp.databinding.FragmentoInscripcionGratuit
 import com.example.kotlin.robertoruizapp.framework.view.activities.LoginActivity
 import com.example.kotlin.robertoruizapp.framework.viewmodel.CursoViewModel
 import com.example.kotlin.robertoruizapp.framework.viewmodel.ViewModelFactory
+import com.example.kotlin.robertoruizapp.utils.PreferenceHelper
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -42,7 +44,28 @@ class FragmentoInscripcionGratuita : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         showProgressBar()
-        // Obtiene la información del curso con el ID proporcionado
+        // Obtener el userId de SharedPreferences
+        val preferences = PreferenceHelper.defaultPrefs(requireContext())
+        val userId = preferences.getString("userId", "") ?: ""
+        Log.d("FragmentoInscripcion", "UserId obtenido: $userId")
+        if (userId.isNotEmpty()) {
+            // Utilizar el userId para obtener la información del usuario
+            cursoViewModel.getUserInfo(LoginActivity.token, userId).observe(viewLifecycleOwner) { result ->
+                result.onSuccess { userInfo ->
+                    // Actualizar la UI con los detalles del usuario
+                    binding.nombreUsuario.text = "${userInfo.firstName} ${userInfo.lastName}"
+                    binding.correoUsuario.text = userInfo.email
+                }
+
+                result.onFailure {
+                    // Manejar el error
+                    Toast.makeText(requireContext(), "Error al obtener datos del usuario", Toast.LENGTH_LONG).show()
+                }
+            }
+        } else {
+            // Manejar el caso en que no se encuentre el userId
+            Toast.makeText(requireContext(), "Usuario no identificado", Toast.LENGTH_LONG).show()
+        }
         cursoViewModel.getCursoInfo(cursoId).observe(viewLifecycleOwner) { result ->
             hideProgressBar()
             result.onSuccess { curso ->

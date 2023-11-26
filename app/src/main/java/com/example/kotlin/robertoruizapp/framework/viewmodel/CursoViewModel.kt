@@ -1,5 +1,7 @@
 package com.example.kotlin.robertoruizapp.framework.viewmodel
 
+import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import com.example.kotlin.robertoruizapp.data.CourseRepository
@@ -10,6 +12,27 @@ import com.example.kotlin.robertoruizapp.framework.view.activities.LoginActivity
 import kotlinx.coroutines.Dispatchers
 
 class CursoViewModel(private val userRepository: UserRepository, private val courseRepository: CourseRepository) : ViewModel() {
+
+    val currentUserInfo: LiveData<UserDocument> = liveData(Dispatchers.IO) {
+        val token = LoginActivity.token
+        Log.d("CursoViewModel", "Token: $token")
+        val usuarioObjeto = userRepository.getUser(token)
+        Log.d("CursoViewModel", "UsuarioObjeto: $usuarioObjeto")
+        val userId = usuarioObjeto?.data?.document?.id
+        Log.d("CursoViewModel", "UserId: $userId")
+
+        if (!userId.isNullOrEmpty()) {
+            val userInfo = userRepository.getUserById(userId, token)
+            if (userInfo != null) {
+                Log.d("CursoViewModel", "UserInfo: $userInfo")
+                emit(userInfo)
+            } else {
+                Log.d("CursoViewModel", "UserInfo es null")
+            }
+        } else {
+            Log.d("CursoViewModel", "UserId es nulo o vacío")
+        }
+    }
 
     fun getUserInfo(token: String, userId: String) = liveData(Dispatchers.IO) {
         try {

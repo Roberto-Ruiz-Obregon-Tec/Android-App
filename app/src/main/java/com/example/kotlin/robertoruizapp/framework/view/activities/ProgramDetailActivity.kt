@@ -38,6 +38,7 @@ class ProgramDetailActivity : Activity() {
         manageIntent()
         initializeBinding()
         initializeListeners()
+        //sendRating()
 
     }
 
@@ -150,6 +151,42 @@ class ProgramDetailActivity : Activity() {
             }
         }
     }
+
+    /*
+    private fun sendRating() {
+        val ratingBar = binding.ratingBar
+        val submitButton = binding.submitRating
+
+        submitButton.setOnClickListener {
+            val rating = ratingBar.rating
+
+            val retrofit = Retrofit.Builder()
+                .baseUrl("URL_BACKEND")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+
+            val apiService = retrofit.create(ApiService::class.java)
+            val call = apiService.enviarValoracion(programID!!, rating)
+
+            call.enqueue(object : Callback<Respuesta> {
+                override fun onResponse(call: Call<Respuesta>, response: Response<Respuesta>) {
+                    if (response.isSuccessful) {
+                        // Manejar la respuesta exitosa del servidor
+                        val respuesta = response.body()
+                        // Puedes realizar acciones adicionales según la respuesta del servidor
+                    } else {
+                        // Manejar errores en la respuesta del servidor
+                        // response.errorBody() podría proporcionar más detalles sobre el error
+                    }
+                }
+
+                override fun onFailure(call: Call<Respuesta>, t: Throwable) {
+                    // Manejar el fallo en la conexión
+                }
+            })
+        }
+    }
+*/
 }
 
 

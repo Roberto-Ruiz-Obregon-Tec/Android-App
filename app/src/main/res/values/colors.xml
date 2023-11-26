@@ -20,5 +20,7 @@
     <color name="blueTitle">#002647</color>
     <color name="nav_bar">#CC2A25</color> <!-- Color primario Nosotros -->
     <color name="red">#FF0000</color>
+    <color name="yellow">#FFFF00</color>
+    <color name="green_aprove">#06C258</color>
 </resources>
 

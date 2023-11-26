@@ -57,5 +57,6 @@
     <string name="programas">Programas</string>
     <string name="becas">Becas</string>
     <string name="certificaciones">Certificaciones</string>
+    <string name="back_button_description">Atrás</string>
 
 </resources>

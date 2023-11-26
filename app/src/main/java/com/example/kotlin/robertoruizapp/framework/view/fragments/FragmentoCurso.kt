@@ -28,6 +28,9 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
+/**
+ * Fragment for displaying a list of courses.
+ */
 class FragmentoCurso : Fragment() {
     private var _binding: FragmentoCursoBinding? = null
     private val binding get() = _binding!!
@@ -152,6 +155,9 @@ class FragmentoCurso : Fragment() {
         }
     }
 
+    /**
+     * Sets up the SearchView.
+     */
     private fun setupSearchView() {
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -167,18 +173,22 @@ class FragmentoCurso : Fragment() {
             }
         })
 
-        // Observar el filtroActual del ViewModel
+        // Observe the filtroActual of the ViewModel
         viewModel.filtroActual.observe(viewLifecycleOwner) { filtro ->
             filterCourses(filtro)
         }
     }
 
+    /**
+     * Filters the courses based on the given query.
+     *
+     * @param query The query string to filter the courses.
+     */
     private fun filterCourses(query: String) {
         val today = Calendar.getInstance().time
         val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
         val normalizedQuery = query.normalize()
 
-        // Filtrar la lista basándose en el query. No es necesario verificar si está inicializada.
         val filteredList = fullCoursesList.filter { course ->
             val startDate = sdf.parse(course.startDate)
             val isDateValid = startDate != null && !startDate.before(today)
@@ -198,11 +208,20 @@ class FragmentoCurso : Fragment() {
         }
     }
 
+    /**
+     * Normalizes the name of the course by removing diacritical marks and converting to lowercase.
+     *
+     * @return The normalized name.
+     */
     fun String.normalize(): String {
         val normalized = Normalizer.normalize(this, Normalizer.Form.NFD)
         return normalized.replace("[\\p{InCombiningDiacriticalMarks}]".toRegex(), "").toLowerCase(Locale.getDefault())
     }
 
+    /**
+     * Called when the fragment's view is resumed or becomes active.
+     * It observes the [viewModel.filtroActual] and, if it is not empty, filters the courses based on it.
+     */
     override fun onResume() {
         super.onResume()
         viewModel.filtroActual.value?.let {
@@ -211,7 +230,6 @@ class FragmentoCurso : Fragment() {
             }
         }
     }
-
 
     /**
      * Displays the progress bar and hides the course list.

@@ -1,9 +1,14 @@
 package com.example.kotlin.robertoruizapp.data.network.model
 
 import com.example.kotlin.robertoruizapp.data.network.model.Course.CourseObject
+import com.example.kotlin.robertoruizapp.data.network.model.publication.CommentRequest
 import com.example.kotlin.robertoruizapp.data.network.model.publication.PublicObjeto
+import com.example.kotlin.robertoruizapp.data.network.model.publication.PublicationPostResponse
+import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.POST
 import retrofit2.http.Path
 
 /**
@@ -23,4 +28,9 @@ interface PublicationApiService {
     @GET("publication/{id}")
     suspend fun getPublicationId(@Path("id") publicationId: String, @Header("Authorization") authToken: String):
             PublicObjeto
+
+    @POST("publication/comment/create")
+    suspend fun creatPublicationComment(@Header("Authorization") authToken: String, @Body commentRequest: CommentRequest
+    ): Response<PublicationPostResponse>
+
 }

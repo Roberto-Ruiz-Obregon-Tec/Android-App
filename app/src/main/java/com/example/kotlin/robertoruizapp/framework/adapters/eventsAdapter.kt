@@ -1,32 +1,26 @@
 package com.example.kotlin.robertoruizapp.framework.adapters
 
-import android.util.Log
-import androidx.appcompat.view.menu.ActionMenuItemView
 import androidx.recyclerview.widget.RecyclerView
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView.OnItemClickListener
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.example.kotlin.robertoruizapp.R
 import com.example.kotlin.robertoruizapp.data.network.model.Events.Document
-import com.example.kotlin.robertoruizapp.framework.view.fragments.FragmentoFeed
+import com.example.kotlin.robertoruizapp.framework.view.fragments.FragmentoEventos
 import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.util.EventObject
 import java.util.Locale
 
-interface OnEventClickListener {
-    fun onEventClick(eventID: String)
-}
+
 
 class EventsAdapter(
     private val events: List<Document?>,
-    private val itemClickListener: OnEventClickListener
+    private val itemClickListener: FragmentoEventos.OnEventClickListener
 ) : RecyclerView.Adapter<EventsAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {

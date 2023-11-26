@@ -12,7 +12,7 @@ class MyCoursesApiClient {
      * @param token Authentication code to make a request.
      * @return MyCoursesObject Objet that represents the obtained course (NULL in case of error).
      */
-    suspend fun getMyCourses(token: String): MyCourseObject? {
+    suspend fun getMyCourses(token: String): List<MyCourseObject>? {
         try {
             return api.getMyCourses("Bearer $token")
         } catch (e: Exception) {

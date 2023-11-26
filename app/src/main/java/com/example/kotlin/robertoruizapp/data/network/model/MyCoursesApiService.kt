@@ -12,5 +12,5 @@ interface MyCoursesApiService {
      * @return MyCoursesObject that represents the returned courses.
      */
     @GET("user/mycourses")
-    suspend fun getMyCourses(@Header("Authorization") authToken: String): MyCourseObject
+    suspend fun getMyCourses(@Header("Authorization") authToken: String): List<MyCourseObject>
 }

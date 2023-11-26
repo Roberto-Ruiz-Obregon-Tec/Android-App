@@ -17,6 +17,6 @@ class MyCoursesListRequirement {
      * @param token Authentication token to make the request.
      * @return MyCourseObject that represents the obtained course, or null on error.
      */
-    suspend operator fun invoke(token: String): MyCourseObject? = myCoursesRepository.getMyCourses(
+    suspend operator fun invoke(token: String): List<MyCourseObject>? = myCoursesRepository.getMyCourses(
         LoginActivity.token)
 }

@@ -23,6 +23,7 @@ import com.example.kotlin.robertoruizapp.data.network.model.publication.Document
 import com.example.kotlin.robertoruizapp.databinding.FragmentoCommentsPublicationBinding
 import com.example.kotlin.robertoruizapp.framework.adapters.CommentsAdapter
 import com.example.kotlin.robertoruizapp.framework.adapters.ProgramsAdapter
+import com.example.kotlin.robertoruizapp.framework.adapters.PublicationAdapter
 import com.example.kotlin.robertoruizapp.framework.view.activities.LoginActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -50,13 +51,21 @@ class FragmentoCommentsPublication: Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val publicationId = arguments?.getString("PUBLICACION_ID") ?: return
+        binding.comentariosList.adapter = CommentsAdapter(emptyList())
+        binding.comentariosList.layoutManager = LinearLayoutManager(context)
 
         getInfoComment(publicationId)
+        for (i in 0 until parentFragmentManager.backStackEntryCount) {
+            val entry = parentFragmentManager.getBackStackEntryAt(i)
+            Log.d("BackStack", "Entry at $i: ${entry.name}")
+        }
 
-        binding.backContainer.setOnClickListener {
+        binding.back.setOnClickListener {
             // Return to the previous fragment
             parentFragmentManager.popBackStack()
         }
+
+
         binding.buttonMensaje.setOnClickListener {
             val commentText = binding.editTextComentario.text.toString().trim()
             if (commentText.isNotEmpty()) {
@@ -113,7 +122,7 @@ class FragmentoCommentsPublication: Fragment() {
             positiveButton.setTextColor(Color.RED)
             positiveButton.setOnClickListener {
                 processComment(publicationId, commentText)
-                dialog.dismiss() 
+                dialog.dismiss()
             }
 
 

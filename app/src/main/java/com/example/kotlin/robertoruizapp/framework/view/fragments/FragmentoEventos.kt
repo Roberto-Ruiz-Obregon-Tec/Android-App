@@ -36,9 +36,10 @@ class FragmentoEventos : Fragment() {
                 }
             }
 
+
             parentFragmentManager.beginTransaction().apply {
                 replace(R.id.nav_host_fragment_content_main, fragmentDetails)
-                addToBackStack(null)
+                addToBackStack("FragmentoEventos")
                 commit()
             }
         }
@@ -58,6 +59,10 @@ class FragmentoEventos : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.eventosList.layoutManager = LinearLayoutManager(context)
         binding.eventosList.adapter = EventsAdapter(emptyList(), onEventClickListener)
+        for (i in 0 until parentFragmentManager.backStackEntryCount) {
+            val entry = parentFragmentManager.getBackStackEntryAt(i)
+            Log.d("BackStack", "Entry at $i: ${entry.name}")
+        }
         getEvents()
     }
     // Get events

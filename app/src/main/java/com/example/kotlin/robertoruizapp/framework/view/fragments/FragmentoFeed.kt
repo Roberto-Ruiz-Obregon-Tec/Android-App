@@ -60,7 +60,7 @@ class FragmentoFeed : Fragment(){
 
     private fun navigateToFragment(fragment: Fragment) {
         parentFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, fragment)
+            .replace(R.id.fragment_container_feed, fragment)
             .addToBackStack(null)
             .commit()
     }

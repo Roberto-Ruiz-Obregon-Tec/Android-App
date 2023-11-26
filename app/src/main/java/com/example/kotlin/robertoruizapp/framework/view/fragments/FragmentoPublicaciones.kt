@@ -13,6 +13,7 @@ import com.example.kotlin.robertoruizapp.R
 import com.example.kotlin.robertoruizapp.data.RepositoryPublication
 import com.example.kotlin.robertoruizapp.data.network.model.publication.PublicObjeto
 import com.example.kotlin.robertoruizapp.databinding.FragmentoPublicacionesBinding
+import com.example.kotlin.robertoruizapp.framework.adapters.EventsAdapter
 import com.example.kotlin.robertoruizapp.framework.adapters.PublicationAdapter
 import com.example.kotlin.robertoruizapp.framework.view.activities.LoginActivity
 import kotlinx.coroutines.CoroutineScope
@@ -32,10 +33,7 @@ class FragmentoPublicaciones : Fragment() {
                     putString("PUBLICACION_ID", publicationId)
                 }
             }
-            for (i in 0 until parentFragmentManager.backStackEntryCount) {
-                val entry = parentFragmentManager.getBackStackEntryAt(i)
-                Log.d("BackStackEntry", entry.name ?: "FragmentoPublicacion")
-            }
+
 
             parentFragmentManager.beginTransaction()
                 .replace(R.id.nav_host_fragment_content_main, fragmentoCommentDetalles)
@@ -60,6 +58,14 @@ class FragmentoPublicaciones : Fragment() {
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.publicacionList.adapter = PublicationAdapter(emptyList(), onCommentClickListener)
+        binding.publicacionList.layoutManager = LinearLayoutManager(context)
+
+        for (i in 0 until parentFragmentManager.backStackEntryCount) {
+            val entry = parentFragmentManager.getBackStackEntryAt(i)
+            Log.d("BackStack", "Entry at $i: ${entry.name}")
+        }
+
         getPublication()
     }
 

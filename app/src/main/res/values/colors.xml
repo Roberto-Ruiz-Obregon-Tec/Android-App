@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primaryDark">#F5F5F5</color>
+    <color name="primaryDark">#BDBDBD</color> <!--Color Barra de tareas -->
     <color name="primary">#F44336</color> <!--Color primario  -->
     <color name="primaryLight">#FFCDD2</color>
     <color name="accent">#607D8B</color> <!--Color secundario -->
@@ -20,5 +20,7 @@
     <color name="blueTitle">#002647</color>
     <color name="nav_bar">#CC2A25</color> <!-- Color primario Nosotros -->
     <color name="red">#FF0000</color>
+    <color name="yellow">#FFFF00</color>
+    <color name="green_aprove">#06C258</color>
 </resources>
 

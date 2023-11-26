@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="380dp"
+    android:layout_width="match_parent"
     android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp"
     android:layout_marginTop="10dp"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -12,64 +13,35 @@
 <TextView
         android:id="@+id/empresa_nombre"
         android:layout_width="match_parent"
+        android:text="Compañía"
         android:textStyle="bold"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
+        android:textSize="25sp"
         android:textColor="#000" />
-    <TextView
-        android:id="@+id/espacio"
-        android:layout_width="match_parent"
-        android:layout_height="8dp"
-        android:textSize="14sp"
-        android:textColor="#666" />
 
     <TextView
         android:id="@+id/empresa_description"
         android:layout_width="match_parent"
+        android:text="Descripción"
         android:layout_height="wrap_content"
         android:textSize="14sp"
         android:textColor="#666" />
-    <TextView
-        android:id="@+id/espacio2"
-        android:layout_width="match_parent"
-        android:layout_height="8dp"
-        android:textSize="14sp"
-        android:textColor="#666" />
-    <TextView
-        android:id="@+id/tel_empresa"
-        android:layout_width="150dp"
-        android:text="Telefono:"
-        android:textStyle="bold"
-        android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:textColor="#666" />
-
-    <TextView
-        android:id="@+id/cel_empresa"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:textColor="#666"
-        android:textSize="14sp" />
-
     <TextView
         android:id="@+id/certificacion"
-        android:layout_width="180dp"
-        android:layout_marginLeft="167dp"
-        android:textColor="#1414b8"
-        android:text="Certificación:"
+        android:layout_width="match_parent"
+        android:textColor="#000"
+        android:text="Acreditaciones:"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:textSize="14sp"
         android:textStyle="italic"/>
 
     <TextView
         android:id="@+id/empresa_certificacion"
-        android:layout_width="180dp"
-        android:layout_marginLeft="167dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textSize="14sp"
-        android:textColor="#000"
+        android:layout_marginLeft="18dp"
+        android:textSize="10sp"
+        android:text="hola"
         android:textStyle="bold|italic"/>
 
 </LinearLayout>

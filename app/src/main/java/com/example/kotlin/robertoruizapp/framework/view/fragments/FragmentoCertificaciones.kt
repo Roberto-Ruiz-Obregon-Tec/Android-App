@@ -19,70 +19,122 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import com.example.kotlin.robertoruizapp.framework.view.activities.LoginActivity
+import com.example.kotlin.robertoruizapp.framework.viewmodel.CertificacionesAdapter
 import java.util.*
 
+/*
+    * Created by Dante Perez 2/11/2023
+    * A fragment that displays a list of certifications.
+    *
+    * Parameters:
+    *  None.
+    *
+    * Methods:
+    *  getCertificaciones(): A suspend function that gets the certification data from the repository.
+    *  @return a CertificacionesObjeto object containing the certification data.
+    *
+    *  onViewCreated(): A function that is called when the fragment is created.
+    *  @param view: A View object.
+    *  @param savedInstanceState: A Bundle object.
+    *
+    *  onCreateView(): A function that is called when the fragment is created.
+    *  @param inflater: A LayoutInflater object.
+    *  @param container: A ViewGroup object.
+    *  @param savedInstanceState: A Bundle object.
+    *  @return a View object.
+    *
+    *  onDestroyView(): A function that is called when the fragment is destroyed.
+    *  @param None.
+    *  @return None.
+    *
+ */
+
 class FragmentoCertificaciones : Fragment() {
-
-
     private var _binding: ActivityCertificacionesBinding? = null
     private val binding get() = _binding!!
 
-    @RequiresApi(Build.VERSION_CODES.N)
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    // Crear la vista del fragmento inflando el layout correspondiente y preparando el binding
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = ActivityCertificacionesBinding.inflate(inflater, container, false)
         return binding.root
     }
 
+    /*
+        * A function that is called when the fragment is created.
+        * @param view: A View object.
+        * @param savedInstanceState: A Bundle object.
+        * @return None.
+        * @see getCertificaciones
+        * @see CertificacionesAdapter
+        * @see CertificacionesObjeto
+        * @see CertificacionesRepository
+        * @see Document
+        *
+        *
+     */
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        getCertificaciones()
+        showProgressBar()
+        getCertifications()
     }
 
-    class CertificacionesAdapter(private val certificaciones: List<Document?>) :
-        RecyclerView.Adapter<CertificacionesAdapter.ViewHolder>() {
 
-        class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-            val nombreCertificacion: TextView = view.findViewById(R.id.certificacion_list)
-            val descripcionCertificacion: TextView = view.findViewById(R.id.descripcionCertificacion)
-        }
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-            val certificacionView = LayoutInflater.from(parent.context)
-                .inflate(R.layout.certificacion_item, parent, false)
-            return ViewHolder(certificacionView)
-        }
-
-        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            val certificacion = certificaciones[position]
-            holder.nombreCertificacion.text = certificacion?.name
-            holder.descripcionCertificacion.text = certificacion?.description
-        }
-
-        override fun getItemCount(): Int {
-            return certificaciones.size
-        }
-    }
-
+    /*
+        * A suspend function that gets the certification data from the repository.
+        * @param None.
+        * @return a CertificacionesObjeto object containing the certification data.
+        * @see CertificacionesObjeto
+        * @see CertificacionesRepository
+        * @see Document
+     */
     @RequiresApi(Build.VERSION_CODES.N)
-    private fun getCertificaciones() {
+    private fun getCertifications() {
+        showProgressBar()
         CoroutineScope(Dispatchers.IO).launch {
-            val certificacionesRepository = CertificacionesRepository()
-            val result: CertificacionesObjeto? = certificacionesRepository.getCertificaciones()
+            try{
+                val certificationRepository = CertificacionesRepository()
+                val result: CertificacionesObjeto? = certificationRepository.getCertificaciones(LoginActivity.token)
 
-            if (result != null) {
+                if (result != null) {
+                    withContext(Dispatchers.Main) {
+                        val adapter = CertificacionesAdapter(result.data)
+                        binding.certificacionesList.adapter = adapter
+                        binding.certificacionesList.layoutManager = LinearLayoutManager(context)
+                    }
+                }
+            } catch (e: Exception) {
+                e.printStackTrace() // Log the exception
+            } finally {
                 withContext(Dispatchers.Main) {
-                    val adapter = CertificacionesAdapter(result.data.documents)
-                    binding.certificacionesList.adapter = adapter
-                    binding.certificacionesList.layoutManager = LinearLayoutManager(context)
+                    hideProgressBar()
                 }
             }
         }
     }
 
+    /**
+     * Displays the progress bar and hides the course list.
+     */
+    private fun showProgressBar() {
+        binding.progressBar.visibility = View.VISIBLE
+        binding.certificacionesList.visibility = View.INVISIBLE
+    }
+
+    /**
+     * Hides the progress bar and displays the course list.
+     */
+    private fun hideProgressBar() {
+        binding.progressBar.visibility = View.GONE
+        binding.certificacionesList.visibility = View.VISIBLE
+    }
+
+    /*
+        * A function that is called when the fragment is destroyed.
+        * @param None.
+        * @return None.
+     */
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

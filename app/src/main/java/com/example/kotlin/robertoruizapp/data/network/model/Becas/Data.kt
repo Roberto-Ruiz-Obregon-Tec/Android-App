@@ -1,7 +1,11 @@
 package com.example.kotlin.robertoruizapp.data.network.model.Becas
 
-import com.example.kotlin.robertoruizapp.data.network.model.Cursos.Document
-
+/**
+ * Data
+ *
+ * @property documents contains the values from the request
+ * @constructor Create empty Data
+ */
 data class Data(
     val documents: List<Document>,
 )

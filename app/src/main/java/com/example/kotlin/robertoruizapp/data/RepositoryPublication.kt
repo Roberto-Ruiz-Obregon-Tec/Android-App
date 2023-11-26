@@ -3,7 +3,9 @@ package com.example.kotlin.robertoruizapp.data
 import com.example.kotlin.robertoruizapp.data.network.NetworkModuleDIPublication
 import com.example.kotlin.robertoruizapp.data.network.model.publication.Document
 import com.example.kotlin.robertoruizapp.data.network.model.PublicationApiService
+import com.example.kotlin.robertoruizapp.data.network.model.publication.CommentRequest
 import com.example.kotlin.robertoruizapp.data.network.model.publication.PublicObjeto
+import com.example.kotlin.robertoruizapp.data.network.model.publication.PublicationPostResponse
 import com.example.kotlin.robertoruizapp.framework.view.activities.LoginActivity
 
 
@@ -29,6 +31,18 @@ class RepositoryPublication {
         return if (response.status == "success" && response.data.isNotEmpty()) {
             response.data.first()  // Returns the first Document in the list
         } else {
+            null
+        }
+    }
+    suspend fun createPublicationComment(token: String, commentRequest: CommentRequest): PublicationPostResponse? {
+        return try {
+            val response = api.creatPublicationComment("Bearer $token", commentRequest)
+            if (response.isSuccessful) {
+                response.body()
+            } else {
+                null
+            }
+        } catch (e: Exception) {
             null
         }
     }

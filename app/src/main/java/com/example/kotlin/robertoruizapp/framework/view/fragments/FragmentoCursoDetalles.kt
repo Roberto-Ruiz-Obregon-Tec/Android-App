@@ -214,18 +214,25 @@ class FragmentoCursoDetalles: Fragment() {
         binding.btnEnroll.setOnClickListener {
             currentCourse?.let { course ->
                 if (course.cost > 0) {
-                    navigateToInscripcionDePago(course._id)
+                    navigateToInscripcionDePago(course)
                 } else {
-                    navigateToInscripcionGratuita(course._id)
+                    navigateToInscripcionGratuita(course)
                 }
             }
         }
     }
 
-    private fun navigateToInscripcionDePago(cursoId: String) {
+    private fun navigateToInscripcionDePago(course: Document) {
         val inscripcionPagoFragment = FragmentoInscripcionDePago().apply {
             arguments = Bundle().apply {
-                putString("cursoId", cursoId)
+                putString("CURSO_ID", course._id)
+                putString("CURSO_NAME", course.name)
+                putString("CURSO_IMAGE", course.courseImage)
+                putString("CURSO_START_DATE", course.startDate)
+                putString("CURSO_END_DATE", course.endDate)
+                putString("CURSO_SCHEDULE", course.schedule)
+                putString("CURSO_LOCATION", course.location)
+                putDouble("CURSO_COST", course.cost)
             }
         }
         parentFragmentManager.beginTransaction()
@@ -234,10 +241,17 @@ class FragmentoCursoDetalles: Fragment() {
             .commit()
     }
 
-    private fun navigateToInscripcionGratuita(cursoId: String) {
+    private fun navigateToInscripcionGratuita(course: Document)  {
         val inscripcionGratuitaFragment = FragmentoInscripcionGratuita().apply {
             arguments = Bundle().apply {
-                putString("cursoId", cursoId)
+                putString("cursoId", course._id)
+                putString("CURSO_NAME", course.name)
+                putString("CURSO_IMAGE", course.courseImage)
+                putString("CURSO_START_DATE", course.startDate)
+                putString("CURSO_END_DATE", course.endDate)
+                putString("CURSO_SCHEDULE", course.schedule)
+                putString("CURSO_LOCATION", course.location)
+                putDouble("CURSO_COST", course.cost)
             }
         }
         parentFragmentManager.beginTransaction()
@@ -251,7 +265,6 @@ class FragmentoCursoDetalles: Fragment() {
      */
     private fun showProgressBar() {
         binding.progressBar.visibility = View.VISIBLE
-        // Puede querer ocultar también otros elementos de la interfaz de usuario
     }
 
     /**

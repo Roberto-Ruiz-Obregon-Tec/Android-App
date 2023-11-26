@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import com.example.kotlin.robertoruizapp.databinding.FragmentoInscripcionDePagoBinding
 import com.example.kotlin.robertoruizapp.framework.viewmodel.CursoViewModel
 import androidx.fragment.app.viewModels
+import com.example.kotlin.robertoruizapp.data.CourseRepository
 import com.example.kotlin.robertoruizapp.data.UserRepository
 import com.example.kotlin.robertoruizapp.data.network.NetworkModuleDIUser
 import com.example.kotlin.robertoruizapp.framework.view.activities.LoginActivity
@@ -19,10 +20,10 @@ class FragmentoInscripcionDePago : Fragment() {
     private val binding get() = _binding!!
 
     private val cursoViewModel: CursoViewModel by viewModels {
-        ViewModelFactory()
+        ViewModelFactory(UserRepository(), CourseRepository())
     }
 
-    // Suponiendo que tienes un argumento de tipo Document para el curso
+    // Suponiendo que tienes un argumento de tipo UserDocument para el curso
     private val cursoId: String by lazy {
         arguments?.getString("cursoId") ?: ""
     }

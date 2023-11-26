@@ -112,7 +112,7 @@ class FragmentoMisCursos : Fragment(), CursoClickListener {
     override fun onClick(document: CourseDocument) {
         val intent = Intent(requireContext(), InfoMisCursos::class.java)
         // Imprime el valor de document._id en el Logcat
-        Log.d("Salida3", "Document ID: ${document._id}")
+        Log.d("Salida3", "UserDocument ID: ${document._id}")
         intent.putExtra(CURSO_ID_EXTRA, document._id)
         startActivity(intent)
     }

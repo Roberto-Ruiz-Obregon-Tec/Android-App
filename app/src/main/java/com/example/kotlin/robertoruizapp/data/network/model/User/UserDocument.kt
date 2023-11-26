@@ -1,6 +1,6 @@
 package com.example.kotlin.robertoruizapp.data.network.model.User
 
-data class Document (
+data class UserDocument (
     val _id: String,
     val age: Int,
     val company: String,

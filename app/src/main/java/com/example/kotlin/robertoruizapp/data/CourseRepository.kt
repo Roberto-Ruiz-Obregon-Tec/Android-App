@@ -36,7 +36,7 @@ class CourseRepository {
         val response = api.getCourseById(cursoId, "Bearer $token")
         // Verify that the response is successful and that the 'data' list contains at least one element
         return if (response.status == "success" && response.data.isNotEmpty()) {
-            response.data.first()  // Returns the first Document in the list
+            response.data.first()  // Returns the first UserDocument in the list
         } else {
             null
         }

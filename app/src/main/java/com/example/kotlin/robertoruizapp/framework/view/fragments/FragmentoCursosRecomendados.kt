@@ -82,7 +82,7 @@ class FragmentoCursosRecomendados : Fragment(),
     override fun onClick(document: Document) {
         val intent = Intent(requireContext(), FragmentoInfoCursos::class.java)
         // Imprime el valor de document._id en el Logcat
-        Log.d("Salida3", "Document ID: ${document._id}")
+        Log.d("Salida3", "UserDocument ID: ${document._id}")
 
 
         intent.putExtra(Constants.CURSO_ID_EXTRA, document._id)

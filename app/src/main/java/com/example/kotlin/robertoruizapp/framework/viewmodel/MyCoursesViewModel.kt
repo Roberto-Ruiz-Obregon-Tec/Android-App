@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
  */
 class MyCoursesViewModel : ViewModel() {
     // LiveData to observe changes in the list of countries
-    val LiveData = MutableLiveData<MyCourseObject>()
+    val LiveData = MutableLiveData<Document>()
 
     // Instance of the ListRequirement class for data retrieval
     private val listRequirement = MyCoursesListRequirement()
@@ -31,7 +31,7 @@ class MyCoursesViewModel : ViewModel() {
         // Launch a coroutine in the IO dispatcher to perform the data retrieval
         viewModelScope.launch(Dispatchers.IO) {
             // Call the ListRequirement function to fetch the list
-            val result: MyCourseObject? = listRequirement("Bearer ${LoginActivity.token}")
+            val result: Document? = listRequirement("Bearer ${LoginActivity.token}")
 
             // Use the Main dispatcher to update the LiveData with the fetched result
             CoroutineScope(Dispatchers.Main).launch {

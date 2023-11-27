@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.example.kotlin.robertoruizapp.R
 import com.example.kotlin.robertoruizapp.data.network.model.MyCourses.Document
 import com.example.kotlin.robertoruizapp.data.network.model.MyCourses.MyCourseObject
+import com.example.kotlin.robertoruizapp.data.network.model.MyCourses.course
 import com.example.kotlin.robertoruizapp.databinding.ItemMyCoursesBinding
 import com.example.kotlin.robertoruizapp.framework.adapters.viewholder.MyCoursesViewHolder
 import com.example.kotlin.robertoruizapp.framework.view.fragments.FragmentoMyCourses
@@ -25,11 +26,11 @@ import java.util.Locale
  * @param courses List of courses to display in the list.
  */
 class MyCoursesAdapter() : RecyclerView.Adapter<MyCoursesViewHolder>() {
-    var data: ArrayList<Document> = ArrayList()
+    var data: ArrayList<course> = ArrayList()
     lateinit var context: Context
 
     fun MyCourseAdapter(basicData: List<MyCourseObject>, context: Context){
-        this.data = basicData as ArrayList<Document>
+        this.data = basicData as ArrayList<course>
         this.context = context
     }
 

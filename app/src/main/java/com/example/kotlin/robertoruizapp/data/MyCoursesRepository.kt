@@ -18,5 +18,5 @@ class MyCoursesRepository {
      * @param token Authentication token to make the request.
      * @return CourseObject that represents the obtained course, or null on error.
      */
-    suspend fun getMyCourses(token: String): MyCourseObject? = api.getMyCourses("Bearer ${LoginActivity.token}")
+    suspend fun getMyCourses(token: String): Document? = api.getMyCourses("Bearer ${LoginActivity.token}")
 }

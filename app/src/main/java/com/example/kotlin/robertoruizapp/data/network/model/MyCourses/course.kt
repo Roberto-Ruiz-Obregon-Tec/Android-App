@@ -1,7 +1,7 @@
 package com.example.kotlin.robertoruizapp.data.network.model.MyCourses
 
 data class course (
-    val id: String,
+    val _id: String,
     val cost: Double,
     val capacity: Int,
     val remaining: Int,
@@ -20,4 +20,5 @@ data class course (
     val location: String,
     val status: String,
     val courseImage: String,
+    val focus: List<String>
 )

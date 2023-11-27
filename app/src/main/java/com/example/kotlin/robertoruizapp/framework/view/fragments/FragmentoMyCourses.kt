@@ -16,6 +16,7 @@ import com.example.kotlin.robertoruizapp.R
 import com.example.kotlin.robertoruizapp.data.MyCoursesRepository
 import com.example.kotlin.robertoruizapp.data.network.model.MyCourses.MyCourseObject
 import com.example.kotlin.robertoruizapp.data.network.model.MyCourses.Document
+import com.example.kotlin.robertoruizapp.data.network.model.MyCourses.course
 import com.example.kotlin.robertoruizapp.databinding.FragmentoMyCoursesBinding
 import com.example.kotlin.robertoruizapp.framework.adapters.MyCoursesAdapter
 import com.example.kotlin.robertoruizapp.framework.view.activities.LoginActivity
@@ -34,7 +35,7 @@ class FragmentoMyCourses: Fragment() {
     private val binding get() = _binding!!
 
     // Variables adicionales
-    private var fullCoursesList: List<Document> = listOf()
+    private var fullCoursesList: List<course> = listOf()
     private lateinit var emptyTextView: TextView
     private val viewModel: SharedViewModel by activityViewModels()
 
@@ -66,7 +67,7 @@ class FragmentoMyCourses: Fragment() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val courseRepository = MyCoursesRepository()
-                val result: MyCourseObject? = courseRepository.getMyCourses(LoginActivity.token)
+                val result: Document? = courseRepository.getMyCourses(LoginActivity.token)
 
                 if (result != null) {
                     fullCoursesList = result.data

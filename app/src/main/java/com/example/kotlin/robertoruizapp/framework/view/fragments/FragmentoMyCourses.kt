@@ -66,15 +66,15 @@ class FragmentoMyCourses: Fragment() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val courseRepository = MyCoursesRepository()
-                val result: List<MyCourseObject>? = courseRepository.getMyCourses(LoginActivity.token)
+                val result: MyCourseObject? = courseRepository.getMyCourses(LoginActivity.token)
 
                 if (result != null) {
-                    fullCoursesList = result.first().data
+                    fullCoursesList = result.data
 
-                    Log.d("hola", result.first().data.toString())
+                    Log.d("Frag", result.data.toString())
 
                     withContext(Dispatchers.Main) {
-                        val adapter = MyCoursesAdapter(fullCoursesList)
+                        val adapter = MyCoursesAdapter()
                         binding.cursosList.adapter = adapter
                         binding.cursosList.layoutManager = LinearLayoutManager(context)
                     }
@@ -89,7 +89,6 @@ class FragmentoMyCourses: Fragment() {
             }
         }
     }
-
 
     /**
      * Normalizes the name of the course by removing diacritical marks and converting to lowercase.

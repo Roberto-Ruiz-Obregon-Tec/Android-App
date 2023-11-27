@@ -1,6 +1,7 @@
 package com.example.kotlin.robertoruizapp.data.network.model
 
 import android.util.Log
+import com.example.kotlin.robertoruizapp.data.network.NetworkModuleDIMyCourses
 import com.example.kotlin.robertoruizapp.data.network.model.MyCourses.MyCourseObject
 
 class MyCoursesApiClient {
@@ -12,12 +13,13 @@ class MyCoursesApiClient {
      * @param token Authentication code to make a request.
      * @return MyCoursesObject Objet that represents the obtained course (NULL in case of error).
      */
-    suspend fun getMyCourses(token: String): List<MyCourseObject>? {
-        try {
-            return api.getMyCourses("Bearer $token")
+    suspend fun getMyCourses(token: String): MyCourseObject? {
+        api = NetworkModuleDIMyCourses()
+        return try {
+            api.getMyCourses("Bearer $token")
         } catch (e: Exception) {
             Log.d("Catch", "Error: ${e.message}")
-            return null
+            null
         }
     }
 }

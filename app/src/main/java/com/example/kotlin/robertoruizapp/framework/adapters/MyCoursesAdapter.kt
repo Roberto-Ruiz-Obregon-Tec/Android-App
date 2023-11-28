@@ -1,6 +1,13 @@
 package com.example.kotlin.robertoruizapp.framework.adapters
 
 import android.content.Context
+import android.graphics.Color
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.method.LinkMovementMethod
+import android.text.style.ForegroundColorSpan
+import android.text.style.URLSpan
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -60,11 +67,33 @@ class MyCoursesAdapter(
         Log.d("Cursos", "Cursos: ${curso?.name}")
         holder.nombreCurso.text = curso?.name
         holder.descripcionCurso.text = curso?.description
-        holder.ubicacion.text = curso?.location
         holder.rating.text = curso?.rating.toString()
 
         holder.itemView.findViewById<Button>(R.id.btn_ver_mas).setOnClickListener {
             Log.d("click", "click")
+        }
+
+        if (curso?.modality.equals("Remoto", ignoreCase = true)){
+            val locationText = curso.meetingCode
+            val spannableString = SpannableString(locationText)
+            spannableString.setSpan(
+                URLSpan(locationText),  // Reemplaza con tu enlace real
+                0,
+                locationText.length,
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+
+            spannableString.setSpan(
+                ForegroundColorSpan(Color.BLUE),
+                0,
+                locationText.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+
+            holder.ubicacion.text = spannableString
+            holder.ubicacion.movementMethod = LinkMovementMethod.getInstance()
+        } else {
+            holder.ubicacion.text = curso?.location
         }
 
         if (curso?.courseImage?.isNotEmpty() == true) {

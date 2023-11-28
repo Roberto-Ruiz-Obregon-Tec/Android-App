@@ -39,7 +39,8 @@ class MyCoursesAdapter(
         val nombreCurso: TextView = view.findViewById(R.id.cursos_list)
         val descripcionCurso: TextView = view.findViewById(R.id.curso_description)
         val imagencurso: ImageView = view.findViewById(R.id.imagencursos)
-
+        val ubicacion: TextView = view.findViewById(R.id.ubicacion_curso)
+        val rating: TextView = view.findViewById(R.id.rating)
     }
 
     /**
@@ -59,11 +60,8 @@ class MyCoursesAdapter(
         Log.d("Cursos", "Cursos: ${curso?.name}")
         holder.nombreCurso.text = curso?.name
         holder.descripcionCurso.text = curso?.description
-
-
-        //Put this when you have the correct urls of the images
-        //Glide.with(holder.imagenCurso.context).load(curso?.courseImage).into(holder.imagenCurso)
-
+        holder.ubicacion.text = curso?.location
+        holder.rating.text = curso?.rating.toString()
 
         holder.itemView.findViewById<Button>(R.id.btn_ver_mas).setOnClickListener {
             Log.d("click", "click")

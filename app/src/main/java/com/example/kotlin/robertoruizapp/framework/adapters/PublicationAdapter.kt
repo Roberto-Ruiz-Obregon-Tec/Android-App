@@ -37,14 +37,20 @@ class PublicationAdapter(
         fun OnLikeClicked(publicationId: String)
     }
 
+
     class ViewHolder(
         view: View,
         private val commentClickListener: OnCommentClickListener,
         private val likeClickListener: OnLikeClickListener
     ) : RecyclerView.ViewHolder(view) {
+        private fun updateLikeImage(likeImageView: ImageView, liked: Boolean) {
+            if (liked) {
+                likeImageView.setImageResource(R.drawable.like_activo)
+            } else {
+                likeImageView.setImageResource(R.drawable.like_inactivo)
+            }
+        }
 
-        private val likeImage: ImageView = view.findViewById(R.id.like_reaccion)
-        private var isLiked: Boolean = false
         val nombrePublicacion: TextView = view.findViewById(R.id.titulo_programa)
         val descripcionPublicacion: TextView = view.findViewById(R.id.programa_description)
         val verMas: TextView = view.findViewById(R.id.ver_mas)
@@ -108,6 +114,17 @@ class PublicationAdapter(
                     commentClickListener.OnCommentClicked(id)
                 }
             }
+            val likeImageView = itemView.findViewById<ImageView>(R.id.like_reaccion)
+            updateLikeImage(likeImageView, publicacion?.liked ?: false)
+
+            itemView.findViewById<LinearLayout>(R.id.boton_like).setOnClickListener {
+                publicacion?.liked != true
+                updateLikeImage(likeImageView, publicacion?.liked ?: false)
+                
+                publicacion?._id?.let { id ->
+                    likeClickListener.OnLikeClicked(id)
+                }
+            }
             itemView.findViewById<LinearLayout>(R.id.boton_like).setOnClickListener {
                 publicacion?._id?.let { id ->
                     likeClickListener.OnLikeClicked(id)
@@ -115,6 +132,9 @@ class PublicationAdapter(
             }
         }
     }
+
+
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)

@@ -12,6 +12,7 @@ data class Document (
     val createdAt: String,
     val updatedAt: String,
     val liked: Boolean,
+    var isliked: Boolean = false,
     val comments: List<Comment>
 
 )

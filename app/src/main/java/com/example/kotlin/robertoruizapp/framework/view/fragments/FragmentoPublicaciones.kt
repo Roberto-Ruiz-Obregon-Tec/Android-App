@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kotlin.robertoruizapp.R
 import com.example.kotlin.robertoruizapp.data.RepositoryPublication
+import com.example.kotlin.robertoruizapp.data.network.model.publication.LikeRequest
 import com.example.kotlin.robertoruizapp.data.network.model.publication.PublicObjeto
 import com.example.kotlin.robertoruizapp.databinding.FragmentoPublicacionesBinding
 import com.example.kotlin.robertoruizapp.framework.adapters.EventsAdapter
@@ -42,6 +43,12 @@ class FragmentoPublicaciones : Fragment() {
         }
 
     }
+    private val onLikeClickListener = object : PublicationAdapter.OnLikeClickListener {
+        @RequiresApi(Build.VERSION_CODES.N)
+        override fun OnLikeClicked(publicationId: String) {
+            likePublication(publicationId)
+        }
+    }
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
@@ -58,8 +65,8 @@ class FragmentoPublicaciones : Fragment() {
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.publicacionList.adapter = PublicationAdapter(emptyList(), onCommentClickListener)
         binding.publicacionList.layoutManager = LinearLayoutManager(context)
+        binding.publicacionList.adapter = PublicationAdapter(emptyList(), onCommentClickListener, onLikeClickListener)
 
         for (i in 0 until parentFragmentManager.backStackEntryCount) {
             val entry = parentFragmentManager.getBackStackEntryAt(i)
@@ -69,6 +76,7 @@ class FragmentoPublicaciones : Fragment() {
         getPublication()
     }
 
+
     @RequiresApi(Build.VERSION_CODES.N)
     private fun getPublication() {
         showProgressBar()
@@ -77,10 +85,10 @@ class FragmentoPublicaciones : Fragment() {
                 val repositoryPublication = RepositoryPublication()
                 val result: PublicObjeto? = repositoryPublication.getPublication(LoginActivity.token)
 
-
                 if (result != null) {
                     withContext(Dispatchers.Main) {
-                        val adapter = PublicationAdapter(result.data, onCommentClickListener)
+                        // Pasa ambos listeners al adaptador
+                        val adapter = PublicationAdapter(result.data, onCommentClickListener, onLikeClickListener)
                         binding.publicacionList.adapter = adapter
                         binding.publicacionList.layoutManager = LinearLayoutManager(context)
                     }
@@ -94,6 +102,27 @@ class FragmentoPublicaciones : Fragment() {
             }
         }
     }
+    @RequiresApi(Build.VERSION_CODES.N)
+    private fun likePublication(publicationId: String) {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val repositoryPublication = RepositoryPublication()
+                val likeRequest = LikeRequest(publicationId)
+                val response = repositoryPublication.likePublication(LoginActivity.token, likeRequest)
+
+                if (response != null) {
+                    withContext(Dispatchers.Main) {
+                        // Actualizar la interfaz de usuario según sea necesario
+                    }
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    // Manejar errores, mostrar un mensaje, etc.
+                }
+            }
+        }
+    }
+
     private fun showProgressBar() {
         binding.progressBar.visibility = View.VISIBLE
         binding.publicacionList.visibility = View.INVISIBLE // Ocultar la lista mientras carga

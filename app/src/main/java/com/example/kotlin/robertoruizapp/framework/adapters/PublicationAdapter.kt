@@ -24,15 +24,27 @@ import java.util.Locale
  * @param companies List of company documents that will be displayed.
  */
 
-class PublicationAdapter(private val publicaciones: List<Document?>,
-                         private val commentClickListener: OnCommentClickListener
-) :
-    RecyclerView.Adapter<PublicationAdapter.ViewHolder>() {
+class PublicationAdapter(
+    private val publicaciones: List<Document?>,
+    private val commentClickListener: OnCommentClickListener,
+    private val likeClickListener: OnLikeClickListener // Añadir el likeClickListener aquí
+) : RecyclerView.Adapter<PublicationAdapter.ViewHolder>() {
     interface OnCommentClickListener {
         fun OnCommentClicked(publicationId: String)
     }
 
-    class ViewHolder(view: View, private val commentClickListener:OnCommentClickListener) : RecyclerView.ViewHolder(view) {
+    interface OnLikeClickListener {
+        fun OnLikeClicked(publicationId: String)
+    }
+
+    class ViewHolder(
+        view: View,
+        private val commentClickListener: OnCommentClickListener,
+        private val likeClickListener: OnLikeClickListener
+    ) : RecyclerView.ViewHolder(view) {
+
+        private val likeImage: ImageView = view.findViewById(R.id.like_reaccion)
+        private var isLiked: Boolean = false
         val nombrePublicacion: TextView = view.findViewById(R.id.titulo_programa)
         val descripcionPublicacion: TextView = view.findViewById(R.id.programa_description)
         val verMas: TextView = view.findViewById(R.id.ver_mas)
@@ -96,13 +108,18 @@ class PublicationAdapter(private val publicaciones: List<Document?>,
                     commentClickListener.OnCommentClicked(id)
                 }
             }
+            itemView.findViewById<LinearLayout>(R.id.boton_like).setOnClickListener {
+                publicacion?._id?.let { id ->
+                    likeClickListener.OnLikeClicked(id)
+                }
+            }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_publication, parent, false)
-        return ViewHolder(view, commentClickListener)
+        return ViewHolder(view, commentClickListener, likeClickListener)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

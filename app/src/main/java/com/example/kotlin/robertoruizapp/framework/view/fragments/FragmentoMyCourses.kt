@@ -43,6 +43,19 @@ class FragmentoMyCourses: Fragment() {
     private lateinit var emptyTextView: TextView
     private val viewModel: SharedViewModel by activityViewModels()
 
+
+    /**
+     * Interface for handling curso (course) click events.
+     */
+    interface OnCursoClickListener {
+        /**
+         * Called when a curso (course) item is clicked.
+         *
+         * @param cursoId The ID of the clicked curso (course).
+         */
+        fun onCursoClicked(cursoId: String)
+    }
+
     /**
      * Method called when the fragment view is created.
      */
@@ -61,6 +74,14 @@ class FragmentoMyCourses: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         getCourse()
+
+        emptyTextView = view.findViewById(R.id.emptyTextView)
+
+        viewModel.filtroActual.observe(viewLifecycleOwner) { filtro ->
+            if (filtro.isNotEmpty()) {
+                filterCourses(filtro)
+            }
+        }
     }
 
     /**
@@ -75,11 +96,20 @@ class FragmentoMyCourses: Fragment() {
 
                 if (result != null) {
                     fullCoursesList = result.data
+                    // Filter courses by startDate and by remaining, so they don't appear on the view
+                    val filteredCourses = result.data.filter { course ->
+                        val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+                        val startDate = sdf.parse(course.startDate)
+                        val today = Calendar.getInstance().time
 
-                    Log.d("Frag", result.data.toString())
+                        val isDateValid = startDate != null && (startDate.after(today) || startDate.compareTo(today) == 0)
+                        val isRemainingValid = course.remaining > 0 // Validate the capacity of the courses
+
+                        isDateValid && isRemainingValid // The course must follow both conditions
+                    }
 
                     withContext(Dispatchers.Main) {
-                        val adapter = MyCoursesAdapter()
+                        val adapter = MyCoursesAdapter(filteredCourses)
                         binding.cursosList.adapter = adapter
                         binding.cursosList.layoutManager = LinearLayoutManager(context)
                     }
@@ -96,14 +126,55 @@ class FragmentoMyCourses: Fragment() {
     }
 
     /**
+     * Filters the courses based on the given query.
+     *
+     * @param query The query string to filter the courses.
+     */
+    private fun filterCourses(query: String) {
+        val today = Calendar.getInstance().time
+        val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+        val normalizedQuery = query.normalize()
+
+        val filteredList = fullCoursesList.filter { course ->
+            val startDate = sdf.parse(course.startDate)
+            val isDateValid = startDate != null && !startDate.before(today)
+            val isRemainingValid = course.remaining > 0
+            val normalizedCourseName = course.name.normalize()
+
+            normalizedCourseName.contains(normalizedQuery, ignoreCase = true) && isDateValid && isRemainingValid
+        }
+
+        val adapter = binding.cursosList.adapter
+        if (binding.cursosList.adapter == null) {
+            val adapter = MyCoursesAdapter(filteredList)
+            binding.cursosList.adapter = adapter
+            binding.cursosList.layoutManager = LinearLayoutManager(context)
+        } else if (binding.cursosList.adapter is MyCoursesAdapter) {
+            (binding.cursosList.adapter as MyCoursesAdapter).updateList(filteredList)
+        }
+    }
+
+    /**
      * Normalizes the name of the course by removing diacritical marks and converting to lowercase.
      *
      * @return The normalized name.
      */
     fun String.normalize(): String {
         val normalized = Normalizer.normalize(this, Normalizer.Form.NFD)
-        return normalized.replace("[\\p{InCombiningDiacriticalMarks}]".toRegex(), "").toLowerCase(
-            Locale.getDefault())
+        return normalized.replace("[\\p{InCombiningDiacriticalMarks}]".toRegex(), "").toLowerCase(Locale.getDefault())
+    }
+
+    /**
+     * Called when the fragment's view is resumed or becomes active.
+     * It observes the [viewModel.filtroActual] and, if it is not empty, filters the courses based on it.
+     */
+    override fun onResume() {
+        super.onResume()
+        viewModel.filtroActual.value?.let {
+            if (it.isNotEmpty()) {
+                filterCourses(it)
+            }
+        }
     }
 
     /**

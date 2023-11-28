@@ -67,12 +67,6 @@ class FragmentoPerfil: Fragment() {
             performLogout()
         }
 
-        val btnEditProfile = binding.btnEditProfile
-
-        btnEditProfile.setOnClickListener {
-            editMyProfile()
-        }
-
         val imageButton = binding.misCursosBoton
 
         imageButton.setOnClickListener {
@@ -89,13 +83,14 @@ class FragmentoPerfil: Fragment() {
     private fun initUI() {
         viewModel.getMyInfo()
         viewModel.userLiveData.observe(viewLifecycleOwner) { user ->
+
             if (user != null) {
-                binding.PNombre.text = user.data.document.name.toString()
+                binding.PNombre.text = user.data.document.firstName + " " + user.data.document.lastName
                 binding.PEdad.text = user.data.document.age.toString()
                 binding.PSexo.text = user.data.document.gender
                 binding.PCorreo.text = user.data.document.email
-                binding.PNivel.text = user.data.document.educationLevel
-                binding.POcupacion.text = user.data.document.job
+                binding.PNivel.text = user.data.document.company
+                binding.POcupacion.text = user.data.document.occupation
                 binding.PCp.text = user.data.document.postalCode.toString()
             }
         }

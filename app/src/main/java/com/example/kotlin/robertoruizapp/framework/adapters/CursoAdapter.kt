@@ -47,6 +47,8 @@ class CursoAdapter(
         val costoCurso: TextView = view.findViewById(R.id.curso_costo)
         val modalidadCurso: TextView = view.findViewById(R.id.curso_modalidad)
         val imagencurso: ImageView = view.findViewById(R.id.imagencursos)
+        val ratingCurso: TextView = view.findViewById(R.id.rating_curso)
+        val ratingStar: ImageView = view.findViewById(R.id.curso_rating_star)
 
     }
 
@@ -80,8 +82,13 @@ class CursoAdapter(
             "Fechas no disponibles"
         }
 
-        //Put this when you have the correct urls of the images
-        //Glide.with(holder.imagenCurso.context).load(curso?.courseImage).into(holder.imagenCurso)
+        if (curso.rating != null) {
+            holder.ratingCurso.text = curso.rating.toString()
+            holder.ratingStar.visibility = View.VISIBLE
+        } else {
+            holder.ratingCurso.text = ""
+            holder.ratingStar.visibility = View.GONE
+        }
 
         // Show the cost
         if (curso?.cost == 0.0) {

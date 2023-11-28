@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
+import com.example.kotlin.robertoruizapp.R
 import com.example.kotlin.robertoruizapp.data.CourseRepository
 import com.example.kotlin.robertoruizapp.data.UserRepository
 import com.example.kotlin.robertoruizapp.data.network.NetworkModuleDIUser
@@ -69,9 +70,18 @@ class FragmentoInscripcionGratuita : Fragment() {
         cursoViewModel.getCursoInfo(cursoId).observe(viewLifecycleOwner) { result ->
             hideProgressBar()
             result.onSuccess { curso ->
-                // Actualiza la UI con la información del curso obtenido
                 binding.nombreCursoInfo.text = curso.name
-                Glide.with(this).load(curso.courseImage).into(binding.ivCourseImage)
+                val imageToLoad = if (curso.courseImage.isNullOrEmpty()) {
+                    R.drawable.curso1
+                } else {
+                    curso.courseImage
+                }
+
+                Glide.with(this)
+                    .load(imageToLoad)
+                    .placeholder(R.drawable.curso1)
+                    .error(R.drawable.curso1)
+                    .into(binding.ivCourseImage)
 
                 // Formatea las fechas
                 val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US)

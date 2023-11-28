@@ -11,11 +11,9 @@ import android.widget.Spinner
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kotlin.robertoruizapp.R
 import com.example.kotlin.robertoruizapp.data.MyCoursesRepository
@@ -37,45 +35,63 @@ import java.util.Calendar
 import java.util.Locale
 
 class FragmentoMyCourses: Fragment() {
-    private lateinit var binding: FragmentoMyCoursesBinding
-    private val adapter : MyCoursesAdapter = MyCoursesAdapter()
-    private lateinit var data:ArrayList<course>
-    private val viewModel: MyCoursesViewModel by activityViewModels()
+    private var _binding: FragmentoMyCoursesBinding? = null
+    private val binding get() = _binding!!
 
+    // Variables adicionales
+    private var fullCoursesList: List<course> = listOf()
+    private lateinit var emptyTextView: TextView
+    private val viewModel: SharedViewModel by activityViewModels()
+
+    /**
+     * Method called when the fragment view is created.
+     */
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
+    ): View {
+        _binding = FragmentoMyCoursesBinding.inflate(inflater, container, false)
         return binding.root
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        initializeBinding()
-        initializeObservers()
+    /**
+     * Method called when the fragment view is created.
+     */
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        getCourse()
     }
 
-    private fun initializeBinding() {
-        binding = FragmentoMyCoursesBinding.inflate(layoutInflater)
-        //setContentView(binding.root)
-    }
+    /**
+     * Method to get the list of courses and display it in the UI.
+     */
+    private fun getCourse() {
+        showProgressBar()
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val courseRepository = MyCoursesRepository()
+                val result: Document? = courseRepository.getMyCourses(LoginActivity.token)
 
-    private fun setUpRecyclerView(dataForList: List<course>) {
-        binding.cursosList.setHasFixedSize(true)
+                if (result != null) {
+                    fullCoursesList = result.data
 
-        val gridLayoutManager = GridLayoutManager(requireContext(), 1)
-        binding.cursosList.layoutManager = gridLayoutManager
+                    Log.d("Frag", result.data.toString())
 
-        adapter.MyCourseAdapter(dataForList, requireContext())
-        binding.cursosList.adapter = adapter
-    }
+                    withContext(Dispatchers.Main) {
+                        val adapter = MyCoursesAdapter()
+                        binding.cursosList.adapter = adapter
+                        binding.cursosList.layoutManager = LinearLayoutManager(context)
+                    }
+                }
 
-    private fun initializeObservers() {
-        viewModel.LiveData.observe(this) { item ->
-            adapter.MyCourseAdapter(item.data, requireContext())
-            adapter.notifyDataSetChanged()
+            } catch (e: Exception) {
+                e.printStackTrace() // Log the exception
+            } finally {
+                withContext(Dispatchers.Main) {
+                    hideProgressBar()
+                }
+            }
         }
     }
 
@@ -98,22 +114,22 @@ class FragmentoMyCourses: Fragment() {
         binding.cursosList.visibility = View.INVISIBLE
     }
 
-//    /**
-//     * Hides the progress bar and displays the course list.
-//     */
-//    private fun hideProgressBar() {
-//        if (isAdded) {
-//            binding.progressBar.visibility = View.GONE
-//            binding.cursosList.visibility = View.VISIBLE
-//        }
-//    }
-//
-//    /**
-//     * Method called when the fragment view is destroyed.
-//     * Clear the reference to the object to avoid memory leaks.
-//     */
-//    override fun onDestroyView() {
-//        super.onDestroyView()
-//        _binding = null
-//    }
+    /**
+     * Hides the progress bar and displays the course list.
+     */
+    private fun hideProgressBar() {
+        if (isAdded) {
+            binding.progressBar.visibility = View.GONE
+            binding.cursosList.visibility = View.VISIBLE
+        }
+    }
+
+    /**
+     * Method called when the fragment view is destroyed.
+     * Clear the reference to the object to avoid memory leaks.
+     */
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

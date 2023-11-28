@@ -29,9 +29,6 @@ class MyCoursesAdapter() : RecyclerView.Adapter<MyCoursesViewHolder>() {
     var data: ArrayList<course> = ArrayList()
     lateinit var context: Context
 
-    init {
-        this.data = ArrayList()
-    }
 
     fun MyCourseAdapter(basicData: List<course>, context: Context){
         this.data = basicData as ArrayList<course>

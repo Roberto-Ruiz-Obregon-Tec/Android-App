@@ -6,11 +6,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.Spinner
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kotlin.robertoruizapp.R
 import com.example.kotlin.robertoruizapp.data.MyCoursesRepository
@@ -20,6 +25,7 @@ import com.example.kotlin.robertoruizapp.data.network.model.MyCourses.course
 import com.example.kotlin.robertoruizapp.databinding.FragmentoMyCoursesBinding
 import com.example.kotlin.robertoruizapp.framework.adapters.MyCoursesAdapter
 import com.example.kotlin.robertoruizapp.framework.view.activities.LoginActivity
+import com.example.kotlin.robertoruizapp.framework.viewmodel.MyCoursesViewModel
 import com.example.kotlin.robertoruizapp.framework.viewmodel.SharedViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -31,63 +37,45 @@ import java.util.Calendar
 import java.util.Locale
 
 class FragmentoMyCourses: Fragment() {
-    private var _binding: FragmentoMyCoursesBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: FragmentoMyCoursesBinding
+    private val adapter : MyCoursesAdapter = MyCoursesAdapter()
+    private lateinit var data:ArrayList<course>
+    private val viewModel: MyCoursesViewModel by activityViewModels()
 
-    // Variables adicionales
-    private var fullCoursesList: List<course> = listOf()
-    private lateinit var emptyTextView: TextView
-    private val viewModel: SharedViewModel by activityViewModels()
-
-    /**
-     * Method called when the fragment view is created.
-     */
-    @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentoMyCoursesBinding.inflate(inflater, container, false)
+    ): View? {
+        // Inflate the layout for this fragment
         return binding.root
     }
 
-    /**
-     * Method called when the fragment view is created.
-     */
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        getCourse()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        initializeBinding()
+        initializeObservers()
     }
 
-    /**
-     * Method to get the list of courses and display it in the UI.
-     */
-    private fun getCourse() {
-        showProgressBar()
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                val courseRepository = MyCoursesRepository()
-                val result: Document? = courseRepository.getMyCourses(LoginActivity.token)
+    private fun initializeBinding() {
+        binding = FragmentoMyCoursesBinding.inflate(layoutInflater)
+        //setContentView(binding.root)
+    }
 
-                if (result != null) {
-                    fullCoursesList = result.data
+    private fun setUpRecyclerView(dataForList: List<course>) {
+        binding.cursosList.setHasFixedSize(true)
 
-                    Log.d("Frag", result.data.toString())
+        val gridLayoutManager = GridLayoutManager(requireContext(), 1)
+        binding.cursosList.layoutManager = gridLayoutManager
 
-                    withContext(Dispatchers.Main) {
-                        val adapter = MyCoursesAdapter()
-                        binding.cursosList.adapter = adapter
-                        binding.cursosList.layoutManager = LinearLayoutManager(context)
-                    }
-                }
+        adapter.MyCourseAdapter(dataForList, requireContext())
+        binding.cursosList.adapter = adapter
+    }
 
-            } catch (e: Exception) {
-                e.printStackTrace() // Log the exception
-            } finally {
-                withContext(Dispatchers.Main) {
-                    hideProgressBar()
-                }
-            }
+    private fun initializeObservers() {
+        viewModel.LiveData.observe(this) { item ->
+            adapter.MyCourseAdapter(item.data, requireContext())
+            adapter.notifyDataSetChanged()
         }
     }
 
@@ -110,22 +98,22 @@ class FragmentoMyCourses: Fragment() {
         binding.cursosList.visibility = View.INVISIBLE
     }
 
-    /**
-     * Hides the progress bar and displays the course list.
-     */
-    private fun hideProgressBar() {
-        if (isAdded) {
-            binding.progressBar.visibility = View.GONE
-            binding.cursosList.visibility = View.VISIBLE
-        }
-    }
-
-    /**
-     * Method called when the fragment view is destroyed.
-     * Clear the reference to the object to avoid memory leaks.
-     */
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
+//    /**
+//     * Hides the progress bar and displays the course list.
+//     */
+//    private fun hideProgressBar() {
+//        if (isAdded) {
+//            binding.progressBar.visibility = View.GONE
+//            binding.cursosList.visibility = View.VISIBLE
+//        }
+//    }
+//
+//    /**
+//     * Method called when the fragment view is destroyed.
+//     * Clear the reference to the object to avoid memory leaks.
+//     */
+//    override fun onDestroyView() {
+//        super.onDestroyView()
+//        _binding = null
+//    }
 }

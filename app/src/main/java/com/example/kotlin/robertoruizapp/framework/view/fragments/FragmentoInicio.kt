@@ -10,6 +10,7 @@ import com.example.kotlin.robertoruizapp.framework.view.fragments.FragmentoBecas
 import com.example.kotlin.robertoruizapp.framework.view.fragments.FragmentoCertificaciones
 import com.example.kotlin.robertoruizapp.framework.view.fragments.FragmentoCurso
 import com.example.kotlin.robertoruizapp.framework.view.fragments.FragmentoCursos
+import com.example.kotlin.robertoruizapp.framework.view.fragments.FragmentoMyCourses
 import com.example.kotlin.robertoruizapp.framework.view.fragments.FragmentoProgramas
 
 /**
@@ -50,12 +51,12 @@ class FragmentoInicio : Fragment() {
 
         binding.button1.setOnClickListener {
             selectButton(binding.button1)
-            navigateToFragment(FragmentoCurso())
+            navigateToFragment(FragmentoProgramas())
         }
 
         binding.button2.setOnClickListener {
             selectButton(binding.button2)
-            navigateToFragment(FragmentoProgramas())
+            navigateToFragment(FragmentoMyCourses())
         }
 
         binding.button3.setOnClickListener {

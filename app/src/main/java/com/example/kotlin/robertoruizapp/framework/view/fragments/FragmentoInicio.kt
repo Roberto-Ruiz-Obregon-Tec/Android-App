@@ -56,7 +56,7 @@ class FragmentoInicio : Fragment() {
 
         binding.button2.setOnClickListener {
             selectButton(binding.button2)
-            navigateToFragment(FragmentoMyCourses())
+            navigateToFragment(FragmentoProgramas())
         }
 
         binding.button3.setOnClickListener {

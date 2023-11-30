@@ -1,5 +1,6 @@
 package com.example.kotlin.robertoruizapp.framework.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -18,6 +19,7 @@ class BankViewModel(private val bankListRequirement: BankListRequirement) : View
             val token = "tu_token" // Debes obtener tu token de alguna manera segura.
             bankListRequirement.invoke(token)?.let { bankObject ->
                 _bankList.postValue(bankObject.data.banks)
+                Log.d("prueba", "zi: ${bankObject}")
             }
         }
     }

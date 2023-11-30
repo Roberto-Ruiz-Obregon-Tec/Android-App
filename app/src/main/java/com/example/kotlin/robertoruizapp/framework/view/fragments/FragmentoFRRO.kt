@@ -146,6 +146,13 @@ class FragmentoFRRO : Fragment() {
                                 startActivity(emailIntent)
                             }
                         }
+
+                        binding.ubicacion.setOnClickListener {
+                            ubicacion?.let { locationAddress ->
+                                val mapIntent = Intent(Intent.ACTION_VIEW, Uri.parse("geo:0,0?q=$locationAddress"))
+                                startActivity(mapIntent)
+                            }
+                        }
                     }
                 }
             } catch (e: Exception) {

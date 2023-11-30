@@ -22,10 +22,8 @@ import com.example.kotlin.robertoruizapp.databinding.FragmentoInicioBinding
 class FragmentoFeed : Fragment(){
 
     private var _binding: FragmentoFeedBinding? = null
-    private val binding get() = _binding!!
 
-    private var lastButtonClickTime: Long = 0
-    private val buttonClickInterval: Long = 1000
+    private val binding get() = _binding!!
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -43,24 +41,18 @@ class FragmentoFeed : Fragment(){
         navigateToFragment(FragmentoEventos())
 
         binding.button1.setOnClickListener {
-            if (isClickable()) {
-                selectButton(binding.button1)
-                navigateToFragment(FragmentoEventos())
-            }
+            selectButton(binding.button1)
+            navigateToFragment(FragmentoEventos())
         }
 
         binding.button2.setOnClickListener {
-            if (isClickable()) {
-                selectButton(binding.button2)
-                navigateToFragment(FragmentoPublicaciones())
-            }
+            selectButton(binding.button2)
+            navigateToFragment(FragmentoPublicaciones())
         }
 
         binding.button3.setOnClickListener {
-            if (isClickable()) {
-                selectButton(binding.button3)
-                navigateToFragment(FragmentoEmpresas())
-            }
+            selectButton(binding.button3)
+            navigateToFragment(FragmentoEmpresas())
         }
 
 
@@ -88,14 +80,5 @@ class FragmentoFeed : Fragment(){
         _binding = null
     }
 
-    private fun isClickable(): Boolean {
-        val currentTime = System.currentTimeMillis()
-
-        if (currentTime - lastButtonClickTime >= buttonClickInterval) {
-            lastButtonClickTime = currentTime
-            return true
-        }
-        return false
-    }
 
 }

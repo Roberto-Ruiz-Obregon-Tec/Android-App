@@ -130,29 +130,6 @@ class FragmentoFRRO : Fragment() {
                         binding.emailFun.text = email
                         val ubicacion = result.data.info.first()?.location
                         binding.ubicacion.text = ubicacion
-
-                        binding.phoneTextView.setOnClickListener {
-                            phone?.let { phoneNumber ->
-                                val dialIntent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$phoneNumber"))
-                                startActivity(dialIntent)
-                            }
-                        }
-
-                        binding.emailFun.setOnClickListener {
-                            email?.let { emailAddress ->
-                                val emailIntent = Intent(Intent.ACTION_SENDTO).apply {
-                                    data = Uri.parse("mailto:$emailAddress")
-                                }
-                                startActivity(emailIntent)
-                            }
-                        }
-
-                        binding.ubicacion.setOnClickListener {
-                            ubicacion?.let { locationAddress ->
-                                val mapIntent = Intent(Intent.ACTION_VIEW, Uri.parse("geo:0,0?q=$locationAddress"))
-                                startActivity(mapIntent)
-                            }
-                        }
                     }
                 }
             } catch (e: Exception) {

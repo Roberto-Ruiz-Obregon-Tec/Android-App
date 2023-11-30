@@ -24,9 +24,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var currentFragment: Fragment
     private var currentMenuOption: String? = null
 
-    private var lastButtonClickTime: Long = 0
-    private val buttonClickInterval: Long = 1000
-
     /**
      * When the activity is created sets up binding and viewmodel
      * also initializes the manageIntent, Binding and Listener methods
@@ -45,24 +42,16 @@ class MainActivity : AppCompatActivity() {
      */
     private fun initializeListeners() {
         binding.appBarMain.inicioMenu.setOnClickListener {
-            if (isClickable()) {
-                selectMenuOption(Constants.MENU_INICIO)
-            }
+            selectMenuOption(Constants.MENU_INICIO)
         }
         binding.appBarMain.feedMenu.setOnClickListener {
-            if (isClickable()) {
-                selectMenuOption(Constants.MENU_FEED)
-            }
+            selectMenuOption(Constants.MENU_FEED)
         }
         binding.appBarMain.frroMenu.setOnClickListener {
-            if (isClickable()) {
-                selectMenuOption(Constants.MENU_FRRO)
-            }
+            selectMenuOption(Constants.MENU_FRRO)
         }
         binding.appBarMain.perfilMenu.setOnClickListener {
-            if (isClickable()) {
-                selectMenuOption(Constants.MENU_PERFIL)
-            }
+            selectMenuOption(Constants.MENU_PERFIL)
         }
     }
 
@@ -115,15 +104,5 @@ class MainActivity : AppCompatActivity() {
                 Constants.MENU_PERFIL
             )
         }
-    }
-
-    private fun isClickable(): Boolean {
-        val currentTime = System.currentTimeMillis()
-
-        if (currentTime - lastButtonClickTime >= buttonClickInterval) {
-            lastButtonClickTime = currentTime
-            return true
-        }
-        return false
     }
 }

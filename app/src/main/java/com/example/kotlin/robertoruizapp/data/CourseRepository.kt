@@ -4,6 +4,7 @@ import com.example.kotlin.robertoruizapp.data.network.NetworkModuleDICourse
 import com.example.kotlin.robertoruizapp.data.network.model.Course.CourseObject
 import com.example.kotlin.robertoruizapp.data.network.model.Course.Document
 import com.example.kotlin.robertoruizapp.data.network.model.CourseApiService
+import com.example.kotlin.robertoruizapp.data.network.model.Inscripcion.inscriptionRequest
 import com.example.kotlin.robertoruizapp.framework.view.activities.LoginActivity
 import retrofit2.http.GET
 
@@ -39,6 +40,17 @@ class CourseRepository {
             response.data.first()  // Returns the first UserDocument in the list
         } else {
             null
+        }
+    }
+
+    suspend fun postInscription(courseId: String, token: String): String? {
+        val body = inscriptionRequest(courseId = courseId)
+        val response = api.postInscription( "Bearer $token", body)
+        // Verify that the response is successful and that the 'data' list contains at least one element
+        return if (response.isSuccessful ) {
+            "Asistencia confirmada"
+        } else {
+            "Hubo un error"
         }
     }
 

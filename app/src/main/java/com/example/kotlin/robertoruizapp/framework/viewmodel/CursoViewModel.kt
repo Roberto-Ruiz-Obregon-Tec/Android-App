@@ -60,4 +60,18 @@ class CursoViewModel(private val userRepository: UserRepository, private val cou
             emit(Result.failure(e))
         }
     }
+
+    fun postInscription(courseId: String) = liveData(Dispatchers.IO) {
+        try {
+            val inscriptionResponse = courseRepository.postInscription(courseId, LoginActivity.token)
+            Log.d("prueba", "token ${LoginActivity.token}")
+            if (inscriptionResponse != null) {
+                emit(Result.success(inscriptionResponse))
+            } else {
+                emit(Result.failure(RuntimeException("Hubo un error")))
+            }
+        } catch (e: Exception) {
+            emit(Result.failure(e))
+        }
+    }
 }

@@ -6,8 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.kotlin.robertoruizapp.R
 import com.example.kotlin.robertoruizapp.data.CourseRepository
@@ -107,6 +110,8 @@ class FragmentoInscripcionGratuita : Fragment() {
                 }
             }
         }
+
+        setupEnrollButton()
     }
 
     /**
@@ -122,6 +127,52 @@ class FragmentoInscripcionGratuita : Fragment() {
     private fun hideProgressBar() {
         binding.progressBar.visibility = View.GONE
     }
+
+    private fun setupEnrollButton() {
+        binding.btnEnroll.setOnClickListener {
+            showConfirmationDialog(cursoId)
+        }
+    }
+
+    private fun showConfirmationDialog(courseId: String) {
+        context?.let {
+            AlertDialog.Builder(it)
+                .setTitle("Confirmamción de Asistencia")
+                .setMessage("¿Estás seguro de enviar tu solicitud de inscripción al curso?")
+                .setPositiveButton("Aceptar") { dialog, which ->
+                    // Lógica para manejar la confirmación de asistencia
+                    confirmAttendance(courseId)
+                }
+                .setNegativeButton("Cancelar", null)
+                .show()
+        }
+    }
+
+    private fun confirmAttendance(courseId: String){
+
+        cursoViewModel.postInscription(courseId).observe(viewLifecycleOwner) { result ->
+            context?.let {
+                AlertDialog.Builder(it)
+                    .setTitle("Confirmación de Asistencia")
+                    .setMessage("Se ha enviado su petición de inscripción al curso. Cuando sea aprobado, aparecerá en la parte de Mis cursos en su perfil")
+                    .setPositiveButton("Aceptar") { dialog, which ->
+                        // Navegar a FragmentoCurso
+                        //navigateToFragment(FragmentoCurso())
+                    }
+                    .show()
+            }
+        }
+    }
+
+    /*private fun navigateToFragment(fragment: Fragment) {
+        // Asegúrate de que el ID del contenedor aquí coincida con el contenedor en tu MainActivity
+        if (isAdded) { // Asegúrate de que el fragmento esté asociado con una actividad.
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.nav_host_fragment_content_main, fragment)
+                .addToBackStack(null)
+                .commit()
+        }
+    }*/
 
     /**
      * Called when the fragment's view is destroyed.

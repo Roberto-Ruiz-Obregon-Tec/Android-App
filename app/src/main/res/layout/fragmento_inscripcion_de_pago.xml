@@ -181,7 +181,7 @@
             android:id="@+id/correo_usuario"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="#000000"
+            android:textColor="#C20000"
             android:gravity="end"
             android:layout_marginStart="25dp"
             app:layout_constraintStart_toEndOf="@id/correo_title"

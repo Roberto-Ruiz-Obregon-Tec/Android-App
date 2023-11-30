@@ -2,8 +2,13 @@ package com.example.kotlin.robertoruizapp.data.network.model
 
 import com.example.kotlin.robertoruizapp.data.network.model.Course.CourseObject
 import com.example.kotlin.robertoruizapp.data.network.model.Course.Document
+import com.example.kotlin.robertoruizapp.data.network.model.Inscripcion.inscriptionRequest
+import com.example.kotlin.robertoruizapp.data.network.model.Inscripcion.inscriptionResponse
+import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.POST
 import retrofit2.http.Path
 
 /**
@@ -28,5 +33,12 @@ interface CourseApiService {
      */
     @GET("course/{id}")
     suspend fun getCourseById(@Path("id") cursoId: String, @Header("Authorization") authToken: String): CourseObject
+
+    @POST("inscription/create")
+    suspend fun postInscription(
+        @Header("Authorization") authToken: String,
+        @Body inscriptionRequest: inscriptionRequest
+    ) : Response<inscriptionResponse>
+
 
 }

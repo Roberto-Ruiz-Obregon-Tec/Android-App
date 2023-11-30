@@ -26,8 +26,9 @@ import java.util.*
 
 
 class FragmentoInfoEventos : Fragment() {
-    private lateinit var binding: FragmentoInfoEventosBinding
+    private var _binding: FragmentoInfoEventosBinding? = null
     private lateinit var currentFragment: Fragment
+    private val binding get() = _binding!!
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
@@ -35,7 +36,7 @@ class FragmentoInfoEventos : Fragment() {
         container: ViewGroup?, 
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentoInfoEventosBinding.inflate(inflater, container, false)
+        _binding = FragmentoInfoEventosBinding.inflate(inflater, container, false)
         return binding.root
     }
 

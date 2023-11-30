@@ -38,7 +38,7 @@
             android:id="@+id/textView22"
             android:layout_width="334dp"
             android:layout_height="38dp"
-            android:text="Roberto Ruíz Obregón"
+            android:text="Roberto Ruiz Obregón"
             android:textAlignment="center"
             android:textColor="#6A6A6A"
             android:textSize="25sp"

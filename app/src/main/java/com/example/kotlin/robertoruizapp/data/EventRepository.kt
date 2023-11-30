@@ -26,7 +26,7 @@ class EventRepository {
         try {
             val response = api.getEventById(eventId, "Bearer $token")
             Log.d("EventRepository", "API Response for Single Event ID $eventId: $response")
-            return response.data.document
+            return response.data.documents
         } catch (e: Exception) {
             Log.e("EventRepository", "Error fetching single event by ID: ${e.message}")
             return null

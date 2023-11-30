@@ -24,6 +24,9 @@ import kotlinx.coroutines.withContext
 
 class FragmentoPublicaciones : Fragment() {
 
+    private var lastClickTime: Long = 0
+    private val clickInterval: Long = 1000 // 1 segundo
+
     private var _binding: FragmentoPublicacionesBinding? = null
     private val binding get() = _binding!!
 
@@ -46,7 +49,12 @@ class FragmentoPublicaciones : Fragment() {
     private val onLikeClickListener = object : PublicationAdapter.OnLikeClickListener {
         @RequiresApi(Build.VERSION_CODES.N)
         override fun OnLikeClicked(position: Int, publicationId: String) {
-            likePublication(position, publicationId)
+            val currentTime = System.currentTimeMillis()
+
+            if (currentTime - lastClickTime >= clickInterval) {
+                likePublication(position, publicationId)
+                lastClickTime = currentTime
+            }
         }
     }
 

@@ -137,6 +137,15 @@ class FragmentoFRRO : Fragment() {
                                 startActivity(dialIntent)
                             }
                         }
+
+                        binding.emailFun.setOnClickListener {
+                            email?.let { emailAddress ->
+                                val emailIntent = Intent(Intent.ACTION_SENDTO).apply {
+                                    data = Uri.parse("mailto:$emailAddress")
+                                }
+                                startActivity(emailIntent)
+                            }
+                        }
                     }
                 }
             } catch (e: Exception) {

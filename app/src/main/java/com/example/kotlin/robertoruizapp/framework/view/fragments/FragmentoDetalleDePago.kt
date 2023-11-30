@@ -10,6 +10,7 @@ import com.example.kotlin.robertoruizapp.databinding.FragmentoDetalleDePagoBindi
 import com.example.kotlin.robertoruizapp.domain.BankListRequirement
 import com.example.kotlin.robertoruizapp.framework.adapters.BankAdapter
 import com.example.kotlin.robertoruizapp.framework.viewmodel.BankViewModel
+import com.example.kotlin.robertoruizapp.framework.viewmodel.BankViewModelFactory
 
 class FragmentoDetalleDePago : Fragment(R.layout.fragmento_detalle_de_pago) {
 

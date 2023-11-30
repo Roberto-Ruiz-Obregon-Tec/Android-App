@@ -25,16 +25,22 @@ import java.util.Locale
  */
 
 class PublicationAdapter(
-    private val publicaciones: List<Document?>,
+    private var publicaciones: List<Document?>,
     private val commentClickListener: OnCommentClickListener,
     private val likeClickListener: OnLikeClickListener // Añadir el likeClickListener aquí
 ) : RecyclerView.Adapter<PublicationAdapter.ViewHolder>() {
     interface OnCommentClickListener {
-        fun OnCommentClicked(publicationId: String)
+        fun OnCommentClicked(position: Int,publicationId: String)
     }
 
     interface OnLikeClickListener {
-        fun OnLikeClicked(publicationId: String)
+        fun OnLikeClicked(position: Int,publicationId: String)
+    }
+    fun updatePublication(position: Int, newPublication: Document) {
+        publicaciones = publicaciones.mapIndexed { index, document ->
+            if (index == position) newPublication else document
+        }
+        notifyItemChanged(position)
     }
 
 
@@ -111,7 +117,7 @@ class PublicationAdapter(
             }
             itemView.findViewById<LinearLayout>(R.id.boton_comentar).setOnClickListener {
                 publicacion?._id?.let { id ->
-                    commentClickListener.OnCommentClicked(id)
+                    commentClickListener.OnCommentClicked(adapterPosition,id)
                 }
             }
             val likeImageView = itemView.findViewById<ImageView>(R.id.like_reaccion)
@@ -122,12 +128,12 @@ class PublicationAdapter(
                 updateLikeImage(likeImageView, publicacion?.liked ?: false)
                 
                 publicacion?._id?.let { id ->
-                    likeClickListener.OnLikeClicked(id)
+                    likeClickListener.OnLikeClicked(adapterPosition,id)
                 }
             }
             itemView.findViewById<LinearLayout>(R.id.boton_like).setOnClickListener {
                 publicacion?._id?.let { id ->
-                    likeClickListener.OnLikeClicked(id)
+                    likeClickListener.OnLikeClicked(adapterPosition,id)
                 }
             }
         }
@@ -145,7 +151,9 @@ class PublicationAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val publicacion = publicaciones[position]
         holder.bind(publicacion)
+
     }
+
 
     override fun getItemCount() = publicaciones.size
 }

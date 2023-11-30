@@ -28,7 +28,7 @@ class FragmentoPublicaciones : Fragment() {
     private val binding get() = _binding!!
 
     private val onCommentClickListener = object : PublicationAdapter.OnCommentClickListener {
-        override fun OnCommentClicked(publicationId: String) {
+        override fun OnCommentClicked(position: Int,publicationId: String) {
             val fragmentoCommentDetalles = FragmentoCommentsPublication().apply {
                 arguments = Bundle().apply {
                     putString("PUBLICACION_ID", publicationId)
@@ -45,8 +45,8 @@ class FragmentoPublicaciones : Fragment() {
     }
     private val onLikeClickListener = object : PublicationAdapter.OnLikeClickListener {
         @RequiresApi(Build.VERSION_CODES.N)
-        override fun OnLikeClicked(publicationId: String) {
-            likePublication(publicationId)
+        override fun OnLikeClicked(position: Int, publicationId: String) {
+            likePublication(position, publicationId)
         }
     }
 
@@ -103,7 +103,7 @@ class FragmentoPublicaciones : Fragment() {
         }
     }
     @RequiresApi(Build.VERSION_CODES.N)
-    private fun likePublication(publicationId: String) {
+    private fun likePublication(position: Int, publicationId: String) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val repositoryPublication = RepositoryPublication()
@@ -111,8 +111,16 @@ class FragmentoPublicaciones : Fragment() {
                 val response = repositoryPublication.likePublication(LoginActivity.token, likeRequest)
 
                 if (response != null) {
+                    // Obtén la versión actualizada de la publicación.
+                    // Esto puede ser a través de una nueva solicitud o parte de la respuesta de 'likePublication'.
+                    val updatedPublication = repositoryPublication.getPublicationId(publicationId, LoginActivity.token)
+
                     withContext(Dispatchers.Main) {
-                        // Actualizar la interfaz de usuario según sea necesario
+                        if (updatedPublication != null) {
+                            val adapter = binding.publicacionList.adapter as PublicationAdapter
+                            adapter.updatePublication(position, updatedPublication)
+                            // Actualizar la interfaz de usuario según sea necesario
+                        }
                     }
                 }
             } catch (e: Exception) {

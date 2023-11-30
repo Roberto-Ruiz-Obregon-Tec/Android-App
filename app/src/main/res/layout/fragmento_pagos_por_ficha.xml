@@ -111,46 +111,52 @@
         android:textColor="#757575"
         app:layout_constraintTop_toBottomOf="@id/details_container"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/button_take_photo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/add_photo"
-        android:text=" Tomar foto"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/anuncio_texto"
-        android:layout_marginTop="8dp"
-        android:background="@android:color/transparent"
-        android:paddingLeft="16dp"
-        android:paddingTop="12dp"
-        android:paddingBottom="12dp" />
-
-    <Button
-        android:id="@+id/button_upload_file"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/upload_container"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/upload_file"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/anuncio_texto"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button_take_photo"
-        android:layout_marginTop="16dp"
-        android:drawableLeft="@drawable/ic_file_upload"
-        android:drawablePadding="10dp"
-        android:padding="12dp"
-        android:background="?android:attr/selectableItemBackground" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="15dp">
 
-    <TextView
-        android:id="@+id/info_tooltip"
-        android:layout_width="wrap_content"
+        <!-- Botón para subir archivo -->
+        <Button
+            android:id="@+id/button_upload_file"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Subir archivo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <TextView
+            android:id="@+id/textView_file_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="No hay archivo seleccionado"
+            android:gravity="center_vertical"
+            android:padding="16dp"
+            app:layout_constraintStart_toEndOf="@id/button_upload_file"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/button_upload_file"
+            app:layout_constraintBottom_toBottomOf="@id/button_upload_file" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/btn_enroll"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/info_tooltip"
-        android:background="@drawable/tooltip_background"
-        android:visibility="invisible"
-        app:layout_constraintStart_toEndOf="@id/button_upload_file"
-        app:layout_constraintTop_toTopOf="@id/button_upload_file"
-        android:layout_marginStart="8dp" />
+        android:text="Inscribirme"
+        android:backgroundTint="#D32F2F"
+        android:textColor="#FFFFFF"
+        app:layout_constraintTop_toBottomOf="@id/upload_container"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="40dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.kotlin.robertoruizapp.R
@@ -24,15 +25,39 @@ import java.util.Locale
  * @param companies List of company documents that will be displayed.
  */
 
-class PublicationAdapter(private val publicaciones: List<Document?>,
-                         private val commentClickListener: OnCommentClickListener
-) :
-    RecyclerView.Adapter<PublicationAdapter.ViewHolder>() {
+class PublicationAdapter(
+    private var publicaciones: List<Document?>,
+    private val commentClickListener: OnCommentClickListener,
+    private val likeClickListener: OnLikeClickListener // Añadir el likeClickListener aquí
+) : RecyclerView.Adapter<PublicationAdapter.ViewHolder>() {
     interface OnCommentClickListener {
-        fun OnCommentClicked(publicationId: String)
+        fun OnCommentClicked(position: Int,publicationId: String)
     }
 
-    class ViewHolder(view: View, private val commentClickListener:OnCommentClickListener) : RecyclerView.ViewHolder(view) {
+    interface OnLikeClickListener {
+        fun OnLikeClicked(position: Int,publicationId: String)
+    }
+    fun updatePublication(position: Int, newPublication: Document) {
+        publicaciones = publicaciones.mapIndexed { index, document ->
+            if (index == position) newPublication else document
+        }
+        notifyItemChanged(position)
+    }
+
+
+    class ViewHolder(
+        view: View,
+        private val commentClickListener: OnCommentClickListener,
+        private val likeClickListener: OnLikeClickListener
+    ) : RecyclerView.ViewHolder(view) {
+        private fun updateLikeImage(likeImageView: ImageView, liked: Boolean) {
+            if (liked) {
+                likeImageView.setImageResource(R.drawable.like_activo)
+            } else {
+                likeImageView.setImageResource(R.drawable.like_inactivo)
+            }
+        }
+
         val nombrePublicacion: TextView = view.findViewById(R.id.titulo_programa)
         val descripcionPublicacion: TextView = view.findViewById(R.id.programa_description)
         val verMas: TextView = view.findViewById(R.id.ver_mas)
@@ -93,22 +118,43 @@ class PublicationAdapter(private val publicaciones: List<Document?>,
             }
             itemView.findViewById<LinearLayout>(R.id.boton_comentar).setOnClickListener {
                 publicacion?._id?.let { id ->
-                    commentClickListener.OnCommentClicked(id)
+                    commentClickListener.OnCommentClicked(adapterPosition,id)
+                }
+            }
+            val likeImageView = itemView.findViewById<ImageView>(R.id.like_reaccion)
+            updateLikeImage(likeImageView, publicacion?.liked ?: false)
+
+            itemView.findViewById<LinearLayout>(R.id.boton_like).setOnClickListener {
+                publicacion?.liked != true
+                updateLikeImage(likeImageView, publicacion?.liked ?: false)
+                
+                publicacion?._id?.let { id ->
+                    likeClickListener.OnLikeClicked(adapterPosition,id)
+                }
+            }
+            itemView.findViewById<LinearLayout>(R.id.boton_like).setOnClickListener {
+                publicacion?._id?.let { id ->
+                    likeClickListener.OnLikeClicked(adapterPosition,id)
                 }
             }
         }
     }
 
+
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_publication, parent, false)
-        return ViewHolder(view, commentClickListener)
+        return ViewHolder(view, commentClickListener, likeClickListener)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val publicacion = publicaciones[position]
         holder.bind(publicacion)
+
     }
+
 
     override fun getItemCount() = publicaciones.size
 }

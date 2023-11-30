@@ -5,16 +5,69 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:id="@+id/frag_perfil"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="8dp"
+        android:layout_marginTop="20dp"
+        android:paddingBottom="15dp">
+
+        <LinearLayout
+            android:id="@+id/llTitulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="10dp">
+
+            <TextView
+                android:id="@+id/titulo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:fontFamily="@font/roboto_slab"
+                android:text="Bienvenido"
+                android:textColor="@color/textIcons"
+                android:textSize="25sp"
+                android:layout_weight="0.1"
+                />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="8dp"
+                android:id="@+id/btn_logout"
+                >
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingVertical="2dp"
+                    android:paddingHorizontal="4dp"
+                    android:background="@color/nav_bar"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cerrar sesion"
+                        android:layout_marginHorizontal="4dp"
+                        android:textColor="@color/primaryLight"
+                        />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
 
         <TextView
             android:id="@+id/P_nombre"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
+            android:layout_below="@+id/llTitulo"
+            android:layout_marginTop="0dp"
             android:fontFamily="@font/roboto_slab"
             android:text="Ricardo Pérez Mendieta"
             android:textColor="@color/textIcons"
@@ -24,185 +77,243 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView13"
+            android:id="@+id/lblDatos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="36dp"
-            android:layout_marginTop="304dp"
-            android:text="Nivel educativo"
-            android:textColor="@color/textIcons"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_below="@+id/P_nombre"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="14dp"
+            android:paddingHorizontal="10dp"
+            android:text="Mis datos"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <View
+            android:id="@+id/separator"
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:layout_below="@+id/lblDatos"
+            android:layout_marginTop="5dp"
+            android:layout_marginHorizontal="20dp"
+            android:background="@color/primary" />
+
+        <LinearLayout
+            android:id="@+id/llcorreo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/separator"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/llTitulo"
+                android:text="Email"
+                android:textColor="@color/textIcons"
+                android:layout_marginHorizontal="10dp"
+                />
+
+            <TextView
+                android:id="@+id/P_correo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="rperez@gmail.com"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llocupacion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/llcorreo"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/llTitulo"
+                android:text="Ocupación"
+                android:textColor="@color/textIcons"
+                android:layout_marginHorizontal="10dp"
+                />
+
+            <TextView
+                android:id="@+id/P_ocupacion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Estudiante" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llempresa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/llocupacion"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="Empresa"
+                android:textColor="@color/textIcons"
+                android:layout_marginHorizontal="10dp"
+                />
+
+            <TextView
+                android:id="@+id/P_nivel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tec"
+                />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/lledad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/llempresa"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:id="@+id/P_agetag"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="Edad"
+                android:textColor="@color/textIcons"
+                android:textSize="15sp"
+                android:layout_marginHorizontal="10dp"
+                />
+            <TextView
+                android:id="@+id/P_edad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="24"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llsexo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lledad"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:id="@+id/P_sextag"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="Sexo"
+                android:textColor="@color/textIcons"
+                android:layout_marginHorizontal="10dp"
+                />
+
+            <TextView
+                android:id="@+id/P_sexo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hombre"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llcp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/llsexo"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="Código postal"
+                android:textColor="@color/textIcons"
+                android:layout_marginHorizontal="10dp"
+                />
+
+            <TextView
+                android:id="@+id/P_Cp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00000"
+                />
+
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/textView11"
+            android:id="@+id/lblCursos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="36dp"
-            android:layout_marginTop="248dp"
-            android:text="Ocupación"
-            android:textColor="@color/textIcons"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_below="@+id/llcp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="14dp"
+            android:paddingHorizontal="10dp"
+            android:text="Mis cursos"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/P_sexo"
+        <View
+            android:id="@+id/separator2"
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:layout_below="@+id/lblCursos"
+            android:layout_marginTop="5dp"
+            android:layout_marginHorizontal="20dp"
+            android:background="@color/primary" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="84dp"
-            android:layout_marginEnd="52dp"
-            android:text="Hombre"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:indeterminate="true"
+            android:visibility="gone"
+            android:indeterminateTint="@color/red"/>
 
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="36dp"
-            android:layout_marginTop="136dp"
-            android:text="Correo"
-            android:textColor="@color/textIcons"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/cursos_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/separator2" />
 
-        <TextView
-            android:id="@+id/P_ocupacion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="160dp"
-            android:layout_marginTop="248dp"
-            android:text="Estudiante"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/P_agetag"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="36dp"
-            android:layout_marginTop="84dp"
-            android:text="Edad"
-            android:textColor="@color/textIcons"
-            android:textSize="15sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/P_nivel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="176dp"
-            android:layout_marginTop="304dp"
-            android:text="Posgrado"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/textView15"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="36dp"
-            android:layout_marginTop="348dp"
-            android:text="Código postal"
-            android:textColor="@color/textIcons"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/P_sextag"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="84dp"
-            android:layout_marginEnd="140dp"
-            android:text="Sexo"
-            android:textColor="@color/textIcons"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/P_Cp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="176dp"
-            android:layout_marginTop="348dp"
-            android:text="76090"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/textView10"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="152dp"
-            android:layout_marginTop="196dp"
-            android:text="********"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/P_edad"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="108dp"
-            android:layout_marginTop="84dp"
-            android:text="24"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/textView9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="36dp"
-            android:layout_marginTop="196dp"
-            android:text="Contraseña"
-            android:textColor="@color/textIcons"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/P_correo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="124dp"
-            android:layout_marginTop="136dp"
-            android:text="rperez@gmail.com"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/btn_edit_profile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="396dp"
-            android:backgroundTint="@color/teal_200"
-            android:text="Editar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageButton
-            android:id="@+id/mis_cursos_boton"
-            android:layout_width="303dp"
-            android:layout_height="117dp"
-            android:layout_marginTop="480dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/image_4" />
-
-        <Button
-            android:id="@+id/btn_logout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="632dp"
-            android:backgroundTint="#3F51B5"
-            android:text="Cerrar sesión"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
 </ScrollView>

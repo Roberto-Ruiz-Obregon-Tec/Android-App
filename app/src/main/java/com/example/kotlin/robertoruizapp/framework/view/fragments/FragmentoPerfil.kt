@@ -10,16 +10,25 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kotlin.robertoruizapp.R
+import com.example.kotlin.robertoruizapp.data.MyCoursesRepository
 import com.example.kotlin.robertoruizapp.data.network.model.ApiService
+import com.example.kotlin.robertoruizapp.data.network.model.MyCourses.Document
+import com.example.kotlin.robertoruizapp.data.network.model.MyCourses.course
 import com.example.kotlin.robertoruizapp.data.network.model.NetworkModuleDI
 import com.example.kotlin.robertoruizapp.databinding.FragmentoPerfilBinding
+import com.example.kotlin.robertoruizapp.framework.adapters.MyCoursesAdapter
 import com.example.kotlin.robertoruizapp.framework.view.activities.EditProfileActivity
 import com.example.kotlin.robertoruizapp.framework.view.activities.LoginActivity
 import com.example.kotlin.robertoruizapp.framework.viewmodel.PerfilViewModel
 import com.example.kotlin.robertoruizapp.utils.PreferenceHelper
 import com.example.kotlin.robertoruizapp.utils.PreferenceHelper.get
 import com.example.kotlin.robertoruizapp.utils.PreferenceHelper.set
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -35,6 +44,7 @@ class FragmentoPerfil: Fragment() {
     private var _binding : FragmentoPerfilBinding? = null
     private val binding get() = _binding!!
     private lateinit var viewModel: PerfilViewModel
+    private var fullCoursesList: List<course> = listOf()
     private val preferences by lazy {
         PreferenceHelper.defaultPrefs(this@FragmentoPerfil.requireActivity())
     }
@@ -67,17 +77,7 @@ class FragmentoPerfil: Fragment() {
             performLogout()
         }
 
-        val btnEditProfile = binding.btnEditProfile
-
-        btnEditProfile.setOnClickListener {
-            editMyProfile()
-        }
-
-        val imageButton = binding.misCursosBoton
-
-        imageButton.setOnClickListener {
-            goToNewFragment()
-        }
+        getCourse()
 
         return root
     }
@@ -89,13 +89,14 @@ class FragmentoPerfil: Fragment() {
     private fun initUI() {
         viewModel.getMyInfo()
         viewModel.userLiveData.observe(viewLifecycleOwner) { user ->
+
             if (user != null) {
-                binding.PNombre.text = user.data.document.name.toString()
+                binding.PNombre.text = user.data.document.firstName + " " + user.data.document.lastName
                 binding.PEdad.text = user.data.document.age.toString()
                 binding.PSexo.text = user.data.document.gender
                 binding.PCorreo.text = user.data.document.email
-                binding.PNivel.text = user.data.document.educationLevel
-                binding.POcupacion.text = user.data.document.job
+                binding.PNivel.text = user.data.document.company
+                binding.POcupacion.text = user.data.document.occupation
                 binding.PCp.text = user.data.document.postalCode.toString()
             }
         }
@@ -132,6 +133,54 @@ class FragmentoPerfil: Fragment() {
             }
 
         })
+    }
+
+    /**
+     * Method to get the list of courses and display it in the UI.
+     */
+    private fun getCourse() {
+        showProgressBar()
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val courseRepository = MyCoursesRepository()
+                val result: Document? = courseRepository.getMyCourses(LoginActivity.token)
+
+                if (result != null) {
+                    fullCoursesList = result.data
+
+                    withContext(Dispatchers.Main) {
+                        val adapter = MyCoursesAdapter(fullCoursesList)
+                        binding.cursosList.adapter = adapter
+                        binding.cursosList.layoutManager = LinearLayoutManager(context)
+                    }
+                }
+
+            } catch (e: Exception) {
+                e.printStackTrace() // Log the exception
+            } finally {
+                withContext(Dispatchers.Main) {
+                    hideProgressBar()
+                }
+            }
+        }
+    }
+
+    /**
+     * Displays the progress bar and hides the course list.
+     */
+    private fun showProgressBar() {
+        binding.progressBar.visibility = View.VISIBLE
+        binding.cursosList.visibility = View.INVISIBLE
+    }
+
+    /**
+     * Hides the progress bar and displays the course list.
+     */
+    private fun hideProgressBar() {
+        if (isAdded) {
+            binding.progressBar.visibility = View.GONE
+            binding.cursosList.visibility = View.VISIBLE
+        }
     }
 
     /**

@@ -1,9 +1,11 @@
 package com.example.kotlin.robertoruizapp.data
 
+import android.util.Log
 import com.example.kotlin.robertoruizapp.data.network.NetworkModuleDICourse
 import com.example.kotlin.robertoruizapp.data.network.model.Course.CourseObject
 import com.example.kotlin.robertoruizapp.data.network.model.Course.Document
 import com.example.kotlin.robertoruizapp.data.network.model.CourseApiService
+import com.example.kotlin.robertoruizapp.data.network.model.Inscripcion.inscriptionRequest
 import com.example.kotlin.robertoruizapp.framework.view.activities.LoginActivity
 import retrofit2.http.GET
 
@@ -36,9 +38,20 @@ class CourseRepository {
         val response = api.getCourseById(cursoId, "Bearer $token")
         // Verify that the response is successful and that the 'data' list contains at least one element
         return if (response.status == "success" && response.data.isNotEmpty()) {
-            response.data.first()  // Returns the first Document in the list
+            response.data.first()  // Returns the first UserDocument in the list
         } else {
             null
+        }
+    }
+
+    suspend fun postInscription(courseId: String, voucher: String, token: String): String? {
+        val body = inscriptionRequest(courseId = courseId, voucher = voucher )
+        val response = api.postInscription( "Bearer $token", body)
+        // Verify that the response is successful and that the 'data' list contains at least one element
+        return if (response.isSuccessful ) {
+            "Se ha enviado la informacion"
+        } else {
+            "Error: Ya cuenta con una inscripcion a este curso"
         }
     }
 

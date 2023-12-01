@@ -2,7 +2,7 @@ package com.example.kotlin.robertoruizapp.data.network.model.certificaciones
 
 /*
     * Created by Dante Perez 2/11/2023
-    * A Document data class representing a certification object.
+    * A UserDocument data class representing a certification object.
     *
     * Parameters:
     * _id: A String representing the id of the document.
@@ -11,7 +11,7 @@ package com.example.kotlin.robertoruizapp.data.network.model.certificaciones
     * adquisitionDate: A String representing the adquisition date of the document.
     *
     * Methods:
-    * Override toString(): Returns a String representation of the Document object.
+    * Override toString(): Returns a String representation of the UserDocument object.
     *
  */
 class Document(
@@ -22,6 +22,6 @@ class Document(
 )
 {
     override fun toString(): String {
-        return "Document(_id='$_id', name='$name', description='$description', adquisitionDate='$adquisitionDate')"
+        return "UserDocument(_id='$_id', name='$name', description='$description', adquisitionDate='$adquisitionDate')"
     }
 }

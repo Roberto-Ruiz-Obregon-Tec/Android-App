@@ -69,7 +69,7 @@ class FragmentoCertificaciones : Fragment() {
         * @see CertificacionesAdapter
         * @see CertificacionesObjeto
         * @see CertificacionesRepository
-        * @see Document
+        * @see UserDocument
         *
         *
      */
@@ -87,7 +87,7 @@ class FragmentoCertificaciones : Fragment() {
         * @return a CertificacionesObjeto object containing the certification data.
         * @see CertificacionesObjeto
         * @see CertificacionesRepository
-        * @see Document
+        * @see UserDocument
      */
     @RequiresApi(Build.VERSION_CODES.N)
     private fun getCertifications() {

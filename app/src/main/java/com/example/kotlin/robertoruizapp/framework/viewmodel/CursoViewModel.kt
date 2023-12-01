@@ -63,7 +63,7 @@ class CursoViewModel(private val userRepository: UserRepository, private val cou
 
     fun postInscription(courseId: String) = liveData(Dispatchers.IO) {
         try {
-            val inscriptionResponse = courseRepository.postInscription(courseId, LoginActivity.token)
+            val inscriptionResponse = courseRepository.postInscription(courseId,"" ,LoginActivity.token)
             Log.d("prueba", "token ${LoginActivity.token}")
             if (inscriptionResponse != null) {
                 emit(Result.success(inscriptionResponse))

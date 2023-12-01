@@ -115,8 +115,9 @@ class FragmentoInscripcionDePago : Fragment() {
 
     private fun setupEnrollButton() {
         binding.btnEnroll.setOnClickListener {
+            val curso = arguments?.getString("CURSO_ID")
             val bundle = Bundle().apply {
-                putString("cursoId", cursoId)
+                putString("cursoId", curso)
                 putDouble("costoCurso", costoCurso)
                 putString("userId", userId)
             }

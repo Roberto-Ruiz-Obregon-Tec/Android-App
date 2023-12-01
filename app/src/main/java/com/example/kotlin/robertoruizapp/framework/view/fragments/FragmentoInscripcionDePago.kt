@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.example.kotlin.robertoruizapp.R
 import com.example.kotlin.robertoruizapp.data.CourseRepository
 import com.example.kotlin.robertoruizapp.data.UserRepository
+import com.example.kotlin.robertoruizapp.data.network.model.Course.Document
 import com.example.kotlin.robertoruizapp.databinding.FragmentoInscripcionDePagoBinding
 import com.example.kotlin.robertoruizapp.framework.view.activities.LoginActivity
 import com.example.kotlin.robertoruizapp.framework.viewmodel.ViewModelFactory
@@ -23,12 +24,14 @@ import java.util.Locale
 class FragmentoInscripcionDePago : Fragment() {
     private var _binding: FragmentoInscripcionDePagoBinding? = null
     private val binding get() = _binding!!
+    private var currentCourse: Document? = null
+    private var costoCurso: Double = 0.0
+    private var userId: String = ""
 
     private val cursoViewModel: CursoViewModel by viewModels {
         ViewModelFactory(UserRepository(), CourseRepository())
     }
 
-    // Suponiendo que tienes un argumento de tipo UserDocument para el curso
     private val cursoId: String by lazy {
         arguments?.getString("cursoId") ?: ""
     }
@@ -100,12 +103,38 @@ class FragmentoInscripcionDePago : Fragment() {
                     binding.ubicacionCurso.text = "${curso.modality} (Se accederá por medio de un link a la clase)"
                 }
                 binding.costoCurso.text = if(curso.cost == 0.0) "Gratuito" else "$${curso.cost} MXN"
+                costoCurso = curso.cost
 
                 binding.backContainer.setOnClickListener {
                     parentFragmentManager.popBackStack()
                 }
             }
         }
+        setupEnrollButton()
+    }
+
+    private fun setupEnrollButton() {
+        binding.btnEnroll.setOnClickListener {
+            val bundle = Bundle().apply {
+                putString("cursoId", cursoId)
+                putDouble("costoCurso", costoCurso)
+                putString("userId", userId)
+            }
+            navigateToDetallesDePago(bundle)
+        }
+    }
+
+    private fun navigateToDetallesDePago(bundle: Bundle) {
+        val detallesPagoFragment = FragmentoDetalleDePago().apply {
+            arguments = bundle.apply {
+                // Suponiendo que tienes el costo del curso en una variable "costoCurso"
+                putDouble("costoCurso", costoCurso)
+            }
+        }
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.nav_host_fragment_content_main, detallesPagoFragment)
+            .addToBackStack(null)
+            .commit()
     }
 
     /**

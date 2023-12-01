@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kotlin.robertoruizapp.R
+import com.example.kotlin.robertoruizapp.data.network.model.Course.Document
 import com.example.kotlin.robertoruizapp.databinding.FragmentoDetalleDePagoBinding
 import com.example.kotlin.robertoruizapp.domain.BankListRequirement
 import com.example.kotlin.robertoruizapp.framework.adapters.BankAdapter
@@ -16,6 +17,7 @@ class FragmentoDetalleDePago : Fragment(R.layout.fragmento_detalle_de_pago) {
 
     private var _binding: FragmentoDetalleDePagoBinding? = null
     private val binding get() = _binding!!
+    val cursoId = arguments?.getString("cursoId")
 
     private val viewModel: BankViewModel by viewModels {
         BankViewModelFactory(BankListRequirement())
@@ -27,6 +29,15 @@ class FragmentoDetalleDePago : Fragment(R.layout.fragmento_detalle_de_pago) {
 
         setupRecyclerView()
         observeBanks()
+
+        val costoCurso = arguments?.getDouble("costoCurso", 0.0) ?: 0.0
+        val userId = arguments?.getString("userId") ?: ""
+
+        binding.montoPago.text = "$${costoCurso} MXN"
+
+        binding.backContainer.setOnClickListener {
+            parentFragmentManager.popBackStack()
+        }
     }
 
     private fun setupRecyclerView() {

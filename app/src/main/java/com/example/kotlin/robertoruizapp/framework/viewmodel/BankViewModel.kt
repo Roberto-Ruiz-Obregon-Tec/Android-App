@@ -18,7 +18,7 @@ class BankViewModel(private val bankListRequirement: BankListRequirement) : View
         viewModelScope.launch {
             val token = "tu_token" // Debes obtener tu token de alguna manera segura.
             bankListRequirement.invoke(token)?.let { bankObject ->
-                _bankList.postValue(bankObject.data.banks)
+                //_bankList.postValue(bankObject.data.banks)
                 Log.d("prueba", "zi: ${bankObject}")
             }
         }

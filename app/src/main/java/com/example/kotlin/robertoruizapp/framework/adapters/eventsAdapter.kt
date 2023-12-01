@@ -28,7 +28,7 @@ class EventsAdapter(
         val eventDescription: TextView = view.findViewById(R.id.description)
         val eventDate: TextView = view.findViewById(R.id.date)
         val eventLocation: TextView = view.findViewById(R.id.location)
-        val btnVerMas: Button = view.findViewById(R.id.btnVerMas)
+        //val btnVerMas: Button = view.findViewById(R.id.btnVerMas)
         val imagenevento: ImageView = view.findViewById(R.id.imgCertificacion)
 
     }
@@ -46,11 +46,11 @@ class EventsAdapter(
 
         holder.eventDate.text = formatEventDate(event?.startDate)
 
-        holder.btnVerMas.setOnClickListener {
-            event?._id?.let { id ->
-                itemClickListener.onEventClick(id)
-            }
-        }
+//        holder.btnVerMas.setOnClickListener {
+//            event?._id?.let { id ->
+//                itemClickListener.onEventClick(id)
+//            }
+//        }
         if (event?.imageUrl?.isNotEmpty() == true) {
             Glide.with(holder.itemView.context)
                 .load(event.imageUrl)

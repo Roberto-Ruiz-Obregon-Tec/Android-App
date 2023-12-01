@@ -103,14 +103,14 @@
         </LinearLayout>
 
 
-            <Button
-                android:id="@+id/btnVerMas"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:backgroundTint="#CF2A2A"
-                android:textColor="#FFFFFF"
-                android:text="Ver más"
-                android:textSize="15sp" />
+<!--            <Button-->
+<!--                android:id="@+id/btnVerMas"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="15dp"-->
+<!--                android:backgroundTint="#CF2A2A"-->
+<!--                android:textColor="#FFFFFF"-->
+<!--                android:text="Ver más"-->
+<!--                android:textSize="15sp" />-->
         </LinearLayout>
     </androidx.cardview.widget.CardView>

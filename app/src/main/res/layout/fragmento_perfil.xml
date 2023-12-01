@@ -235,7 +235,7 @@
                 android:id="@+id/P_sextag"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:text="Sexo"
+                android:text="Género"
                 android:textColor="@color/textIcons"
                 android:layout_marginHorizontal="10dp"
                 />

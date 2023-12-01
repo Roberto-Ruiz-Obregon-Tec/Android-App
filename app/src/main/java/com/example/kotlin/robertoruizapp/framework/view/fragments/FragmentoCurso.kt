@@ -107,6 +107,11 @@ class FragmentoCurso : Fragment() {
         })
         setupSearchView()
 
+        val botonComentarLinearLayout: LinearLayout = view.findViewById(R.id.boton_comentar)
+        botonComentarLinearLayout.setOnClickListener {
+            onComentarioClickListener.onComentarioClicked()
+        }
+
         viewModel.filtroActual.observe(viewLifecycleOwner) { filtro ->
             if (filtro.isNotEmpty()) {
                 filterCourses(filtro)

@@ -33,8 +33,10 @@ class FragmentoInscripcionDePago : Fragment() {
     }
 
     private val cursoId: String by lazy {
-        arguments?.getString("cursoId") ?: ""
+        arguments?.getString("CURSO_ID") ?: ""
+
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,6 +52,7 @@ class FragmentoInscripcionDePago : Fragment() {
         // Obtener el userId de SharedPreferences
         val preferences = PreferenceHelper.defaultPrefs(requireContext())
         val userId = preferences.getString("userId", "") ?: ""
+        Log.d("Id del curso en pago", "${cursoId}")
         Log.d("FragmentoInscripcion", "UserId obtenido: $userId")
         if (userId.isNotEmpty()) {
             // Utilizar el userId para obtener la información del usuario

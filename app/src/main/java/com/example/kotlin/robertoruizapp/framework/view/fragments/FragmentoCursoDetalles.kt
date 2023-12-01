@@ -234,6 +234,7 @@ class FragmentoCursoDetalles: Fragment() {
                 putString("CURSO_LOCATION", course.location)
                 putDouble("CURSO_COST", course.cost)
             }
+            Log.d("ID del curso", "${course._id}")
         }
         parentFragmentManager.beginTransaction()
             .replace(R.id.nav_host_fragment_content_main, inscripcionPagoFragment)

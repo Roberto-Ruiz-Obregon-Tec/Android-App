@@ -3,7 +3,7 @@ package com.example.kotlin.robertoruizapp.data.network.model.Becas
 import java.util.Date
 
 /**
- * Document
+ * UserDocument
  *
  * @property id: id of the scholarship
  * @property name: name of the scholarship
@@ -16,7 +16,7 @@ import java.util.Date
  * @property phone: phone where you can contact the scholarship organization
  * @property startDate: date of the start of the scholarship
  * @property endDate: date of the end of the scholarship
- * @constructor Create empty Document
+ * @constructor Create empty UserDocument
  */
 class Document (
     val id: String,

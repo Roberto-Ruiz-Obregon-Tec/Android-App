@@ -12,6 +12,7 @@ import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.kotlin.robertoruizapp.R
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.kotlin.robertoruizapp.data.CourseRepository
@@ -31,8 +32,8 @@ import java.util.Locale
  */
 class FragmentoCursoDetalles: Fragment() {
     private var _binding: FragmentoCursoDetallesBinding? = null
-
     private val binding get() = _binding!!
+    private var currentCourse: Document? = null
 
     /**
      * Creates the view of the Fragment.
@@ -60,16 +61,9 @@ class FragmentoCursoDetalles: Fragment() {
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        // Get the course ID from the arguments
         val cursoId = arguments?.getString("CURSO_ID") ?: return
-        Log.d("CursoDetalles", "ID del curso recibido: $cursoId")
-
-        // Get course information for the given ID
         getInfoCourse(cursoId)
-
         binding.backContainer.setOnClickListener {
-            // Return to the previous fragment
             parentFragmentManager.popBackStack()
         }
     }
@@ -86,24 +80,20 @@ class FragmentoCursoDetalles: Fragment() {
             try {
                 val courseRepository = CourseRepository()
                 val result: Document? = courseRepository.getCourseById(cursoId, LoginActivity.token)
-                Log.d("CursoDetalles", "Detalles del curso obtenidos: ${result?.name}")
                 withContext(Dispatchers.Main) {
-                    if (result != null) {
-                        updateUIWithCourseDetails(result)
-                    } else {
-                        showError("No se encontraron detalles del curso.")
-                    }
+                    result?.let {
+                        currentCourse = it // Asigna el curso a la variable de instancia.
+                        updateUIWithCourseDetails(it)
+                        setupEnrollButton() // Configura el botón después de obtener el curso.
+                    } ?: showError("No se encontraron detalles del curso.")
                     hideProgressBar()
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
-                    //showError("Error al obtener los detalles del curso: ${e.message}")
+                    showError("Error al obtener los detalles del curso: ${e.message}")
                     hideProgressBar()
                 }
-                e.printStackTrace() // Log the exception
-            } finally {
-                withContext(Dispatchers.Main) {
-                }
+                e.printStackTrace()
             }
         }
     }
@@ -220,12 +210,62 @@ class FragmentoCursoDetalles: Fragment() {
 
     }
 
+    private fun setupEnrollButton() {
+        binding.btnEnroll.setOnClickListener {
+            currentCourse?.let { course ->
+                if (course.cost > 0) {
+                    navigateToInscripcionDePago(course)
+                } else {
+                    navigateToInscripcionGratuita(course)
+                }
+            }
+        }
+    }
+
+    private fun navigateToInscripcionDePago(course: Document) {
+        val inscripcionPagoFragment = FragmentoInscripcionDePago().apply {
+            arguments = Bundle().apply {
+                putString("CURSO_ID", course._id)
+                putString("CURSO_NAME", course.name)
+                putString("CURSO_IMAGE", course.courseImage)
+                putString("CURSO_START_DATE", course.startDate)
+                putString("CURSO_END_DATE", course.endDate)
+                putString("CURSO_SCHEDULE", course.schedule)
+                putString("CURSO_LOCATION", course.location)
+                putDouble("CURSO_COST", course.cost)
+            }
+            Log.d("ID del curso", "${course._id}")
+        }
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.nav_host_fragment_content_main, inscripcionPagoFragment)
+            .addToBackStack(null) // Permite volver al fragmento anterior
+            .commit()
+    }
+
+    private fun navigateToInscripcionGratuita(course: Document)  {
+        val inscripcionGratuitaFragment = FragmentoInscripcionGratuita().apply {
+            arguments = Bundle().apply {
+                putString("cursoId", course._id)
+                putString("CURSO_NAME", course.name)
+                putString("CURSO_IMAGE", course.courseImage)
+                putString("CURSO_START_DATE", course.startDate)
+                putString("CURSO_END_DATE", course.endDate)
+                putString("CURSO_SCHEDULE", course.schedule)
+                putString("CURSO_LOCATION", course.location)
+                putDouble("CURSO_COST", course.cost)
+            }
+        }
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.nav_host_fragment_content_main, inscripcionGratuitaFragment)
+            .addToBackStack(null) // Permite volver al fragmento anterior
+            .commit()
+    }
+
     /**
      * Displays the progress bar.
      */
     private fun showProgressBar() {
         binding.progressBar.visibility = View.VISIBLE
-        // Puede querer ocultar también otros elementos de la interfaz de usuario
     }
 
     /**

@@ -11,7 +11,7 @@ import com.example.kotlin.robertoruizapp.data.network.model.certificaciones.Docu
 
 /*
     * A class that represents a certification adapter.
-    * @param certificaciones: A List<Document> object.
+    * @param certificaciones: A List<UserDocument> object.
     * @return None.
     * @see ViewHolder
     *

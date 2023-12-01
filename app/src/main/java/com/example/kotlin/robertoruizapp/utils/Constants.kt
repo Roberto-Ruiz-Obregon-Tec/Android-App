@@ -3,7 +3,9 @@ package com.example.kotlin.robertoruizapp.utils
 object Constants {
 
 
-    const val BASE_URL_PROYECTO = "https://us-central1-roberto-ruiz-obregon.cloudfunctions.net/test/v1/"
+    const val BASE_URL_PROYECTO = "https://us-central1-roberto-ruiz-obregon.cloudfunctions.net/test/v1/" +
+            "" +
+            ""
 
 
 

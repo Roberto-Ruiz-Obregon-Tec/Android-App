@@ -120,7 +120,7 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_marginTop="30dp"
-        android:hint="Ingrese el número de su voucher"
+        android:hint="Ingrese el número de referencia"
         android:textSize="15dp"
         app:layout_constraintTop_toBottomOf="@+id/anuncio_texto"
         tools:layout_editor_absoluteX="46dp" />

@@ -20,6 +20,8 @@ class FragmentoDetalleDePago : Fragment() {
     private var _binding: FragmentoDetalleDePagoBinding? = null
     private val binding get() = _binding!!
     val cursoId = arguments?.getString("cursoId")
+    private var costoCurso: Double = 0.0
+    private var userId: String = ""
 
     private lateinit var viewModelBank: BankViewModel
     private lateinit var recyclerView: RecyclerView
@@ -39,16 +41,40 @@ class FragmentoDetalleDePago : Fragment() {
         initializeComponents(root )
 
         viewModelBank.getListBanks()
-        val costoCurso = arguments?.getDouble("costoCurso", 0.0) ?: 0.0
-        val userId = arguments?.getString("userId") ?: ""
+        costoCurso = arguments?.getDouble("costoCurso", 0.0) ?: 0.0
+        userId = arguments?.getString("userId") ?: ""
 
         binding.montoPago.text = "$${costoCurso} MXN"
+
 
         binding.backContainer.setOnClickListener {
             parentFragmentManager.popBackStack()
         }
-
+        setupEnrollButton()
         return root
+    }
+
+    private fun setupEnrollButton() {
+        binding.btnEnroll.setOnClickListener {
+            val bundle = Bundle().apply {
+                putString("cursoId", cursoId)
+                putDouble("costoCurso", costoCurso)
+                putString("userId", userId)
+            }
+            navigateToPagosPorFicha(bundle)
+        }
+    }
+
+    private fun navigateToPagosPorFicha(bundle: Bundle) {
+        val pagosPorFichaFragment = FragmentoPagosPorFicha().apply {
+            arguments = bundle.apply {
+                putDouble("costoCurso", costoCurso)
+            }
+        }
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.nav_host_fragment_content_main, pagosPorFichaFragment)
+            .addToBackStack(null)
+            .commit()
     }
 
     private fun observeBanks() {

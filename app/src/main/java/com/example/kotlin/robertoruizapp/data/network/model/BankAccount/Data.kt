@@ -1,5 +1,5 @@
 package com.example.kotlin.robertoruizapp.data.network.model.BankAccount
 
 data class Data (
-    val banks: ArrayList<BankDocument>,
+    val accounts: List<BankDocument>,
 )

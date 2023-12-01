@@ -19,6 +19,9 @@ class FragmentoInicio : Fragment() {
     private var _binding: FragmentoInicioBinding? = null
     private val binding get() = _binding!!
 
+    private var lastButtonClickTime: Long = 0
+    private val buttonClickInterval: Long = 1000
+
     /**
      * Called when the fragment's view is created. Inflates the layout for the home screen
      * and returns the root view.
@@ -49,24 +52,31 @@ class FragmentoInicio : Fragment() {
         navigateToFragment(FragmentoCurso())
 
         binding.button1.setOnClickListener {
-            selectButton(binding.button1)
-            navigateToFragment(FragmentoCurso())
+            if (isClickable()){
+                selectButton(binding.button1)
+                navigateToFragment(FragmentoCurso())
+            }
         }
 
         binding.button2.setOnClickListener {
-
-            selectButton(binding.button2)
-            navigateToFragment(FragmentoProgramas())
+            if (isClickable()) {
+                selectButton(binding.button2)
+                navigateToFragment(FragmentoProgramas())
+            }
         }
 
         binding.button3.setOnClickListener {
-            selectButton(binding.button3)
-            navigateToFragment(FragmentoCertificaciones())
+            if (isClickable()) {
+                selectButton(binding.button3)
+                navigateToFragment(FragmentoCertificaciones())
+            }
         }
 
         binding.button4.setOnClickListener {
-            selectButton(binding.button4)
-            navigateToFragment(FragmentoBecas())
+            if (isClickable()) {
+                selectButton(binding.button4)
+                navigateToFragment(FragmentoBecas())
+            }
         }
     }
 
@@ -96,6 +106,16 @@ class FragmentoInicio : Fragment() {
 
         // Select the specified button
         selectedButton.isSelected = true
+    }
+
+    private fun isClickable(): Boolean {
+        val currentTime = System.currentTimeMillis()
+
+        if (currentTime - lastButtonClickTime >= buttonClickInterval) {
+            lastButtonClickTime = currentTime
+            return true
+        }
+        return false
     }
 
     override fun onDestroyView() {

@@ -2,7 +2,9 @@ package com.example.kotlin.robertoruizapp.data.network.model
 
 import com.example.kotlin.robertoruizapp.data.network.model.Course.CourseObject
 import com.example.kotlin.robertoruizapp.data.network.model.publication.CommentRequest
+import com.example.kotlin.robertoruizapp.data.network.model.publication.LikeRequest
 import com.example.kotlin.robertoruizapp.data.network.model.publication.PublicObjeto
+import com.example.kotlin.robertoruizapp.data.network.model.publication.PublicationPostLike
 import com.example.kotlin.robertoruizapp.data.network.model.publication.PublicationPostResponse
 import retrofit2.Response
 import retrofit2.http.Body
@@ -32,5 +34,8 @@ interface PublicationApiService {
     @POST("publication/comment/create")
     suspend fun creatPublicationComment(@Header("Authorization") authToken: String, @Body commentRequest: CommentRequest
     ): Response<PublicationPostResponse>
+
+    @POST("publication/like")
+    suspend fun likePublication(@Header("Authorization") authToken: String, @Body likeRequest: LikeRequest): Response<PublicationPostResponse>
 
 }

@@ -8,5 +8,5 @@ data class Document (
     val startDate: String,
     val endDate: String,
     val imageUrl: String,
-    val topics: List<Any>
+
 )

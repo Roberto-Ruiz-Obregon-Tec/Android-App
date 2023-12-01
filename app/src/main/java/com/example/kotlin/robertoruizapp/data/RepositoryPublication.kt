@@ -4,7 +4,9 @@ import com.example.kotlin.robertoruizapp.data.network.NetworkModuleDIPublication
 import com.example.kotlin.robertoruizapp.data.network.model.publication.Document
 import com.example.kotlin.robertoruizapp.data.network.model.PublicationApiService
 import com.example.kotlin.robertoruizapp.data.network.model.publication.CommentRequest
+import com.example.kotlin.robertoruizapp.data.network.model.publication.LikeRequest
 import com.example.kotlin.robertoruizapp.data.network.model.publication.PublicObjeto
+import com.example.kotlin.robertoruizapp.data.network.model.publication.PublicationPostLike
 import com.example.kotlin.robertoruizapp.data.network.model.publication.PublicationPostResponse
 import com.example.kotlin.robertoruizapp.framework.view.activities.LoginActivity
 
@@ -37,6 +39,18 @@ class RepositoryPublication {
     suspend fun createPublicationComment(token: String, commentRequest: CommentRequest): PublicationPostResponse? {
         return try {
             val response = api.creatPublicationComment("Bearer $token", commentRequest)
+            if (response.isSuccessful) {
+                response.body()
+            } else {
+                null
+            }
+        } catch (e: Exception) {
+            null
+        }
+    }
+    suspend fun likePublication(token: String, likeRequest: LikeRequest): PublicationPostResponse? {
+        return try {
+            val response = api.likePublication("Bearer $token", likeRequest)
             if (response.isSuccessful) {
                 response.body()
             } else {

@@ -20,6 +20,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import com.example.kotlin.robertoruizapp.framework.view.activities.LoginActivity
+import com.example.kotlin.robertoruizapp.framework.viewmodel.CertificacionesAdapter
 import java.util.*
 
 /*
@@ -50,17 +51,11 @@ import java.util.*
  */
 
 class FragmentoCertificaciones : Fragment() {
-
-
     private var _binding: ActivityCertificacionesBinding? = null
     private val binding get() = _binding!!
 
     // Crear la vista del fragmento inflando el layout correspondiente y preparando el binding
-    @RequiresApi(Build.VERSION_CODES.N)
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = ActivityCertificacionesBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -81,55 +76,10 @@ class FragmentoCertificaciones : Fragment() {
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        getCertificaciones()
+        showProgressBar()
+        getCertifications()
     }
 
-    /*
-    * A class that represents a certification adapter.
-    * @param certificaciones: A List<Document> object.
-    * @return None.
-    * @see ViewHolder
-    *
-    * Methods:
-    * onCreateViewHolder(): A function that is called when the view holder is created each time the recycler view is created.
-    * @param parent: A ViewGroup object.
-    * @param viewType: An Int object.
-    * @return a ViewHolder object.
-    *
-    * onBindViewHolder(): A function that is called when the view holder is bound to the recycler view.
-    * @param holder: A ViewHolder object.
-    * @param position: An Int object.
-    * @return None.
-    *
-    * getItemCount(): A function that returns the number of items in the recycler view.
-    * @param None.
-    * @return an Int object.
-     */
-
-    class CertificacionesAdapter(private val certificaciones: List<Document?>) :
-        RecyclerView.Adapter<CertificacionesAdapter.ViewHolder>() {
-
-        class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-            val nombreCertificacion: TextView = view.findViewById(R.id.certificacion_list)
-            val descripcionCertificacion: TextView = view.findViewById(R.id.descripcionCertificacion)
-        }
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-            val certificacionView = LayoutInflater.from(parent.context)
-                .inflate(R.layout.certificacion_item, parent, false)
-            return ViewHolder(certificacionView)
-        }
-
-        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            val certificacion = certificaciones[position]
-            holder.nombreCertificacion.text = certificacion?.name
-            holder.descripcionCertificacion.text = certificacion?.description
-        }
-
-        override fun getItemCount(): Int {
-            return certificaciones.size
-        }
-    }
 
     /*
         * A suspend function that gets the certification data from the repository.
@@ -140,19 +90,44 @@ class FragmentoCertificaciones : Fragment() {
         * @see Document
      */
     @RequiresApi(Build.VERSION_CODES.N)
-    private fun getCertificaciones() {
+    private fun getCertifications() {
+        showProgressBar()
         CoroutineScope(Dispatchers.IO).launch {
-            val certificacionesRepository = CertificacionesRepository()
-            val result: CertificacionesObjeto? = certificacionesRepository.getCertificaciones(LoginActivity.token)
+            try{
+                val certificationRepository = CertificacionesRepository()
+                val result: CertificacionesObjeto? = certificationRepository.getCertificaciones(LoginActivity.token)
 
-            if (result != null) {
+                if (result != null) {
+                    withContext(Dispatchers.Main) {
+                        val adapter = CertificacionesAdapter(result.data)
+                        binding.certificacionesList.adapter = adapter
+                        binding.certificacionesList.layoutManager = LinearLayoutManager(context)
+                    }
+                }
+            } catch (e: Exception) {
+                e.printStackTrace() // Log the exception
+            } finally {
                 withContext(Dispatchers.Main) {
-                    val adapter = CertificacionesAdapter(result.data.documents)
-                    binding.certificacionesList.adapter = adapter
-                    binding.certificacionesList.layoutManager = LinearLayoutManager(context)
+                    hideProgressBar()
                 }
             }
         }
+    }
+
+    /**
+     * Displays the progress bar and hides the course list.
+     */
+    private fun showProgressBar() {
+        binding.progressBar.visibility = View.VISIBLE
+        binding.certificacionesList.visibility = View.INVISIBLE
+    }
+
+    /**
+     * Hides the progress bar and displays the course list.
+     */
+    private fun hideProgressBar() {
+        binding.progressBar.visibility = View.GONE
+        binding.certificacionesList.visibility = View.VISIBLE
     }
 
     /*

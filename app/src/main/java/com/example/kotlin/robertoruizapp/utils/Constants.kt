@@ -16,7 +16,12 @@ object Constants {
     const val MENU_CERTIFICACIONES = "CERTIFICACIONES"
     const val MENU_PROGRAMAS = "PROGRAMAS"
     //No se para que se usan las siguientes constantes pero las dejo por si a caso
-    const val BASE_URL = "http://172.24.48.1:3001/v1/"
+
+
+    const val BASE_URL = "https://us-central1-roberto-ruiz-obregon.cloudfunctions.net/test/v1/"
+
+
+
     const val ID_PROGRAM = "ID_PROGRAM"
     const val ID_PERFIL = "641e2e746f6fd2c83702ca33"
 

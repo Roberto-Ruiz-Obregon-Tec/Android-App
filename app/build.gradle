@@ -14,8 +14,8 @@ android {
         applicationId "com.fundacionrobertoruiz.kotlin.robertoruizapp"
         minSdk 21
         targetSdk 33
-        versionCode 3
-        versionName "1.0.2"
+        versionCode 6
+        versionName "1.0.5"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -67,6 +67,8 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.12.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
     implementation 'jp.wasabeef:glide-transformations:4.3.0'
+    implementation 'com.github.bumptech.glide:glide:4.x'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.x'
 
     //Corrutinas
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1'
@@ -102,6 +104,7 @@ dependencies {
     //Navegation
     implementation "androidx.navigation:navigation-fragment-ktx:2.4.0"
     implementation "androidx.navigation:navigation-ui-ktx:2.4.0"
+
 
 
 }

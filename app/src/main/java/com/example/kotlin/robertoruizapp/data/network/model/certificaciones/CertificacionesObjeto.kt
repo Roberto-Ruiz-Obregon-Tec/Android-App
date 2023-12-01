@@ -1,5 +1,4 @@
 package com.example.kotlin.robertoruizapp.data.network.model.certificaciones
-import com.example.kotlin.robertoruizapp.data.network.model.certificaciones.Data
 
 
 /*
@@ -15,7 +14,7 @@ import com.example.kotlin.robertoruizapp.data.network.model.certificaciones.Data
     *  None.
  */
 data class CertificacionesObjeto(
-    val `data`: Data,
+    val `data`: List<Document>,
     val results: Int?,
     val status: String
 )

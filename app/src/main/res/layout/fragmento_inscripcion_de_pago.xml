@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/textView22"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Inscripción de Pago"
+        android:layout_marginTop="10dp"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.025" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/logo_robertoruiz"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.954"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/back_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:padding="8dp">
+
+        <ImageView
+            android:id="@+id/back_button"
+            android:layout_width="18dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/back_icon"
+            android:contentDescription="@string/back_button_description"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <TextView
+            android:id="@+id/back_button_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/back_button_description"
+            android:textColor="#CF2A2A"
+            app:layout_constraintBottom_toBottomOf="@id/back_button"
+            app:layout_constraintStart_toEndOf="@id/back_button"
+            app:layout_constraintTop_toTopOf="@id/back_button" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    <ImageView
+        android:id="@+id/iv_course_image"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        app:layout_constraintTop_toBottomOf="@id/imageView2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.25"/>
+
+    <TextView
+        android:id="@+id/inscripcion_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/iv_course_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/nombre_curso_info"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/inscripcion_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+    <TextView
+        android:id="@+id/fecha_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        android:textColor="#949494"
+        android:text="Fecha:"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nombre_curso_info" />
+
+    <TextView
+        android:id="@+id/fecha_curso_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"
+        android:layout_marginTop="4dp"
+        app:layout_constraintTop_toBottomOf="@id/fecha_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/details_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        app:layout_constraintTop_toBottomOf="@id/fecha_curso_info"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/nombre_usuario_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#949494"
+            android:textStyle="bold"
+            android:text="Nombre:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/nombre_usuario"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:layout_marginStart="6dp"
+            android:gravity="end"
+            app:layout_constraintStart_toEndOf="@id/nombre_usuario_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/nombre_usuario_title"
+            app:layout_constraintTop_toBottomOf="@id/nombre_usuario_title" />
+
+        <TextView
+            android:id="@+id/correo_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Correo:"
+            android:textColor="#949494"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/nombre_usuario" />
+
+        <TextView
+            android:id="@+id/correo_usuario"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:gravity="end"
+            android:layout_marginStart="25dp"
+            app:layout_constraintStart_toEndOf="@id/correo_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/correo_title"
+            app:layout_constraintTop_toBottomOf="@id/nombre_usuario"/>
+
+        <TextView
+            android:id="@+id/ubicacion_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textColor="#949494"
+            android:textStyle="bold"
+            android:text="Ubicación:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/correo_usuario" />
+
+        <TextView
+            android:id="@+id/ubicacion_curso"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:gravity="end"
+            android:layout_marginStart="10dp"
+            app:layout_constraintStart_toEndOf="@id/ubicacion_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/ubicacion_title"
+            app:layout_constraintTop_toBottomOf="@id/nombre_usuario"/>
+
+        <TextView
+            android:id="@+id/costo_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#949494"
+            android:layout_marginTop="10dp"
+            android:textStyle="bold"
+            android:text="Costo:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ubicacion_curso" />
+
+        <TextView
+            android:id="@+id/costo_curso"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:gravity="end"
+            android:layout_marginStart="36dp"
+            app:layout_constraintStart_toEndOf="@id/costo_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/costo_title"
+            app:layout_constraintTop_toBottomOf="@id/ubicacion_curso"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/btn_enroll"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Pagar"
+        android:backgroundTint="#D32F2F"
+        android:textColor="#FFFFFF"
+        app:layout_constraintTop_toBottomOf="@id/details_container"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="gone"
+        android:indeterminateTint="@color/red"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

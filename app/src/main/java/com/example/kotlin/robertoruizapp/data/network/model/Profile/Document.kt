@@ -10,6 +10,10 @@ data class Document(
     val gender: String,
     val job: String,
     val name: String,
+    val firstName: String,
+    val lastName: String,
     val postalCode: Int,
-    val topics: List<Any>
+    val topics: List<Any>,
+    val company: String,
+    val occupation: String
 )

@@ -53,21 +53,23 @@ interface ApiService {
     
     @GET("event")
     suspend fun getEventsNoFilter(
+        @Header("Authorization") jwt: String
     ): EventObject
 
     @GET("event/{id}")
     suspend fun getEvent(
+        @Header("Authorization") jwt: String,
         @Path("id") id: String
     ): EventObject
     
     @GET("event")
     suspend fun getEvents(
+        @Header("Authorization") jwt: String,
         @Query("eventName[regex]") eventName: String,
         @Query("location[regex]") location: String,
-        @Query("description[regex]") description: String,
         @Query("startDate[regex]") startDate: String,
         @Query("endDate[regex]") endDate: String,
-        @Query("eventImage[regex]") topic: String
+        @Query("topics[in]") topic: String?
     ): EventObject
     
     @GET("topics")

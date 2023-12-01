@@ -61,6 +61,7 @@ class FragmentoCurso : Fragment() {
             val fragmentoDetalles = FragmentoCursoDetalles().apply {
                 arguments = Bundle().apply {
                     putString("CURSO_ID", cursoId)
+
                 }
             }
 
@@ -92,7 +93,12 @@ class FragmentoCurso : Fragment() {
 
         emptyTextView = view.findViewById(R.id.emptyTextView)
 
+
+
+
         val searchView: SearchView = view.findViewById(R.id.search_view)
+        //Aquí debo de asignarlo y abajo debo de leerlo
+
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
@@ -106,6 +112,7 @@ class FragmentoCurso : Fragment() {
             }
         })
         setupSearchView()
+        viewModel.setFiltroActual(searchView.query.toString())
 
         val botonComentarLinearLayout: LinearLayout = view.findViewById(R.id.boton_comentar)
         botonComentarLinearLayout.setOnClickListener {

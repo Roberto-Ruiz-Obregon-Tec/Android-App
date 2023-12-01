@@ -91,9 +91,11 @@ class LoginActivity : AppCompatActivity() {
      *
      * @param token Session of the current user
      */
-    private fun createSessionPreference(token: String) {
+    private fun createSessionPreference(token: String, userId: String) {
         val preferences = PreferenceHelper.defaultPrefs(this)
         preferences["token"] = token
+        preferences["userId"] = userId
+        Log.d("LoginActivity", "Token y UserId guardados: $token, $userId")
     }
 
     /**
@@ -116,23 +118,28 @@ class LoginActivity : AppCompatActivity() {
         call.enqueue(object : Callback<LoginResponse> {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 val loginResponse = response.body()
-                if (response.isSuccessful) {
-                    if (loginResponse?.status == "success") {
-//                        checkCache(loginResponse.token)
-                        token = loginResponse.token
-                        createSessionPreference(loginResponse.token)
+
+                if (response.isSuccessful && loginResponse != null) {
+                    if (loginResponse.status == "success") {
+                        // Aquí aseguras que tanto el token como el userId no son nulos
+                        val token = loginResponse.token
+                        val userId = loginResponse.data.user.id
+                        Log.d("LoginActivity", "UserId obtenido en login: $userId")
+
+                        createSessionPreference(token, userId)
+                        // Guarda el token en la variable de la clase
+                        LoginActivity.token = token
                         progressBar?.visibility = View.INVISIBLE
                         goToHome()
-
                     }
                 } else {
+                    // Manejo de la respuesta fallida
                     progressBar?.visibility = View.INVISIBLE
                     loadingPanel.visibility = View.INVISIBLE
                     passwordLogin.isEnabled = true
                     emailLogin.isEnabled = true
                     btnGoMenu.isEnabled = true
                     btnSign.isEnabled = true
-
                     Toast.makeText(
                         applicationContext,
                         "Usuario o contraseña no válidos",

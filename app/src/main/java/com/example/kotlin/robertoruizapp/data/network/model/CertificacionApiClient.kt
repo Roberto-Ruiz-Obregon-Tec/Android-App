@@ -24,11 +24,9 @@ class CertificacionApiClient {
 
     suspend fun getCertificaciones(): CertificacionesObjeto? {
         var result: CertificacionesObjeto? = null
-        Log.d("Try", "Try")
         try {
             return api.getCertificaciones("Bearer ${LoginActivity.token}")
         } catch (e: java.lang.Exception) {
-            Log.d("Catch", "Holaa" + { result })
             null
         }
         return result

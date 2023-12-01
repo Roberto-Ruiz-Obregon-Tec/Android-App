@@ -10,6 +10,6 @@ class BankRepository {
     private val api: BankApiService = NetworkModuleDIBank()
 
     suspend fun getBanks(token: String): BankObject? {
-        return api.getBanks("Bearer ${LoginActivity.token}")
+        return api.getBanks("Bearer ${token}")
     }
 }

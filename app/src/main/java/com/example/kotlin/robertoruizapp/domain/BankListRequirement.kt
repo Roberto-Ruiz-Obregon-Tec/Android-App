@@ -7,5 +7,5 @@ import com.example.kotlin.robertoruizapp.framework.view.activities.LoginActivity
 class BankListRequirement {
     private val bankRepository = BankRepository()
 
-    suspend fun invoke(token: String): BankObject? = bankRepository.getBanks(LoginActivity.token)
+    suspend operator fun invoke(): BankObject? = bankRepository.getBanks(LoginActivity.token)
 }

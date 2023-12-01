@@ -1,6 +1,6 @@
 package com.example.kotlin.robertoruizapp.data.network.model.BankAccount
 
-import com.example.kotlin.robertoruizapp.data.network.model.companyCertification.Data
+import com.example.kotlin.robertoruizapp.data.network.model.BankAccount.Data
 
 data class BankObject (
     val `data`: Data,

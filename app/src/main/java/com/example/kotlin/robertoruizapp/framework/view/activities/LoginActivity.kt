@@ -1,5 +1,6 @@
 package com.example.kotlin.robertoruizapp.framework.view.activities
 
+
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -20,6 +21,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
+import com.example.kotlin.robertoruizapp.framework.view.activities.ForgotPasswordActivity
+
 
 /**
  * LoginActivity class that manages the activity actions
@@ -53,7 +56,8 @@ class LoginActivity : AppCompatActivity() {
             goToHome()*/
 
         val loadingPanel = findViewById<RelativeLayout>(R.id.loadingPanel)
-        progressBar = findViewById(R.id.progressBarLogin)
+//        progressBar = findViewById(R.id.progressBarLogin)
+        progressBar = findViewById(R.id.progressBar)
         val btnGoMenu = findViewById<Button>(R.id.button_login)
         val btnSign = findViewById<Button>(R.id.signup)
         val emailLogin = findViewById<TextView>(R.id.email_login)
@@ -72,6 +76,13 @@ class LoginActivity : AppCompatActivity() {
         val btnStartRegisterActivity = findViewById<Button>(R.id.signup)
         btnStartRegisterActivity.setOnClickListener {
             val intent = Intent(this, SignUpActivity::class.java)
+            startActivity(intent)
+        }
+        // Add the event handler on click for the password reset.
+        val forgotPasswordButton = findViewById<Button>(R.id.forgot_password_button)
+        forgotPasswordButton.setOnClickListener {
+            // Starts the activity ResContrasena
+            val intent = Intent(this, ForgotPasswordActivity::class.java)
             startActivity(intent)
         }
 

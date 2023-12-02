@@ -21,6 +21,9 @@ import com.example.kotlin.robertoruizapp.utils.PreferenceHelper
 import java.text.SimpleDateFormat
 import java.util.Locale
 
+/**
+ * Fragment for handling course enrollment and payment information.
+ */
 class FragmentoInscripcionDePago : Fragment() {
     private var _binding: FragmentoInscripcionDePagoBinding? = null
     private val binding get() = _binding!!
@@ -28,16 +31,33 @@ class FragmentoInscripcionDePago : Fragment() {
     private var costoCurso: Double = 0.0
     private var userId: String = ""
 
+    /**
+     * ViewModel for managing course-related data and operations.
+     */
     private val cursoViewModel: CursoViewModel by viewModels {
         ViewModelFactory(UserRepository(), CourseRepository())
     }
 
+    /**
+     * Lazily initializes the course ID from fragment arguments.
+     *
+     * If the "CURSO_ID" argument is provided, it will be used as the course ID. Otherwise, an
+     * empty string will be used.
+     */
     private val cursoId: String by lazy {
         arguments?.getString("CURSO_ID") ?: ""
 
     }
 
 
+    /**
+     * Inflates the fragment's layout and initializes its components.
+     *
+     * @param inflater The LayoutInflater used to inflate the layout.
+     * @param container The parent view in which the fragment should be attached.
+     * @param savedInstanceState The saved instance state of the fragment.
+     * @return The root view of the fragment.
+     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -46,6 +66,12 @@ class FragmentoInscripcionDePago : Fragment() {
         return binding.root
     }
 
+    /**
+     * Handles UI setup and data retrieval when the view is created.
+     *
+     * @param view The root view of the fragment.
+     * @param savedInstanceState The saved instance state of the fragment.
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         showProgressBar()
@@ -116,6 +142,10 @@ class FragmentoInscripcionDePago : Fragment() {
         setupEnrollButton()
     }
 
+    /**
+     * Sets up the behavior of the "Enroll" button.
+     */
+
     private fun setupEnrollButton() {
         binding.btnEnroll.setOnClickListener {
             val curso = arguments?.getString("CURSO_ID")
@@ -128,6 +158,11 @@ class FragmentoInscripcionDePago : Fragment() {
         }
     }
 
+    /**
+     * Navigates to the payment details fragment with the provided bundle.
+     *
+     * @param bundle The Bundle containing data to pass to the target fragment.
+     */
     private fun navigateToDetallesDePago(bundle: Bundle) {
         val detallesPagoFragment = FragmentoDetalleDePago().apply {
             arguments = bundle.apply {

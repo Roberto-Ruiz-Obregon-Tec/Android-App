@@ -24,15 +24,26 @@ import com.example.kotlin.robertoruizapp.utils.PreferenceHelper
 import java.text.SimpleDateFormat
 import java.util.Locale
 
+/**
+ * Fragment for handling course enrollment and payment information.
+ */
 class FragmentoInscripcionGratuita : Fragment() {
     private var _binding: FragmentoInscripcionGratuitaBinding? = null
     private val binding get() = _binding!!
 
+    /**
+     * ViewModel for managing course-related data and operations.
+     */
     private val cursoViewModel: CursoViewModel by viewModels {
         ViewModelFactory(UserRepository(), CourseRepository())
     }
 
-    // Suponiendo que tienes un argumento de tipo UserDocument para el curso
+    /**
+     * Lazily initializes the course ID from fragment arguments.
+     *
+     * If the "CURSO_ID" argument is provided, it will be used as the course ID. Otherwise, an
+     * empty string will be used.
+     */
     private val cursoId: String by lazy {
         arguments?.getString("cursoId") ?: ""
     }
@@ -128,12 +139,20 @@ class FragmentoInscripcionGratuita : Fragment() {
         binding.progressBar.visibility = View.GONE
     }
 
+    /**
+     * Sets up the enroll button click listener to show the confirmation dialog.
+     */
     private fun setupEnrollButton() {
         binding.btnEnroll.setOnClickListener {
             showConfirmationDialog(cursoId)
         }
     }
 
+    /**
+     * Displays a confirmation dialog for course enrollment.
+     *
+     * @param courseId The ID of the course to enroll in.
+     */
     private fun showConfirmationDialog(courseId: String) {
         context?.let {
             AlertDialog.Builder(it)
@@ -148,6 +167,11 @@ class FragmentoInscripcionGratuita : Fragment() {
         }
     }
 
+    /**
+     * Handles the confirmation of attendance and sends the enrollment request to the ViewModel.
+     *
+     * @param courseId The ID of the course to enroll in.
+     */
     private fun confirmAttendance(courseId: String){
 
         cursoViewModel.postInscription(courseId).observe(viewLifecycleOwner) { result ->
@@ -163,16 +187,6 @@ class FragmentoInscripcionGratuita : Fragment() {
             }
         }
     }
-
-    /*private fun navigateToFragment(fragment: Fragment) {
-        // Asegúrate de que el ID del contenedor aquí coincida con el contenedor en tu MainActivity
-        if (isAdded) { // Asegúrate de que el fragmento esté asociado con una actividad.
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.nav_host_fragment_content_main, fragment)
-                .addToBackStack(null)
-                .commit()
-        }
-    }*/
 
     /**
      * Called when the fragment's view is destroyed.

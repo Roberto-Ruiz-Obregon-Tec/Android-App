@@ -12,7 +12,18 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+/**
+ * ViewHolder class for displaying bank information in a RecyclerView.
+ *
+ * @param binding The data binding instance for the bank item layout.
+ */
 class BankViewHolder(private val binding: ItemBankBinding) : RecyclerView.ViewHolder(binding.root) {
+    /**
+     * Binds bank data to the ViewHolder.
+     *
+     * @param item The [BankDocument] object containing bank information.
+     * @param context The [Context] object for loading images.
+     */
     fun bind(item: BankDocument, context: Context){
         binding.cuentaCurso.text = item.bank
         binding.cursoCosto.text = item.accountNumber

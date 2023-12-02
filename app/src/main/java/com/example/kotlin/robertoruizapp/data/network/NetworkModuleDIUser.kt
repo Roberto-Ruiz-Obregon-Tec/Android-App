@@ -8,6 +8,9 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+/**
+ * Dependency Injection module for creating a [UserApiService] instance.
+ */
 object NetworkModuleDIUser {
     private val gsonFactory: GsonConverterFactory = GsonConverterFactory.create()
 
@@ -30,10 +33,9 @@ object NetworkModuleDIUser {
     }.build()
 
     /**
-     * Gets an instance of [UserApiService] configured with the base URL, client OkHttpClient
-     * with Gson authentication token and converter.
+     * Creates and returns a [UserApiService] instance.
      *
-     * @return Instance of [UserApiService].
+     * @return A [UserApiService] instance configured with the base URL, OkHttpClient, and GsonConverterFactory.
      */
     operator fun invoke(): UserApiService {
         return Retrofit.Builder()

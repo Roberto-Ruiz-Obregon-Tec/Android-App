@@ -15,6 +15,9 @@ import com.example.kotlin.robertoruizapp.framework.viewmodel.BankViewModel
 import android.view.LayoutInflater
 import android.view.ViewGroup
 
+/**
+ * Fragment for displaying payment details and banks.
+ */
 class FragmentoDetalleDePago : Fragment() {
 
     private var _binding: FragmentoDetalleDePagoBinding? = null
@@ -27,6 +30,14 @@ class FragmentoDetalleDePago : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private val adapter : BankAdapter = BankAdapter()
 
+    /**
+     * Inflates the fragment's layout and initializes its components.
+     *
+     * @param inflater The LayoutInflater used to inflate the layout.
+     * @param container The parent view in which the fragment should be attached.
+     * @param savedInstanceState The saved instance state of the fragment.
+     * @return The root view of the fragment.
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -54,6 +65,9 @@ class FragmentoDetalleDePago : Fragment() {
         return root
     }
 
+    /**
+     * Sets up the behavior of the "Enroll" button.
+     */
     private fun setupEnrollButton() {
         binding.btnEnroll.setOnClickListener {
             val curso = arguments?.getString("cursoId")
@@ -66,6 +80,11 @@ class FragmentoDetalleDePago : Fragment() {
         }
     }
 
+    /**
+     * Navigates to the "PagosPorFicha" fragment with the provided bundle.
+     *
+     * @param bundle The Bundle containing data to pass to the target fragment.
+     */
     private fun navigateToPagosPorFicha(bundle: Bundle) {
         val pagosPorFichaFragment = FragmentoPagosPorFicha().apply {
             arguments = bundle.apply {
@@ -78,6 +97,9 @@ class FragmentoDetalleDePago : Fragment() {
             .commit()
     }
 
+    /**
+     * Observes changes in bank data and updates the RecyclerView accordingly.
+     */
     private fun observeBanks() {
         viewModelBank.bankList.observe(viewLifecycleOwner){result ->
             if ( result != null ){
@@ -88,6 +110,11 @@ class FragmentoDetalleDePago : Fragment() {
         }
     }
 
+    /**
+     * Sets up the RecyclerView to display bank data.
+     *
+     * @param dataForList The list of [BankDocument] objects to display.
+     */
     private fun setupRecyclerView(dataForList:ArrayList<BankDocument>) {
         Log.d("prueba", "setupreclycler: ${dataForList}")
         recyclerView.setHasFixedSize(true)
@@ -100,10 +127,18 @@ class FragmentoDetalleDePago : Fragment() {
         recyclerView.adapter = adapter
     }
 
+    /**
+     * Initializes the components of the fragment.
+     *
+     * @param root The root view of the fragment.
+     */
     private fun initializeComponents(root: View){
         recyclerView = root.findViewById(R.id.bancos_list)
     }
 
+    /**
+     * Cleans up resources when the view is destroyed.
+     */
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

@@ -14,11 +14,17 @@ import com.example.kotlin.robertoruizapp.framework.view.activities.LoginActivity
 import com.example.kotlin.robertoruizapp.framework.viewmodel.BankViewModel
 import com.example.kotlin.robertoruizapp.framework.viewmodel.FichaPagoViewModel
 
+/**
+ * Fragment for handling payments by voucher.
+ */
 class FragmentoPagosPorFicha : Fragment() {
     private var _binding: FragmentoPagosPorFichaBinding? = null
     private val binding get() = _binding!!
     private lateinit var viewModel: FichaPagoViewModel
 
+    /**
+     * Called when the fragment's view is created.
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -39,6 +45,9 @@ class FragmentoPagosPorFicha : Fragment() {
         return root
     }
 
+    /**
+     * Called when the fragment's view is created and ready.
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentoPagosPorFichaBinding.bind(view)
@@ -46,7 +55,6 @@ class FragmentoPagosPorFicha : Fragment() {
         val cursoId = arguments?.getString("cursoId")
         val costoCurso = arguments?.getDouble("costoCurso")
 
-        // Utilizar los datos extraídos
         binding.montoPago.text = "$${costoCurso} MXN"
 
         binding.btnEnroll.setOnClickListener {
@@ -61,6 +69,9 @@ class FragmentoPagosPorFicha : Fragment() {
 
     }
 
+    /**
+     * Initializes observers to listen for changes in ViewModel data.
+     */
     private fun initializeObservers() {
 
         viewModel.voucherLiveData.observe(viewLifecycleOwner) {result ->

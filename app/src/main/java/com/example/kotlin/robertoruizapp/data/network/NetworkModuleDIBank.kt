@@ -7,6 +7,9 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+/**
+ * Dependency Injection module for creating a [BankApiService] instance.
+ */
 object NetworkModuleDIBank {
     private val gsonFactory: GsonConverterFactory = GsonConverterFactory.create()
 
@@ -27,6 +30,11 @@ object NetworkModuleDIBank {
         }
     }.build()
 
+    /**
+     * Creates and returns a [BankApiService] instance.
+     *
+     * @return A [BankApiService] instance configured with the base URL, OkHttpClient, and GsonConverterFactory.
+     */
     operator fun invoke(): BankApiService {
         return Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
